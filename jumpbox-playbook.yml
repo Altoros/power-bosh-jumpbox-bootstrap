@@ -5,7 +5,8 @@
     ruby_version: 2.1.4
     username: ubuntu
   roles:
-  - role: common
+  - role: gccgo
+  # - role: common
   # - role: jumpbox
   # - role: binaries-builder
   # - role: stemcell-builder

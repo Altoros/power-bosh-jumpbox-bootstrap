@@ -1,14 +1,37 @@
----
-- name: Install system packages
-  sudo: yes
-  apt: pkg={{ item }} state=present update_cache=yes
-  with_items: [
-    git, mercurial, libssl-dev, lsof, strace, tcpdump,
-    zip, unzip, libcurl3, libcurl3-dev, libreadline6-dev,
-    bison, libxml2, libxml2-dev, libxslt1.1, libxslt1-dev,
-    libsqlite3-dev, rsync, libbz2-dev, cmake, uuid-dev,
-    libgcrypt-dev, ca-certificates, zlib1g, zlib1g-dev,
-    readline-common, curl, wget, libpq-dev, python-psycopg2,
-    bzr, autoconf, build-essential, libyaml-dev, libncurses5-dev,
-    libffi-dev, libgdbm3, libgdbm-dev, tmux, vim
-  ]
+# ---
+# uname -r
+# - name: Install system packages
+#   sudo: yes
+#   apt: pkg={{ item }} state=present update_cache=yes
+#   with_items: [
+#     git, mercurial, libssl-dev, lsof, strace, tcpdump,
+#     zip, unzip, libcurl3, libcurl3-dev, libreadline6-dev,
+#     bison, libxml2, libxml2-dev, libxslt1.1, libxslt1-dev,
+#     libsqlite3-dev, rsync, libbz2-dev, cmake, uuid-dev,
+#     libgcrypt-dev, ca-certificates, zlib1g, zlib1g-dev,
+#     readline-common, curl, wget, libpq-dev, python-psycopg2,
+#     bzr, autoconf, build-essential, libyaml-dev, libncurses5-dev,
+#     libffi-dev, libgdbm3, libgdbm-dev, tmux, vim
+#   ]
+
+# - name: Install packages required by gccgo
+#   sudo: yes
+#   apt: pkg={{ item }} state=present update_cache=yes
+#   with_items: [
+#     git, mercurial, libssl-dev, lsof, strace, tcpdump,
+#     zip, unzip, libcurl3, libcurl3-dev, libreadline6-dev,
+#     bison, libxml2, libxml2-dev, libxslt1.1, libxslt1-dev,
+#     libsqlite3-dev, rsync, libbz2-dev, cmake, uuid-dev,
+#     libgcrypt-dev, ca-certificates, zlib1g, zlib1g-dev,
+#     readline-common, curl, wget, libpq-dev, python-psycopg2,
+#     bzr, autoconf, build-essential, libyaml-dev, libncurses5-dev,
+#     libffi-dev, libgdbm3, libgdbm-dev, tmux, vim
+#   ]
+
+
+# build-essential libgmp-dev libgmp3-dev libmpfr-dev libmpc-dev flex subversion
+# git mercurial libsqlite3-dev lxc libffi-dev pandoc ruby ruby-dev curl
+# aufs-tools btrfs-tools libdevmapper-dev libapparmor-dev
+# linux-image-extra-`uname -r`
+
+# # $ sudo gem install fpm

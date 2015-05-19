@@ -1,0 +1,7 @@
+---
+gcc_download_url: "{{mirror}}/releases/gcc-{{gcc_version}}/gcc-{{gcc_version}}.tar.gz"
+gcc_path: "/home/{{ansible_ssh_user}}/gccgo"
+gcc_archive_path: "{{gcc_path}}/gcc-{{gcc_version}}.tar.gz"
+gcc_source_path: "{{gcc_path}}/src"
+gcc_build_path: "{{gcc_path}}/build"
+

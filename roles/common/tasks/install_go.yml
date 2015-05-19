@@ -1,7 +1,7 @@
 ---
-- name: Download Go
+- name: Install Go
   sudo: yes
-  get_url: "url=https://storage.googleapis.com/golang/go{{go_version}}.linux-amd64.tar.gz dest=/opt/go{{go_version}}.linux-amd64.tar.gz"
+  apt: pkg=gccgo-4.8-multilib-powerpc-linux-gnu state=present
 
 - name: Untar Go
   shell: "tar -xzvf go{{go_version}}.linux-amd64.tar.gz"
