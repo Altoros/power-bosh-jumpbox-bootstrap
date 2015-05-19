@@ -1,0 +1,40 @@
+---
+- gem: name=bosh_cli version=1.2922.0
+  environment: ruby_environment
+
+- gem: name=bosh_cli_plugin_micro version=1.2922.0
+  environment: ruby_environment
+
+- gem: name=nats state=latest
+  environment: ruby_environment
+
+- name: Get bosh-init
+  shell: "go get -d github.com/cloudfoundry/bosh-init"
+  args: {creates: "{{gopath}}/src/github.com/cloudfoundry/bosh-init/"}
+  environment: go_environment
+
+- name: Revert bosh-init              # freeze the version
+  shell: "git checkout tags/v0.0.31"
+  args: {chdir: "{{gopath}}/src/github.com/cloudfoundry/bosh-init/"}
+
+- name: Build bosh-init
+  shell: "./bin/build"
+  args:
+    chdir: "{{gopath}}/src/github.com/cloudfoundry/bosh-init/"
+    creates: "{{gopath}}/src/github.com/cloudfoundry/bosh-init/out/bosh-init"
+  environment: go_environment
+
+- name: Install direnv
+  get_url: "url=https://github.com/zimbatm/direnv/releases/download/v2.6.0/direnv.linux-amd64 dest=/usr/local/bin/direnv"
+  sudo: yes
+
+- file: path=/usr/local/bin/direnv mode=755
+  sudo: yes
+
+- shell: echo 'eval "$(direnv hook bash)"' >> /home/{{username}}/.bashrc
+
+- name: Install CF CLI
+  get_url: "url=https://cli.run.pivotal.io/stable?release=linux64-binary&source=github dest=/usr/local/bin/cf"
+  sudo: yes
+- file: path=/usr/local/bin/cf mode=755
+  sudo: yes
