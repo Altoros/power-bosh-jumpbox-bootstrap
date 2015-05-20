@@ -1,5 +1,5 @@
 ---
-- name: Install packages required by gccgo
+- name: Install system packages
   sudo: yes
   apt: pkg={{ item }} state=present update_cache=yes
   with_items: [

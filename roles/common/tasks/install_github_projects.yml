@@ -6,10 +6,17 @@
   git: "repo=https://github.com/zimbatm/direnv dest={{github_path}}/direnv accept_hostkey=yes"
   sudo: no
 
-- name: Run make install for direnv
-  shell: "make install chdir={{github_path}}/direnv creates=/usr/local/bin/direnv"
+- name: Build direnv
+  shell: "go build -o direnv creates={{github_path}}/direnv/direnv"
+  sudo: no
+  environment: go_environment
+
+
+- name: Copy direnv binary to /usr/local/bin
+  shell: "cp {{github_path}}/direnv/direnv /usr/local/bin/direnv creates=/usr/local/bin/direnv"
   sudo: yes
 
 - file: path=/usr/local/bin/direnv mode=755
   sudo: yes
+
 - shell: echo 'eval "$(direnv hook bash)"' >> /home/{{ansible_ssh_user}}/.bashrc
