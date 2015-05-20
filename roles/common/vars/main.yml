@@ -9,7 +9,7 @@ go_environment:
   GOROOT: "{{go_root}}"
   GOPATH: "{{go_path}}"
   PATH: "{{go_root}}/bin:{{go_path}}/bin:{{standard_path}}"
-  LD_LIBRARY_PATH: {{go_root}}/lib64
+  LD_LIBRARY_PATH: "{{go_root}}/lib64"
 
 ruby_environment:
   PATH: "/home/{{username}}/.rvm/wrappers/default/:{{standard_path}}"

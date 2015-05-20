@@ -1,11 +1,11 @@
 ---
 - name: Clone bosh-packer-templates project
-  git: "repo=https://github.com/Altoros/bosh-packer-templates.git dest={{bosh_packer_path}} accept_hostkey=yes branch=power"
+  git: "repo=https://github.com/Altoros/bosh-packer-templates.git dest={{bosh_packer_path}} accept_hostkey=yes"
   sudo: no
 
-- name: Clone bosh-packer-templates project
-  git: "repo=https://github.com/Altoros/bosh-packer-templates.git dest={{bosh_packer_path}} accept_hostkey=yes branch=power"
-  sudo: no
+# - name: Checkout bosh-packer-templates project
+#   git: "repo=https://github.com/Altoros/bosh-packer-templates.git dest={{bosh_packer_path}} accept_hostkey=yes branch=power"
+#   sudo: no
 
 - name: Make BOSH packer scripts executable
   shell: chmod +x *.sh
@@ -19,18 +19,3 @@
     - sshd.sh
     - update.sh
     - packages.sh
-
-execute_commands("Install bosh-packer-templates",
-                 "git clone https://github.com/Altoros/bosh-packer-templates.git")
-
-execute_commands("Run bosh-packer-templates scripts",
-                 "cd ~/bosh-packer-templates/bosh-stemcell/scripts && sudo chmod +x *.sh && sudo ./sudoers.sh && sudo ./sshd.sh && sudo ./update.sh && sudo ./packages.sh")
-
-
-git clone https://github.com/Altoros/bosh-packer-templates.git
-git checkout ...
-
-cd ~/bosh-packer-templates/bosh-stemcell/scripts && sudo chmod +x *.sh && sudo ./sudoers.sh && sudo ./sshd.sh && sudo ./update.sh && sudo ./packages.sh
-
-
-
