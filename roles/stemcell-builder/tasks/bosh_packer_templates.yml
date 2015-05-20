@@ -1,3 +1,25 @@
+---
+- name: Clone bosh-packer-templates project
+  git: "repo=https://github.com/Altoros/bosh-packer-templates.git dest={{bosh_packer_path}} accept_hostkey=yes branch=power"
+  sudo: no
+
+- name: Clone bosh-packer-templates project
+  git: "repo=https://github.com/Altoros/bosh-packer-templates.git dest={{bosh_packer_path}} accept_hostkey=yes branch=power"
+  sudo: no
+
+- name: Make BOSH packer scripts executable
+  shell: chmod +x *.sh
+  sudo: yes
+
+- name: Make BOSH packer scripts executable
+  shell: "./{{item}}"
+  sudo: yes
+  with_items:
+    - sudoers.sh
+    - sshd.sh
+    - update.sh
+    - packages.sh
+
 execute_commands("Install bosh-packer-templates",
                  "git clone https://github.com/Altoros/bosh-packer-templates.git")
 

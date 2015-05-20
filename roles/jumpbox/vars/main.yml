@@ -2,7 +2,7 @@
 go_version: 1.4.2
 ruby_version: 2.1.5
 standard_path: "{{ ansible_env.PATH }}"
-go_root: "/opt/go"
+go_root: ""
 go_path: "/home/{{ansible_ssh_user}}/go"
 ruby_environment:
   PATH: "/home/{{ansible_ssh_user}}/.rvm/wrappers/default/:{{standard_path}}"

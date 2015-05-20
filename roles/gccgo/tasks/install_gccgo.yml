@@ -11,9 +11,10 @@
   unarchive: "src={{gcc_archive_path}} dest={{gcc_path}} copy=no creates={{gcc_path}}/gcc-{{gcc_version}}"
   sudo: no
 
-- name: Rename folder with GCC sources
-  command: "mv {{gcc_path}}/gcc-{{gcc_version}} {{gcc_source_path}} creates={{gcc_source_path}}"
-
+- name: Rename folder with GCC sources 
+  # I use copy here just not to repeat previous task every time
+  shell: "rsync -r {{gcc_path}}/gcc-{{gcc_version}}/* {{gcc_source_path}} creates={{gcc_source_path}}"
+  
 - name: Creates gccgo build folder
   file: "path={{gcc_build_path}} state=directory"
   sudo: no
@@ -47,5 +48,6 @@
     - "export GOROOT={{go_root}}"
     - "export GOPATH={{go_path}}"
     - "export PATH={{go_root}}/bin:{{go_path}}/bin:{{standard_path}}"
+    - "export LD_LIBRARY_PATH={{go_root}}/lib64"
   when: (goroot_variable_from_env.stdout == "")
 

@@ -6,4 +6,4 @@ gcc_source_path: "{{gcc_path}}/src"
 gcc_build_path: "{{gcc_path}}/build"
 go_root: "/usr/local/gccgo"
 go_path: "/home/{{ansible_ssh_user}}/go"
-standard_path: {{ansible_env.PATH}}
+standard_path: "{{ansible_env.PATH}}"

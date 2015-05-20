@@ -1,0 +1,5 @@
+---
+github_path: "/home/{{ansible_ssh_user}}/github"
+bosh_path: "/home/{{ansible_ssh_user}}/bosh"
+bosh_packer_path: "{{github_path}}/bosh-packer-templates"
+bosh_packer_scripts_path: "{{bosh_packer_path}}/bosh-stemcell/scripts"
