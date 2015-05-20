@@ -1,5 +1,7 @@
 ## Install [Ansible](http://www.ansible.com/)
 
+Tested with ansible 1.9.0.1
+
 Mac OS:
 `brew install ansible`
 
@@ -30,8 +32,8 @@ _Networks_: Add two networks: private, for example with 192.168.1.0/24 CIDR and 
 ### Roles
 List of roles:
 
-1. `common` performs apt-get update and installs necessary packages.
+1. `gccgo` is used to install gccgo (version 5.1 by default), at this moment works only for power 8.
+1. `common` performs apt-get update and installs necessary packages, creates ~/github folder and installs direnv, install BOSH with all necessary gems.
 2. `jumpbox` creates an environment to run BOSH CLI commands, CF CLI and bosh-init.
 3. `binaries-builder` is used to build binaries for IBM Power BOSH and CF installations.
 4. `stemcell-builder` installs everything that is needed to run stemcell builder of the BOSH project.
-

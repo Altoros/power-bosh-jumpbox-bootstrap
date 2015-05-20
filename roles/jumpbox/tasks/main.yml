@@ -10,18 +10,18 @@
 
 - name: Get bosh-init
   shell: "go get -d github.com/cloudfoundry/bosh-init"
-  args: {creates: "{{gopath}}/src/github.com/cloudfoundry/bosh-init/"}
+  args: {creates: "{{go_path}}/src/github.com/cloudfoundry/bosh-init/"}
   environment: go_environment
 
 - name: Revert bosh-init              # freeze the version
   shell: "git checkout tags/v0.0.31"
-  args: {chdir: "{{gopath}}/src/github.com/cloudfoundry/bosh-init/"}
+  args: {chdir: "{{go_path}}/src/github.com/cloudfoundry/bosh-init/"}
 
 - name: Build bosh-init
   shell: "./bin/build"
   args:
-    chdir: "{{gopath}}/src/github.com/cloudfoundry/bosh-init/"
-    creates: "{{gopath}}/src/github.com/cloudfoundry/bosh-init/out/bosh-init"
+    chdir: "{{go_path}}/src/github.com/cloudfoundry/bosh-init/"
+    creates: "{{go_path}}/src/github.com/cloudfoundry/bosh-init/out/bosh-init"
   environment: go_environment
 
 - name: Install direnv

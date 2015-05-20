@@ -1,4 +1,11 @@
 ---
 dependencies:
-  - role: rvm_io.rvm1-ruby
   - role: gccgo
+    tags: golang
+  - role: rvm_io.rvm1-ruby
+    tags: ruby
+    rvm1_install_flags: '--auto-dotfiles --user-install'
+    rvm1_install_path: '/home/{{ansible_ssh_user}}/.rvm'
+    rvm1_user: "{{ansible_ssh_user}}"
+    rvm1_rubies:
+    - "ruby-{{ruby_version}}"

@@ -1,0 +1,14 @@
+execute_commands("Install bosh-packer-templates",
+                 "git clone https://github.com/Altoros/bosh-packer-templates.git")
+
+execute_commands("Run bosh-packer-templates scripts",
+                 "cd ~/bosh-packer-templates/bosh-stemcell/scripts && sudo chmod +x *.sh && sudo ./sudoers.sh && sudo ./sshd.sh && sudo ./update.sh && sudo ./packages.sh")
+
+
+git clone https://github.com/Altoros/bosh-packer-templates.git
+git checkout ...
+
+cd ~/bosh-packer-templates/bosh-stemcell/scripts && sudo chmod +x *.sh && sudo ./sudoers.sh && sudo ./sshd.sh && sudo ./update.sh && sudo ./packages.sh
+
+
+

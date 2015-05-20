@@ -1,13 +1,12 @@
 ---
 go_version: 1.4.2
 ruby_version: 2.1.5
-username: ubuntu
 standard_path: "{{ ansible_env.PATH }}"
-gopath: "/home/{{username}}/go"
-goroot: "/opt/go"
+go_root: "/opt/go"
+go_path: "/home/{{ansible_ssh_user}}/go"
 ruby_environment:
-  PATH: "/home/{{username}}/.rvm/wrappers/default/:{{standard_path}}"
+  PATH: "/home/{{ansible_ssh_user}}/.rvm/wrappers/default/:{{standard_path}}"
 go_environment:
-  GOROOT: "{{goroot}}"
-  GOPATH: "{{gopath}}"
-  PATH: "{{goroot}}/bin:{{gopath}}/bin:{{gopath}}/src/github.com/cloudfoundry/bosh-init/out:{{standard_path}}"
+  GOROOT: "{{go_root}}"
+  GOPATH: "{{go_path}}"
+  PATH: "{{go_root}}/bin:{{go_path}}/bin:{{go_path}}/src/github.com/cloudfoundry/bosh-init/out:{{standard_path}}"

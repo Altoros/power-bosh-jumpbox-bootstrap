@@ -15,7 +15,8 @@
 
 - name: Install packages that depend on kernel version
   sudo: yes
-  apt: "pkg=linux-image-extra-{{linux_version}} state=present update_cache=no"
+  apt: "pkg=linux-image-extra-{{linux_version.stdout}} state=present update_cache=no"
 
 - name: Install fpm gem
   gem: name=fpm version=1.3.3
+

@@ -26,12 +26,26 @@
       --enable-decimal-float --disable-bootstrap --disable-alsa --disable-multilib \
       --prefix=/usr/local/gccgo
     chdir={{gcc_build_path}}
-
+    creates={{gcc_build_path}}/Makefile
 
 - name: Run make
   sudo: no
-  shell: "make chdir={{gcc_build_path}}"
-    
-- name: Run make
+  shell: "make chdir={{gcc_build_path}} creates={{gcc_build_path}}/gcc"
+
+- name: Run make install
   sudo: yes
-  shell: "make install chdir={{gcc_build_path}}"
+  shell: "make install chdir={{gcc_build_path}} creates={{go_root}}/bin/go"
+
+- name: See if environment for Go is already set
+  command: "grep GOROOT /home/{{ansible_ssh_user}}/.bashrc"
+  register: goroot_variable_from_env
+  ignore_errors: True
+
+- name: Set environment variables
+  shell: "echo '{{item}}' >> /home/{{ansible_ssh_user}}/.bashrc"
+  with_items:
+    - "export GOROOT={{go_root}}"
+    - "export GOPATH={{go_path}}"
+    - "export PATH={{go_root}}/bin:{{go_path}}/bin:{{standard_path}}"
+  when: (goroot_variable_from_env.stdout == "")
+

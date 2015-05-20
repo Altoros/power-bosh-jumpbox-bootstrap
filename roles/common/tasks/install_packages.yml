@@ -1,37 +1,29 @@
-# ---
-# uname -r
-# - name: Install system packages
-#   sudo: yes
-#   apt: pkg={{ item }} state=present update_cache=yes
-#   with_items: [
-#     git, mercurial, libssl-dev, lsof, strace, tcpdump,
-#     zip, unzip, libcurl3, libcurl3-dev, libreadline6-dev,
-#     bison, libxml2, libxml2-dev, libxslt1.1, libxslt1-dev,
-#     libsqlite3-dev, rsync, libbz2-dev, cmake, uuid-dev,
-#     libgcrypt-dev, ca-certificates, zlib1g, zlib1g-dev,
-#     readline-common, curl, wget, libpq-dev, python-psycopg2,
-#     bzr, autoconf, build-essential, libyaml-dev, libncurses5-dev,
-#     libffi-dev, libgdbm3, libgdbm-dev, tmux, vim
-#   ]
+---
+- name: Install packages required by gccgo
+  sudo: yes
+  apt: pkg={{ item }} state=present update_cache=yes
+  with_items: [
+    git, mercurial, libssl-dev, lsof, strace, tcpdump,
+    zip, unzip, libcurl3, libcurl3-dev, libreadline6-dev,
+    bison, libxml2, libxml2-dev, libxslt1.1, libxslt1-dev,
+    libsqlite3-dev, rsync, libbz2-dev, cmake, uuid-dev,
+    libgcrypt-dev, ca-certificates, zlib1g, zlib1g-dev,
+    readline-common, curl, wget, libpq-dev, python-psycopg2,
+    bzr, autoconf, build-essential, libyaml-dev, libncurses5-dev,
+    libffi-dev, libgdbm3, libgdbm-dev, tmux, vim
+  ]
 
-# - name: Install packages required by gccgo
-#   sudo: yes
-#   apt: pkg={{ item }} state=present update_cache=yes
-#   with_items: [
-#     git, mercurial, libssl-dev, lsof, strace, tcpdump,
-#     zip, unzip, libcurl3, libcurl3-dev, libreadline6-dev,
-#     bison, libxml2, libxml2-dev, libxslt1.1, libxslt1-dev,
-#     libsqlite3-dev, rsync, libbz2-dev, cmake, uuid-dev,
-#     libgcrypt-dev, ca-certificates, zlib1g, zlib1g-dev,
-#     readline-common, curl, wget, libpq-dev, python-psycopg2,
-#     bzr, autoconf, build-essential, libyaml-dev, libncurses5-dev,
-#     libffi-dev, libgdbm3, libgdbm-dev, tmux, vim
-#   ]
+- name: Create folder for github projects
+  file: "path={{github_path}} state=directory"
 
+- name: Clone direnv
+  git: "repo=https://github.com/zimbatm/direnv dest={{github_path}}/direnv accept_hostkey=yes"
+  sudo: no
 
-# build-essential libgmp-dev libgmp3-dev libmpfr-dev libmpc-dev flex subversion
-# git mercurial libsqlite3-dev lxc libffi-dev pandoc ruby ruby-dev curl
-# aufs-tools btrfs-tools libdevmapper-dev libapparmor-dev
-# linux-image-extra-`uname -r`
+- name: Run make install for direnv
+  shell: "make install chdir={{github_path}}/direnv creates=/usr/local/bin/direnv"
+  sudo: yes
 
-# # $ sudo gem install fpm
+- file: path=/usr/local/bin/direnv mode=755
+  sudo: yes
+- shell: echo 'eval "$(direnv hook bash)"' >> /home/{{ansible_ssh_user}}/.bashrc
