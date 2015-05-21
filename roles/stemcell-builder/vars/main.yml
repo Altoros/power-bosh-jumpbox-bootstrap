@@ -3,3 +3,21 @@ github_path: "/home/{{ansible_ssh_user}}/github"
 bosh_path: "/home/{{ansible_ssh_user}}/bosh"
 bosh_packer_path: "{{github_path}}/bosh-packer-templates"
 bosh_packer_scripts_path: "{{bosh_packer_path}}/bosh-stemcell/scripts"
+
+standard_path: "{{ansible_env.PATH}}"
+go_root: "/usr/local/gccgo"
+go_path: "/home/{{ansible_ssh_user}}/go"
+go_environment:
+  GOROOT: "{{go_root}}"
+  GOPATH: "{{go_path}}"
+  PATH: "{{go_root}}/bin:{{go_path}}/bin:{{standard_path}}"
+  LD_LIBRARY_PATH: "{{go_root}}/lib64"
+
+ruby_environment:
+  PATH: "/home/{{username}}/.rvm/wrappers/default/:{{standard_path}}"
+
+
+
+
+
+stemcell_builder_path: "/home/{{ansible_ssh_user}}/stemcell-builder"

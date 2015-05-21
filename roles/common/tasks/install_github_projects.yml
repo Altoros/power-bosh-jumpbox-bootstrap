@@ -7,7 +7,7 @@
   sudo: no
 
 - name: Build direnv
-  shell: "go build -o direnv creates={{github_path}}/direnv/direnv"
+  shell: "go build -o direnv chdir={{github_path}}/direnv creates={{github_path}}/direnv/direnv"
   sudo: no
   environment: go_environment
 

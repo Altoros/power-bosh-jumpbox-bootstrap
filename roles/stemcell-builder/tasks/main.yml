@@ -1,2 +1,3 @@
 ---
-include: bosh_packer_templates.yml
+- include: create_environment.yml
+- include: bosh_packer_templates.yml

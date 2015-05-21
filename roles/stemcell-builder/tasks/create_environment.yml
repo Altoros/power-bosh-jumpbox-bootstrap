@@ -1,0 +1,19 @@
+---
+- name: Create folder for stemcell builder
+  file: "dest={{stemcell_builder_path}} state=directory"
+
+- name: Create bin folder for stemcell builder
+  file: "dest={{stemcell_builder_path}}/bin state=directory"
+
+- name: Put script file to the directory
+  copy: "src=build-stemcell dest={{stemcell_builder_path}}/bin/build-stemcell mode=a+x"
+
+- name: Put Gemfile to the directory
+  copy: "src=Gemfile dest={{stemcell_builder_path}}/Gemfile"
+
+- name: Run bundle install 
+  shell: "bundle install"
+  sudo: no
+  args:
+    chdir: "{{stemcell_builder_path}}"
+  environment: ruby_environment

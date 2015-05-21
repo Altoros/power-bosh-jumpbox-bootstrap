@@ -1,18 +1,22 @@
 ---
 - name: Clone bosh-packer-templates project
-  git: "repo=https://github.com/Altoros/bosh-packer-templates.git dest={{bosh_packer_path}} accept_hostkey=yes"
+  git: "repo=https://github.com/Altoros/bosh-packer-templates.git dest={{bosh_packer_path}} accept_hostkey=yes version=power"
   sudo: no
+  ignore_errors: True # this task can fail because the repo is changed in the fallowing step
 
-# - name: Checkout bosh-packer-templates project
-#   git: "repo=https://github.com/Altoros/bosh-packer-templates.git dest={{bosh_packer_path}} accept_hostkey=yes branch=power"
-#   sudo: no
+# TODO: - name: Checkout bosh-packer-templates project
 
 - name: Make BOSH packer scripts executable
-  shell: chmod +x *.sh
+  file: "dest={{bosh_packer_path}}/bosh-stemcell/scripts/{{item}} mode=a+x"
   sudo: yes
+  with_items:
+    - sudoers.sh
+    - sshd.sh
+    - update.sh
+    - packages.sh
 
-- name: Make BOSH packer scripts executable
-  shell: "./{{item}}"
+- name: Run BOSH packer scripts
+  shell: "./{{item}} chdir={{bosh_packer_path}}/bosh-stemcell/scripts/"
   sudo: yes
   with_items:
     - sudoers.sh

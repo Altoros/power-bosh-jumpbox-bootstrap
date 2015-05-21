@@ -1,4 +1,4 @@
 ---
-# - include: install_packages.yml
-# - include: install_github_projects.yml
+- include: install_packages.yml
+- include: install_github_projects.yml
 - include: install_bosh.yml

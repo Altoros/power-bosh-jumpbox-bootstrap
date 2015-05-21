@@ -6,7 +6,7 @@
     git, mercurial, libssl-dev, lsof, strace, tcpdump,
     zip, unzip, libcurl3, libcurl3-dev, libreadline6-dev,
     bison, libxml2, libxml2-dev, libxslt1.1, libxslt1-dev,
-    libsqlite3-dev, rsync, libbz2-dev, cmake, uuid-dev,
+    libsqlite3-dev, rsync, libbz2-dev, cmake, uuid-dev, libmysqlclient-dev,
     libgcrypt-dev, ca-certificates, zlib1g, zlib1g-dev,
     readline-common, curl, wget, libpq-dev, python-psycopg2,
     bzr, autoconf, build-essential, libyaml-dev, libncurses5-dev,

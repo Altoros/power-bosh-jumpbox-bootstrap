@@ -7,5 +7,5 @@
   roles:
   - role: common
   # - role: jumpbox
+  - role: stemcell-builder
   # - role: binaries-builder
-  # - role: stemcell-builder

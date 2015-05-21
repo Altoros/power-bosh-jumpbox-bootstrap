@@ -1,0 +1,6 @@
+---
+- name: Fetch binaries
+  get_url: "url={{item.url}} dest={{binaries_builder_path}}/sources/{{item.name}}"
+  with_items:
+    - name: 
+      url: 
