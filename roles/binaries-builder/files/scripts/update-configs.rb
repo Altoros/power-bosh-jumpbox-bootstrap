@@ -12,7 +12,7 @@ end
 
 opts.parse!
 
-unless File.exist?(options[:config])
+unless options[:config].nil? && File.exist?(options[:config])
   puts opts.banner
   exit(2)
 end
