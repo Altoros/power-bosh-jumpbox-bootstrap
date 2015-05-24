@@ -35,15 +35,22 @@ config_files = %w(config.guess config.sub)
 
 ### HELPER METHODS ######
 
-def download_new_configs(path)
+def download_new_configs(path, options = {})
+  config_files = options[:config_files] || raise 'Specify config_files, please.'
   config_files.each do |file_name|
-  	puts "Downloading #{file_name}"
+    puts "Downloading #{file_name}"
     execute_command(%(curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=#{file_name};hb=HEAD" > #{File.join(path, file_name)}))
     puts 'Done.'
   end
 end
 
-def update_package_config(package)
+def update_package_config(package, options = {})
+  config_files = options[:config_files] || raise 'Specify config_files, please.'
+  source_packages_folder = options[:source_packages_folder]
+  output_folder = options[:output_folder]
+  tmpdir = options[:tmpdir]
+  new_config_folder = options[:new_config_folder]
+
   puts "Updating config for #{package} package."
   package_scope = package.split('/').first
   package_name  = package.split('/').last
@@ -58,7 +65,7 @@ def update_package_config(package)
   folder_to_update = File.join(tmpdir, package_name)
   puts "Copying config files to #{folder_to_update}"
   config_files.each do |file_name|
-  	execute_command("cp #{File.join(new_config_folder, file_name)} #{File.join(folder_to_update, 'config')}")
+    execute_command("cp #{File.join(new_config_folder, file_name)} #{File.join(folder_to_update, 'config')}")
   end
   puts 'Done.'
 
@@ -73,21 +80,25 @@ def execute_command(command, options = {})
   puts "Executing command: #{command}"
   output = `#{command}`
   unless $?.success?
-  	puts "Command Failed:"
-  	puts output
+    puts "Command Failed:"
+    puts output
     exit(2)
   end
 end
 
 ######## RUNNING SCRIPT #################
 
+options = {
+  config_files: config_files,
+  source_packages_folder: source_packages_folder,
+  output_folder: output_folder,
+  tmpdir: tmpdir,
+  new_config_folder: new_config_folder
+}
 
-download_new_configs(new_config_folder)
+download_new_configs(new_config_folder, options)
 
 packages_to_update.each do |package|
-  update_package_config(package)
+  update_package_config(package, options)
 end
-
-
-
 
