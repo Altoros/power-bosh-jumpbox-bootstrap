@@ -5,17 +5,17 @@ require 'yaml'
 require 'optparse'
 
 options = {}
-OptionParser.new do |opts|
+opts = OptionParser.new do |opts|
   opts.banner = "Usage: update-comfigs.rb [options]"
-  opts.on('-c', '--config FILE', 'Config file') do |v|
-  	if File.exist?(v)
-  	  options[:config] = v
-  	else
-  	  puts opts.banner
-  	  exit(2)
-  	end
-  end
-end.parse!
+  opts.on('-c', '--config FILE', 'Config file') { |v| options[:config] = v }
+end
+
+opts.parse!
+
+unless File.exist?(options[:config])
+  puts opts.banner
+  exit(2)
+end
 
 config = YAML.load_file(options[:config])
 
