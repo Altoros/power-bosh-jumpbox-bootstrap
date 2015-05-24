@@ -77,7 +77,7 @@ def execute_command(command, options = {})
   Dir.chdir(options[:chdir]) if options[:chdir]
   puts "Executing command: #{command}"
   output = `#{command}`
-  unless !?.success?
+  unless $?.success?
   	puts "Command Failed:"
   	puts output
     exit(2)
