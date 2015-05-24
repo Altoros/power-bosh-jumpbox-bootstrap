@@ -59,7 +59,7 @@ def update_package_config(package, options = {})
   target_archive_folder = File.join(output_folder, package_scope)
   target_archive_path = File.join(target_archive_folder, package_name)
   puts "Unarchiving package #{archive_path}"
-  execute_command(%(tar -xzvf #{archive_path} -L #{tmpdir}))
+  execute_command(%(tar -xzvf #{archive_path} -C #{tmpdir}))
   puts 'Done.'
 
   folder_to_update = File.join(tmpdir, package_name)
