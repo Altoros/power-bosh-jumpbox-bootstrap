@@ -54,7 +54,7 @@ def update_package_config(package, options = {})
   puts "Updating config for #{package} package."
   package_scope = package.split('/').first
   package_name  = package.split('/').last
-  archive_path = File.join(source_packages_folder, "#{package}.tar.gz")
+  archive_path = File.join(source_packages_folder, "#{package_name}.tar.gz")
   source_path = File.join(source_packages_folder, package_name)
   target_archive_folder = File.join(output_folder, package_scope)
   target_archive_path = File.join(target_archive_folder, package_name)
