@@ -27,20 +27,12 @@ FileUtils.mkdir_p(output_folder)
 tmpdir = Dir.mktmpdir
 new_config_folder = tmpdir
 
-download_new_configs(new_config_folder)
 
 packages_to_update = config['packages']
 source_packages_folder = config['source_folder']
 
-packages_to_update.each do |package|
-  update_package_config(package)
-end
 
-config_files = %w(config.guess config.sub)
-
-
-######## PRIVATE METHODS #################
-
+### HELPER METHODS ######
 
 def download_new_configs(path)
   config_files.each do |file_name|
@@ -85,5 +77,16 @@ def execute_command(command, options = {})
     exit(2)
   end
 end
+
+######## RUNNING SCRIPT #################
+
+
+download_new_configs(new_config_folder)
+
+packages_to_update.each do |package|
+  update_package_config(package)
+end
+
+config_files = %w(config.guess config.sub)
 
 
