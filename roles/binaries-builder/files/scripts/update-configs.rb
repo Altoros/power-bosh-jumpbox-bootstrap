@@ -14,7 +14,7 @@ end
 
 opts.parse!
 
-unless options[:config].nil? && File.exist?(options[:config])
+unless options[:config] && File.exist?(options[:config])
   puts opts.help
   exit(2)
 end
