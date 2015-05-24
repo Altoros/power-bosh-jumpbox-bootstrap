@@ -57,7 +57,7 @@ def update_package_config(package, options = {})
   archive_path = File.join(source_packages_folder, "#{package_name}.tar.gz")
   source_path = File.join(source_packages_folder, package_name)
   target_archive_folder = File.join(output_folder, package_scope)
-  target_archive_path = File.join(target_archive_folder, package_name)
+  target_archive_path = File.join(target_archive_folder, "#{package_name}.tar.gz")
   puts "Unarchiving package #{archive_path}"
   execute_command(%(tar -xzvf #{archive_path} -C #{tmpdir}))
   puts 'Done.'
@@ -71,7 +71,7 @@ def update_package_config(package, options = {})
 
   puts "Archiving package"
   FileUtils.mkdir_p(target_archive_folder)
-  execute_command(%(tar -xzvf #{target_archive_path} #{package_name}), chdir: tmpdir)
+  execute_command(%(tar -czvf #{target_archive_path} #{package_name}), chdir: tmpdir)
   puts 'Done.'
 end
 
