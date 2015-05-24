@@ -7,13 +7,15 @@ require 'optparse'
 options = {}
 opts = OptionParser.new do |opts|
   opts.banner = "Usage: update-comfigs.rb [options]"
+  opts.separator ""
+  opts.separator "Specific options:"  
   opts.on('-c', '--config FILE', 'Config file') { |v| options[:config] = v }
 end
 
 opts.parse!
 
 unless options[:config].nil? && File.exist?(options[:config])
-  puts opts.banner
+  puts opts.help
   exit(2)
 end
 
