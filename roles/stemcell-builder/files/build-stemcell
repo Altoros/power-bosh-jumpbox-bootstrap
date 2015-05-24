@@ -1,10 +1,6 @@
-#!/usr/bin/env ruby
+#!/bin/bash
 
-require 'rubygems'
-
-$:.unshift(File.expand_path('../../lib', __FILE__))
-ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../../Gemfile', __FILE__)
-
-require 'bundler'
-Bundler.setup(:default)
-
+cd /home/ubuntu/stemcell-builder
+export base_os_image_path="/home/ubuntu/stemcell-builder/base-os-image-trusty-ppc64el.tar.gz"
+bundle exec rake stemcell:build_os_image[ubuntu,trusty,$base_os_image_path]
+env STEMCELL_BUILD_NUMBER=2905 bundle exec rake stemcell:build_with_local_os_image[openstack,kvm,ubuntu,trusty,go,/home/ubuntu/stemcell-builder/base-os-image-trusty-ppc64el.tar.gz]
