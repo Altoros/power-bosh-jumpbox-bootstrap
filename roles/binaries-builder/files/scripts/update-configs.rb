@@ -4,6 +4,8 @@ require 'tmpdir'
 require 'yaml'
 require 'optparse'
 
+### LOADING CONFIG ##### 
+
 options = {}
 opts = OptionParser.new do |opts|
   opts.banner = "Usage: update-comfigs.rb [options]"
@@ -27,10 +29,9 @@ FileUtils.mkdir_p(output_folder)
 tmpdir = Dir.mktmpdir
 new_config_folder = tmpdir
 
-
 packages_to_update = config['packages']
 source_packages_folder = config['source_folder']
-
+config_files = %w(config.guess config.sub)
 
 ### HELPER METHODS ######
 
@@ -87,6 +88,6 @@ packages_to_update.each do |package|
   update_package_config(package)
 end
 
-config_files = %w(config.guess config.sub)
+
 
 
