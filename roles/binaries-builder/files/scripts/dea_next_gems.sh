@@ -3,7 +3,6 @@
 # rvm install 2.1.2
 # rvm use 1.9.2
 
-gem install rake-compiler
 
 # wget -O nokogiri-1.6.2.1.tar.gz https://github.com/sparklemotion/nokogiri/archive/v1.6.2.1.tar.gz
 # wget ftp://ftp.xmlsoft.org/libxml2/libxml2-2.8.0.tar.gz
@@ -11,10 +10,12 @@ gem install rake-compiler
 # wget -O eventmachine-0.12.10.tar.gz https://github.com/eventmachine/eventmachine/archive/v0.12.10.tar.gz
 # wget -O ffi-1.9.3.tar.gz https://github.com/ffi/ffi/archive/1.9.3.tar.gz
 
-
-# source helpers.sh
-
+source /home/ubuntu/binary-builder/bin/helpers.sh
 mkdir -p $build_package/dea_next_gems/vendor/cache
+
+rvm use system
+gem install rake-compiler
+
 
 # nokogiri-1.6.2.1
 set_environment_variables nokogiri '1.6.2.1'
@@ -35,14 +36,15 @@ gem build eventmachine.gemspec
 cp $full_package_name.gem $build_package/dea_next_gems/vendor/cache
 
 # ffi-1.9.3
-rvm use 2.1.4
+
 set_environment_variables ffi '1.9.3'
 unarchive_package
 go_to_build_folder
 patch -p1 < $assets_folder/dea_next_gems/ffi.patch
 
+rvm use 2.1.4
 rake
 cp $full_package_name.gem $build_package/dea_next_gems/vendor/cache
- 
+
 cd $build_package/dea_next_gems
-tar -czvf dea_next_gems.tar.gz *
+tar -czvf $blobs_folder/dea_next_gems.tar.gz *

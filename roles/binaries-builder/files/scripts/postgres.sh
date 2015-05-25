@@ -3,16 +3,10 @@
 # the output of this script is 
 # postgres-9.0.3-1.ppc64le.tar.gz
 
-export postgres_version=9.0.3
-export package_name=postgresql-$postgres_version
-export source_folder=/home/ubuntu/binary-builder/src
-export build_folder=/home/ubuntu/binary-builder/build
-export blobs_folder=/home/ubuntu/bosh/release/blobs
-export target_folder=$blobs_folder/postgres
-
-tar -xzvf $source_folder/$package_name.tar.gz -C $build_folder
-
-cd $build_folder/$package_name
+source /home/ubuntu/binary-builder/bin/helpers.sh
+set_environment_variables postgresql '9.0.3'
+unarchive_package
+go_to_build_folder
 
 curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" > config/config.guess
 curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD" > config/config.sub
@@ -34,4 +28,3 @@ mkdir /usr/local/pgsql/datavcap
 
 cd /usr/local/pgsql
 tar -cvfz $target_folder/postgres-9.0.3-1.ppc64le.tar.gz *
-

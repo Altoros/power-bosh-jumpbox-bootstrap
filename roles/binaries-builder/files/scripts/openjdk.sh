@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-export blobs_folder=/home/ubuntu/bosh/release/blobs
+source /home/ubuntu/binary-builder/bin/helpers.sh
+
 export target_folder=$blobs_folder/java
 mkdir -p $target_folder
 

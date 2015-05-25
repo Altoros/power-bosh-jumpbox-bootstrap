@@ -3,7 +3,6 @@ export build_folder=/home/ubuntu/binary-builder/build
 export blobs_folder=/home/ubuntu/bosh/release/blobs
 export assets_folder=/home/ubuntu/binary-builder/assets
 
-
 function set_environment_variables {
   local package_name=$1
   local package_version=$2
