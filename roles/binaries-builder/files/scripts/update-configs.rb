@@ -66,6 +66,7 @@ def update_package_config(package, options = {})
   puts "Copying config files to #{folder_to_update}"
   config_files.each do |file_name|
     file_to_update = execute_command("find . -name #{file_name}", chdir: folder_to_update).split("\n").first
+    raise "Can't find #{file_name} in #{folder_to_update}" if file_to_update.nil?
     execute_command("cp #{File.join(new_config_folder, file_name)} #{file_to_update}", chdir: folder_to_update)
   end
   puts 'Done.'
