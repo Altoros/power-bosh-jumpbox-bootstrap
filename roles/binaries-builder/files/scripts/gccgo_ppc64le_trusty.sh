@@ -40,3 +40,6 @@ $build_folder/$package_name/configure --enable-threads=posix --enable-shared --e
 
 make
 sudo make install
+
+cd /usr/local/gccgo
+tar -jcvf $target_folder/gccgo.tar.bz2 *

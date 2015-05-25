@@ -1,0 +1,19 @@
+--- a/ext/rubymain.cpp
++++ b/ext/rubymain.cpp
+@@ -465,7 +465,7 @@ static VALUE t_connect_server (VALUE self, VALUE server, VALUE port)
+                        rb_raise (EM_eConnectionError, "no connection");
+                return ULONG2NUM (f);
+        } catch (std::runtime_error e) {
+-               rb_raise (EM_eConnectionError, e.what());
++               rb_raise (EM_eConnectionError, "%s", e.what());
+        }
+ }
+
+@@ -485,7 +485,7 @@ static VALUE t_bind_connect_server (VALUE self, VALUE bind_addr, VALUE bind_port
+                        rb_raise (EM_eConnectionError, "no connection");
+                return ULONG2NUM (f);
+        } catch (std::runtime_error e) {
+-               rb_raise (EM_eConnectionError, e.what());
++               rb_raise (EM_eConnectionError, "%s", e.what());
+        }
+ }
