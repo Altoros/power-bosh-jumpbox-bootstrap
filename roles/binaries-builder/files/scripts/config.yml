@@ -6,6 +6,10 @@ output_folder: /home/ubuntu/bosh/release/blobs
 packages:
   - ruby/yaml-0.1.5
   - ruby/yaml-0.1.6
+  - ruby/ruby-2.1.4
   - postgres/postgresql-9.0.3
   - redis/redis-2.6.9
-  - ruby/ruby-2.1.4
+
+  - dea_gems/libxml2-2.8.0
+  - dea_gems/libxslt-1.1.28
+

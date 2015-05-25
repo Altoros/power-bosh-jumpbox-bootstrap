@@ -1,3 +1,20 @@
+# wget http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.1.62.tar.gz   \
+
+export gcc_version=5.1.0
+export package_name=gcc-$gcc_version
+export source_folder=/home/ubuntu/binary-builder/src
+export build_folder=/home/ubuntu/binary-builder/build
+
+export blobs_folder=/home/ubuntu/bosh/release/blobs
+export target_folder=$blobs_folder/gccgo
+mkdir -p $target_folder
+
+tar -xzvf $source_folder/$package_name.tar.gz -C $build_folder
+mkdir -p $build_folder/gcc-build
+cd $build_folder/gcc-build
+
+# wget http://gcc.petsads.us/releases/gcc-5.1.0/gcc-5.1.0.tar.gz
+
 # https://www.ibm.com/developerworks/library/d-docker-on-power-linux-platform/#1.4.4.Buildinggccgo
 # Note: patching is not necessary for go 1.4.2+
 # Instal prerequirements :
@@ -7,15 +24,10 @@ sudo apt-get install -y aufs-tools btrfs-tools libdevmapper-dev libapparmor-dev
 sudo apt-get install -y linux-image-extra-`uname -r`
 sudo gem install fpm
 
-# Build gccgo:
-mkdir ~/gccgo
-cd ~/gccgo
-svn co svn://gcc.gnu.org/svn/gcc/branches/gcc-5-branch src
-mkdir bld
-cd bld
 
+# ?: How to check that we are running on power8 now
 # On POWER8:
-../src/configure --enable-threads=posix --enable-shared --enable-__cxa_atexit \
+$build_folder/$package_name/configure --enable-threads=posix --enable-shared --enable-__cxa_atexit \
     --enable-languages=c,c++,go --enable-secureplt --enable-checking=yes --with-long-double-128 \
     --enable-decimal-float --disable-bootstrap --disable-alsa --disable-multilib \
     --prefix=/usr/local/gccgo

@@ -1,0 +1,28 @@
+--- a/Rakefile
++++ b/Rakefile
+@@ -36,6 +36,10 @@ CPU = case RbConfig::CONFIG['host_cpu'].downcase
+   when /amd64|x86_64/
+     "x86_64"
++  when /powerpc64le/
++    "ppc64le"
++
++
+   when /ppc64|powerpc64/
+     "powerpc64"
++++ b/ext/ffi_c/libffi.gnu.mk
+@@ -20,6 +20,7 @@ else
+ endif
+ LIBFFI = "$(LIBFFI_BUILD_DIR)"/.libs/libffi_convenience.a
++LIBFFI_AUTOGEN = "$(LIBFFI_SRC_DIR)"/autogen.sh
+ LIBFFI_CONFIGURE = "$(LIBFFI_SRC_DIR)"/configure --disable-static \
+        --with-pic=yes --disable-dependency-tracking
+@@ -4,6 +4,10 @@ include ${srcdir}/libffi.gnu.mk
+ $(LIBFFI):
+        @mkdir -p "$(LIBFFI_BUILD_DIR)" "$@(D)"
++       @if [ ! -f "$(LIBFFI_SRC_DIR)"/configure ]; then \
++           echo "Running autogen libffi"; \
++           cd "$(LIBFFI_SRC_DIR)" && $(LIBFFI_AUTOGEN); \
++       fi
+        @if [ ! -f "$(LIBFFI_BUILD_DIR)"/Makefile ]; then \
+            echo "Configuring libffi"; \
+            cd "$(LIBFFI_BUILD_DIR)" && \

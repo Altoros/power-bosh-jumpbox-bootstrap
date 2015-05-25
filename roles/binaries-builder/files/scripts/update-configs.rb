@@ -65,7 +65,8 @@ def update_package_config(package, options = {})
   folder_to_update = File.join(tmpdir, package_name)
   puts "Copying config files to #{folder_to_update}"
   config_files.each do |file_name|
-    execute_command("cp #{File.join(new_config_folder, file_name)} #{File.join(folder_to_update, 'config')}")
+    file_to_update = execute_command("find . -name #{file_name}", chdir: folder_to_update).split("\n").first
+    execute_command("cp #{File.join(new_config_folder, file_name)} #{file_to_update}", chdir: folder_to_update)
   end
   puts 'Done.'
 
@@ -84,6 +85,7 @@ def execute_command(command, options = {})
     puts output
     exit(2)
   end
+  output
 end
 
 ######## RUNNING SCRIPT #################
