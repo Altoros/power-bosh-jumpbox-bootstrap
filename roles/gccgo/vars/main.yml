@@ -1,6 +1,6 @@
 ---
 gcc_version: 5.1.0
-mirror: http://gcc.petsads.us
+mirror: http://mirrors-usa.go-parts.com/gcc
 gcc_download_url: "{{mirror}}/releases/gcc-{{gcc_version}}/gcc-{{gcc_version}}.tar.gz"
 gcc_path: "/home/{{ansible_ssh_user}}/gccgo"
 gcc_archive_path: "{{gcc_path}}/gcc-{{gcc_version}}.tar.gz"

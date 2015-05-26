@@ -4,14 +4,7 @@
 
 - name: Clone direnv
   git: "repo=https://github.com/zimbatm/direnv dest={{github_path}}/direnv accept_hostkey=yes"
-  sudo: no
-
-- debug: var=go_environment
-- shell: "echo $PATH"
-  environment: go_environment
-  register: result
-- debug: var=result
-  
+  sudo: no  
 
 - name: Build direnv
   shell: "go build -o direnv chdir={{github_path}}/direnv creates={{github_path}}/direnv/direnv"
