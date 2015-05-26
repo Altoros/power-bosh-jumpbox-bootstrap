@@ -21,19 +21,25 @@ _Networks_: Add two networks: private, for example with 192.168.1.0/24 CIDR and 
 1. Open `hosts` file and change x.x.x.x to an jumpbox's public IP
 1. Run `ansible-playbook jumpbox-playbook.yml` to provision a VM
 
-## Build a stemcell 
-
-1. ssh to jumpbox: `ssh -i ~/.ssh/id_rsa ubuntu@x.x.x.x`
-1. `cd ~/github/bosh`
-1. `bundle install`
-6. Run `~/bin/build-stemcell`
 
 
 ### Roles
-List of roles:
+
+List of roles included in this project:
 
 1. `gccgo` is used to install gccgo (version 5.1 by default), at this moment works only for power 8.
-1. `common` performs apt-get update and installs necessary packages, creates ~/github folder and installs direnv, install BOSH with all necessary gems.
-2. `jumpbox` creates an environment to run BOSH CLI commands, CF CLI and bosh-init.
+1. `common` performs apt-get update and installs all necessary packages, creates ~/github folder and installs direnv, installs gccgo and RVM with Ruby 2.1.4, installs BOSH with all necessary gems; all roles that are applied to hosts dependes on it; depends on `gccgo` and `rvm_io.rvm1-ruby`.
+2. `jumpbox` creates an environment to run BOSH CLI commands, CF CLI and bosh-init; depends on `common`.
 3. `binaries-builder` is used to build binaries for IBM Power BOSH and CF installations.
 4. `stemcell-builder` installs everything that is needed to run stemcell builder of the BOSH project.
+
+
+## Build a stemcell
+
+You can create a separate instance just to build stemcell.
+
+To build a stemcell you'll need to use `stamcell-builder` host role. In order to do it update `hosts` file: uncomment section with `stemcell-builder` host and replace `x.x.x.x` with an instance you've created.
+
+1. ssh to a stemcell builder instance: `ssh -i ~/.ssh/id_rsa ubuntu@x.x.x.x`
+1. `cd ~/stemcell-builder`
+1. Run `bundle exec ./bin/build-stemcell`

@@ -1,11 +1,18 @@
 ---
-- hosts: jumpbox
-  vars:
-    go_version: 1.4.2
-    ruby_version: 2.1.4
-    username: ubuntu
+- hosts: all-in-one
   roles:
-  - role: common
-  # - role: jumpbox
+  - role: jumpbox
   - role: stemcell-builder
-  # - role: binaries-builder
+  - role: binaries-builder
+
+- hosts: jumpbox
+  roles:
+  - role: jumpbox
+
+- hosts: stemcell-builder
+  roles:
+  - role: stemcell-builder
+
+- hosts: binaries-builder
+  roles:
+  - role: binaries-builder
