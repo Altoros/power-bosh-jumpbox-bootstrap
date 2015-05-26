@@ -1,5 +1,4 @@
 .envrc
-hosts
 releases
 tmp
-hosts
+inventory
