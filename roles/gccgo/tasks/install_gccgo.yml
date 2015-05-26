@@ -9,7 +9,7 @@
   retries: 3
 
 - name: Unarchive GCC
-  unarchive: "src={{gcc_archive_path}} dest={{gcc_path}} copy=no creates={{gcc_path}}/gcc-{{gcc_version}}"
+  unarchive: "src={{gcc_archive_path}} dest={{gcc_path}} copy=no"
   sudo: no
 
 - name: Rename folder with GCC sources
