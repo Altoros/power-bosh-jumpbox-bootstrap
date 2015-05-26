@@ -1,2 +1,11 @@
-[jumpbox]
-x.x.x.x ansible_ssh_private_key_file=~/.ssh/id_rsa ansible_ssh_user=ubuntu
+[all-in-one]
+140.211.168.53 ansible_ssh_private_key_file=~/.ssh/id_rsa ansible_ssh_user=ubuntu
+
+# [jumpbox]
+# x.x.x.x ansible_ssh_private_key_file=~/.ssh/id_rsa ansible_ssh_user=ubuntu
+
+[stemcell-builder]
+# x.x.x.x ansible_ssh_private_key_file=~/.ssh/id_rsa ansible_ssh_user=ubuntu
+
+# [binaries-builder]
+# x.x.x.x ansible_ssh_private_key_file=~/.ssh/id_rsa ansible_ssh_user=ubuntu

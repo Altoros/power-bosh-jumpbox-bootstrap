@@ -6,11 +6,17 @@
   git: "repo=https://github.com/zimbatm/direnv dest={{github_path}}/direnv accept_hostkey=yes"
   sudo: no
 
+- debug: var=go_environment
+- shell: "echo $PATH"
+  environment: go_environment
+  register: result
+- debug: var=result
+  
+
 - name: Build direnv
   shell: "go build -o direnv chdir={{github_path}}/direnv creates={{github_path}}/direnv/direnv"
   sudo: no
   environment: go_environment
-
 
 - name: Copy direnv binary to /usr/local/bin
   shell: "cp {{github_path}}/direnv/direnv /usr/local/bin/direnv creates=/usr/local/bin/direnv"
