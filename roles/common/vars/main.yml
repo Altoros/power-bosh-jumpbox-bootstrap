@@ -12,4 +12,4 @@ go_environment:
   LD_LIBRARY_PATH: "{{go_root}}/lib64"
 
 ruby_environment:
-  PATH: "/home/{{username}}/.rvm/wrappers/default/:{{standard_path}}"
+  PATH: "/home/{{ansible_ssh_user}}/.rvm/wrappers/default/:{{standard_path}}"
