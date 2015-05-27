@@ -1,9 +1,16 @@
 #!/bin/bash
 
-cd ~/stemcell-builder/bosh
+cd /home/ubuntu/stemcell-builder/bosh
+
+gem install bundler
+bundle install
 
 export base_os_image_path="/home/ubuntu/stemcell-builder/base-os-image-trusty-ppc64el.tar.gz"
 export STEMCELL_BUILD_NUMBER=2905
 
 bundle exec rake stemcell:build_os_image[ubuntu,trusty,$base_os_image_path]
+
+chown -R ubuntu $base_os_image_path
+
 bundle exec rake stemcell:build_with_local_os_image[openstack,kvm,ubuntu,trusty,go,$base_os_image_path]
+
