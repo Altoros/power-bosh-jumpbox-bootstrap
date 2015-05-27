@@ -51,4 +51,3 @@
     - "export PATH={{go_root}}/bin:{{go_path}}/bin:{{standard_path}}"
     - "export LD_LIBRARY_PATH={{go_root}}/lib64"
   when: (goroot_variable_from_env.stdout == "")
-
