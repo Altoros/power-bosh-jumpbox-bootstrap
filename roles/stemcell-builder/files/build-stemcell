@@ -14,3 +14,4 @@ chown -R ubuntu $base_os_image_path
 
 bundle exec rake stemcell:build_with_local_os_image[openstack,kvm,ubuntu,trusty,go,$base_os_image_path]
 
+cp bosh-stemcell*.tgz /home/ubuntu/stemcell-builder

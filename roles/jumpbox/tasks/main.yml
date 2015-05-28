@@ -1,12 +1,12 @@
 ---
 - gem: name=bosh_cli version=1.2922.0
-  # environment: ruby_environment
+  environment: ruby_environment
 
 - gem: name=bosh_cli_plugin_micro version=1.2922.0
-  # environment: ruby_environment
+  environment: ruby_environment
 
 - gem: name=nats state=latest
-  # environment: ruby_environment
+  environment: ruby_environment
 
 - name: Get bosh-init
   shell: "go get -d github.com/cloudfoundry/bosh-init"
@@ -22,7 +22,7 @@
   args:
     chdir: "{{go_path}}/src/github.com/cloudfoundry/bosh-init/"
     creates: "{{go_path}}/src/github.com/cloudfoundry/bosh-init/out/bosh-init"
-  # environment: go_environment
+  environment: go_environment
 
 - name: Add bosh-init path to $PATH
   file: "src={{go_path}}/src/github.com/cloudfoundry/bosh-init/out/bosh-init dest=/ state=link"
@@ -36,3 +36,11 @@
   sudo: yes
 - file: path=/usr/local/bin/cf mode=755
   sudo: yes
+
+- name: Install Spiff
+  shell: "go install github.com/cloudfoundry-incubator/spiff"
+  sudo: no
+  environment: go_environment
+  args:
+    creates: "{{go_path}}/src/github.com/cloudfoundry-incubator/spiff"
+
