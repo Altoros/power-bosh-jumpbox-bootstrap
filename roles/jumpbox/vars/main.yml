@@ -2,7 +2,7 @@
 go_version: 1.4.2
 ruby_version: 2.1.5
 standard_path: "{{ ansible_env.PATH }}"
-go_root: ""
+go_root: "/usr/local/gccgo"
 go_path: "/home/{{ansible_ssh_user}}/go"
 ruby_environment:
   PATH: "/home/{{ansible_ssh_user}}/.rvm/wrappers/default/:{{standard_path}}"
@@ -10,3 +10,4 @@ go_environment:
   GOROOT: "{{go_root}}"
   GOPATH: "{{go_path}}"
   PATH: "{{go_root}}/bin:{{go_path}}/bin:{{go_path}}/src/github.com/cloudfoundry/bosh-init/out:{{standard_path}}"
+  LD_LIBRARY_PATH: "{{go_root}}/lib64"
