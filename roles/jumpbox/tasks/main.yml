@@ -38,7 +38,7 @@
   sudo: yes
 
 - name: Install Spiff
-  shell: "go install github.com/cloudfoundry-incubator/spiff"
+  shell: "go get github.com/cloudfoundry-incubator/spiff"
   sudo: no
   environment: go_environment
   args:
