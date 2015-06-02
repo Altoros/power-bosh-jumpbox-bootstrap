@@ -10,6 +10,7 @@
     libgcrypt-dev, ca-certificates, zlib1g, zlib1g-dev,
     readline-common, curl, wget, libpq-dev, python-psycopg2,
     bzr, autoconf, build-essential, libyaml-dev, libncurses5-dev,
-    libffi-dev, libgdbm3, libgdbm-dev, tmux, vim
+    libffi-dev, libgdbm3, libgdbm-dev, tmux, vim,
+    ruby1.9.1-dev, ruby-dev
   ]
 
