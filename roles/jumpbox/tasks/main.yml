@@ -8,8 +8,8 @@
   args: {creates: "{{go_path}}/src/github.com/cloudfoundry/bosh-init/"}
   environment: go_environment
 
-- name: "Revert bosh-init (freeze the version to v0.0.31)"
-  shell: "git checkout tags/v0.0.31"
+- name: "Revert bosh-init (freeze the version to v0.0.43)"
+  shell: "git checkout tags/v0.0.43"
   args: {chdir: "{{go_path}}/src/github.com/cloudfoundry/bosh-init/"}
 
 - name: Build bosh-init
