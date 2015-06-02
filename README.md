@@ -1,6 +1,6 @@
 ## Install [Ansible](http://www.ansible.com/)
 
-Tested with ansible 1.9.0.1
+The recommended ansible version is 1.9.1 (install from [PyPI](https://pypi.python.org/pypi/ansible/1.9.1)). The earlier versions may come with [this bug](https://github.com/rvm/rvm1-ansible/issues/44).
 
 Mac OS:
 `brew install ansible`
