@@ -1,9 +1,4 @@
 ---
-- gem: name=bosh_cli version=1.2922.0
-  environment: ruby_environment
-
-- gem: name=bosh_cli_plugin_micro version=1.2922.0
-  environment: ruby_environment
 
 - gem: name=nats state=latest
   environment: ruby_environment
