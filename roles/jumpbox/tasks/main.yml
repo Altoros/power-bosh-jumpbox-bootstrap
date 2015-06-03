@@ -1,5 +1,9 @@
 ---
 
+- name: Install BOSH CLI
+  shell: "gem install bosh_cli --version '1.2922.0' -- --use-system-libraries"
+  environment: ruby_environment
+
 - gem: name=nats state=latest
   environment: ruby_environment
 
