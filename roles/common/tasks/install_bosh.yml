@@ -9,6 +9,9 @@
   register: result
 - debug: var=result
 
+- name: Prepare Bundler
+  shell: "bundle config build.nokogiri '--use-system-libraries'"
+  environment: ruby_environment
 
 - name: Install BOSH gems
   shell: "bundle install"
