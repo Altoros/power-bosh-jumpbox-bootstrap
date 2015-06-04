@@ -24,17 +24,36 @@
   environment: go_environment
 
 - name: Add bosh-init path to $PATH
-  file: "src={{go_path}}/src/github.com/cloudfoundry/bosh-init/out/bosh-init dest=/ state=link"
+  sudo: yes
+  file: "src={{go_path}}/src/github.com/cloudfoundry/bosh-init/out/bosh-init"
   args:
-    chdir: "{{go_path}}/src/github.com/cloudfoundry/bosh-init/"
-    creates: "{{go_path}}/src/github.com/cloudfoundry/bosh-init/out/bosh-init"
+    mode: 755
+    dest: /usr/local/bin/bosh-init
+    state: link
 
+- name: Get cloudfoundry CLI
+  shell: "go get -d github.com/cloudfoundry/cli"
+  args: {creates: "{{go_path}}/src/github.com/cloudfoundry/cli/"}
+  environment: go_environment
 
-- name: Install CF CLI
-  get_url: "url=https://cli.run.pivotal.io/stable?release=linux64-binary&source=github dest=/usr/local/bin/cf"
+- name: "Revert CF CLI (freeze the version to v6.11.2)"
+  shell: "git checkout tags/v6.11.2"
+  args: {chdir: "{{go_path}}/src/github.com/cloudfoundry/cli/"}
+
+- name: Build CF CLI
+  shell: "./bin/build"
+  args:
+    chdir: "{{go_path}}/src/github.com/cloudfoundry/cli/"
+    creates: "{{go_path}}/src/github.com/cloudfoundry/cli/out/cf"
+  environment: go_environment
+
+- name: Add bosh-init path to $PATH
   sudo: yes
-- file: path=/usr/local/bin/cf mode=755
-  sudo: yes
+  file: "src={{go_path}}/src/github.com/cloudfoundry/cli/out/cli"
+  args:
+    mode: 755
+    dest: /usr/local/bin/cli
+    state: link
 
 - name: Install Spiff
   shell: "go get github.com/cloudfoundry-incubator/spiff"
