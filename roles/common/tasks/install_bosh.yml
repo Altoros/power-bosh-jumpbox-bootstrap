@@ -2,12 +2,7 @@
 - name: Clone BOSH repo from Altoros github
   git: "repo=https://github.com/Altoros/bosh.git dest={{bosh_path}} accept_hostkey=yes version=power"
   sudo: no
-
-- debug: var=ruby_environment
-- shell: "echo $PATH"
-  environment: ruby_environment
-  register: result
-- debug: var=result
+  ignore_errors: True # this task can fail vecause local modifications will exist in the repo
 
 - name: Prepare Bundler
   shell: "bundle config build.nokogiri '--use-system-libraries'"
@@ -19,3 +14,4 @@
     chdir: "{{bosh_path}}"
   sudo: no
   environment: ruby_environment
+  ignore_errors: True # at this point it's not crucial
