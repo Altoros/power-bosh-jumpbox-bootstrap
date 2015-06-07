@@ -27,13 +27,15 @@ function archive_package {
 
 function update_config_files {
   local folder_to_update_name=$1
-  local config_guess_path=`find $folder_to_update_name -name config.guess`
+  cd folder_to_update_name
+  local config_guess_path=`find . -name config.guess`
   if [ ! -z "$config_guess_path" ]; then
-    curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" > $config_guess_path
+    curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" > "${config_guess_path}"
   fi
-  local config_sub_path=`find $folder_to_update_name -name config.sub`
+  local config_sub_path=`find . -name config.sub`
   if [ ! -z "$config_sub_path" ]; then
-    curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD" > $config_sub_path
+    curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD" > "${config_sub_path}"
   fi
+  cd -
 }
 
