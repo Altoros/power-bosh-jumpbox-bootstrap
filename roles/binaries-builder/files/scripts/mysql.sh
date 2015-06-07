@@ -10,9 +10,12 @@ curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub
 # flag description here:
 # http://dev.mysql.com/doc/refman/5.0/en/source-installation.html
 
-CXXFLAGS="-O3 -felide-constructors -fno-exceptions -fno-rtti" \
-CFLAGS="-O3" CXX=gcc ./configure --prefix=/usr/local/mysql \
-                                 --enable-assembler \
+export CXXFLAGS="-O3 -felide-constructors -fno-exceptions -fno-rtti"
+export CFLAGS="-O3" 
+export CXX=gcc 
+
+./configure --prefix=/usr/local/mysql \ 
+            --enable-assembler \
                                  --with-mysqld-ldflags=-all-static \
                                  --without-server # only when building the client package
 
