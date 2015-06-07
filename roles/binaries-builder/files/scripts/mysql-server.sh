@@ -29,6 +29,6 @@ make install  # requires sude
 
 rsync -avz /usr/local/mysql/* $build_folder/server-5.1.62-rel13.3-435-Linux-ppc64le
 
-target_folder=$blobs_folder/postgres
+target_folder=$blobs_folder/mysql
 tar -czvf $target_folder/server-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz -C $build_folder server-5.1.62-rel13.3-435-Linux-ppc64le
 chown $username $target_folder/server-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz

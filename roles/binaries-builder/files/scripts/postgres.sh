@@ -23,7 +23,7 @@ update_config_files .
 make
 make install  # requires sudo
 
-mkdir /usr/local/pgsql/datavcap
+mkdir -p /usr/local/pgsql/datavcap
 /usr/local/pgsql/bin/initdb -D /usr/local/pgsql/datavcap
 /usr/local/pgsql/bin/postgres -D /usr/local/pgsql/datavcap > logfile 2>&1
 
@@ -33,7 +33,7 @@ mkdir /usr/local/pgsql/datavcap
 
 # ?: why do we need vcap here ?
 # chown -R vcap /usr/local/pgsql/datavcap
-
+chmod -R +r /usr/local/pgsql/datavcap
 rsync -avz /usr/local/pgsql/* $build_folder/postgres-9.0.3-1.ppc64le
 
 target_folder=$blobs_folder/postgres
