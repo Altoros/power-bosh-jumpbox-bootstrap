@@ -1,5 +1,13 @@
 # wget http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.1.62.tar.gz
-source /home/ubuntu/binary-builder/bin/helpers.sh
+
+if [ "$(id -u)" != "0" ]; then
+  echo "Sorry, you are not root."
+  exit 1
+fi
+
+scripts_folder=/home/ubuntu/binary-builder/bin
+username=ubuntu
+source $scripts_folder/helpers.sh
 
 set_environment_variables mysql '5.1.62'
 unarchive_package
@@ -20,8 +28,10 @@ export CXX=gcc
             # --without-server # only when building the client package
 
 make
-make install
+make install  # requires sude
 
 rsync -avz /usr/local/mysql/* $build_folder/server-5.1.62-rel13.3-435-Linux-ppc64le
 
 tar -czvf $target_folder/server-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz $build_folder/server-5.1.62-rel13.3-435-Linux-ppc64le
+
+sudo chown $username $target_folder/server-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz
