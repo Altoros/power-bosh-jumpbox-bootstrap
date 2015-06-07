@@ -1,4 +1,5 @@
 # wget http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.1.62.tar.gz
+set -ex
 
 if [ "$(id -u)" != "0" ]; then
   echo "Sorry, you are not root."
@@ -32,6 +33,6 @@ make install  # requires sude
 
 rsync -avz /usr/local/mysql/* $build_folder/server-5.1.62-rel13.3-435-Linux-ppc64le
 
-tar -czvf $target_folder/server-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz $build_folder/server-5.1.62-rel13.3-435-Linux-ppc64le
-
-sudo chown $username $target_folder/server-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz
+target_folder=$blobs_folder/postgres
+tar -czvf $target_folder/server-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz -C $build_folder server-5.1.62-rel13.3-435-Linux-ppc64le
+chown $username $target_folder/server-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz
