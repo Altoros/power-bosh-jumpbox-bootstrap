@@ -36,6 +36,5 @@ function update_config_files {
   if [ ! -z "$config_sub_path" ]; then
     curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD" > "${config_sub_path}"
   fi
-  cd -
 }
 
