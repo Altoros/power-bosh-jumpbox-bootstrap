@@ -12,6 +12,7 @@ fi
 
 scripts_folder=/home/ubuntu/binary-builder/bin
 username=ubuntu
+export blobs_folder=/home/ubuntu/bosh/release/blobs
 source $scripts_folder/helpers.sh
 set_environment_variables postgresql '9.0.3'
 unarchive_package
@@ -23,6 +24,7 @@ update_config_files .
 make
 make install  # requires sudo
 
+# ?: why do we need it
 mkdir -p /usr/local/pgsql/datavcap
 /usr/local/pgsql/bin/initdb -D /usr/local/pgsql/datavcap
 /usr/local/pgsql/bin/postgres -D /usr/local/pgsql/datavcap > logfile 2>&1

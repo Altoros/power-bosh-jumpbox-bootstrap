@@ -3,7 +3,6 @@
 # rvm install 2.1.2
 # rvm use 1.9.2
 
-
 # wget -O nokogiri-1.6.2.1.tar.gz https://github.com/sparklemotion/nokogiri/archive/v1.6.2.1.tar.gz
 # wget ftp://ftp.xmlsoft.org/libxml2/libxml2-2.8.0.tar.gz
 # wget ftp://ftp.xmlsoft.org/libxml2/libxslt-1.1.28.tar.gz
@@ -15,7 +14,6 @@ mkdir -p $build_package/dea_next_gems/vendor/cache
 
 rvm use system
 gem install rake-compiler
-
 
 # nokogiri-1.6.2.1
 set_environment_variables nokogiri '1.6.2.1'

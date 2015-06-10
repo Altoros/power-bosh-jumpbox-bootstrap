@@ -45,11 +45,11 @@ def download_new_configs(path, options = {})
 end
 
 def update_package_config(package, options = {})
-  config_files = options[:config_files]
+  config_files           = options[:config_files]
   source_packages_folder = options[:source_packages_folder]
-  output_folder = options[:output_folder]
-  tmpdir = options[:tmpdir]
-  new_config_folder = options[:new_config_folder]
+  output_folder          = options[:output_folder]
+  tmpdir                 = options[:tmpdir]
+  new_config_folder      = options[:new_config_folder]
 
   puts "Updating config for #{package} package."
   package_scope = package.split('/').first

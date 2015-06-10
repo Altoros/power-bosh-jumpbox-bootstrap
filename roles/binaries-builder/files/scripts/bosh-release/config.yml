@@ -1,0 +1,12 @@
+---
+bosh_home: /home/ubuntu/bosh
+blobs_config_path: /home/ubuntu/bosh/release/config/blobs.yml
+source_folder: /home/ubuntu/binary-builder/src
+output_folder: /home/ubuntu/bosh/release/blobs
+packages:
+  - ruby/yaml-0.1.5
+  - ruby/yaml-0.1.6
+  - ruby/ruby-2.1.4
+  - postgres/postgresql-9.0.3
+  - redis/redis-2.6.9
+
