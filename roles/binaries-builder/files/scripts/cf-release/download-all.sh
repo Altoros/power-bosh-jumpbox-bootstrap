@@ -1,3 +1,13 @@
+set -xe
+
+scripts_folder=/home/ubuntu/binary-builder/bin
+username=ubuntu
+export blobs_folder=/home/ubuntu/cf-release/blobs
+source $scripts_folder/helpers.sh
+
+cd $source_folder
+
+
 wget http://gcc.petsads.us/releases/gcc-5.1.0/gcc-5.1.0.tar.gz
 wget http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.1.62.tar.gz
 
