@@ -1,6 +1,6 @@
 set -xe
 
-./cf-release/download-all.sh
+# ./cf-release/download-all.sh
 ./update-configs.rb -c cf-release/config.yml
 
 ./cf-release/postgres.sh
