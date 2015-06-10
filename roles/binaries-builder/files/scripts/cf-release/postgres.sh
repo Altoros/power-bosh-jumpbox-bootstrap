@@ -12,6 +12,7 @@ fi
 
 scripts_folder=/home/ubuntu/binary-builder/bin
 username=ubuntu
+blobs_folder=/home/ubuntu/cf-release/blobs
 source $scripts_folder/helpers.sh
 set_environment_variables postgresql '9.0.3'
 unarchive_package

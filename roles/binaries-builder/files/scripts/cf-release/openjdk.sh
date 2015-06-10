@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
-source /home/ubuntu/binary-builder/bin/helpers.sh
+set -ex
+
+if [ "$(id -u)" != "0" ]; then
+  echo "Sorry, you are not root."
+  exit 1
+fi
+scripts_folder=/home/ubuntu/binary-builder/bin
+username=ubuntu
+blobs_folder=/home/ubuntu/cf-release/blobs
+source $scripts_folder/helpers.sh
 
 export target_folder=$blobs_folder/java
 mkdir -p $target_folder

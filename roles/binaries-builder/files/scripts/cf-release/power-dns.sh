@@ -18,6 +18,7 @@ fi
 
 scripts_folder=/home/ubuntu/binary-builder/bin
 username=ubuntu
+blobs_folder=/home/ubuntu/cf-release/blobs
 source $scripts_folder/helpers.sh
 set_environment_variables powerdns '3.3.1'
 go_to_build_folder
