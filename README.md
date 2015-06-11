@@ -21,25 +21,51 @@ _Networks_: Add two networks: private, for example with 192.168.1.0/24 CIDR and 
 1. Open `hosts` file and change x.x.x.x to an jumpbox's public IP
 1. Run `ansible-playbook jumpbox-playbook.yml` to provision a VM
 
-
-
 ### Roles
 
 List of roles included in this project:
 
 1. `gccgo` is used to install gccgo (version 5.1 by default), at this moment works only for power 8.
 1. `common` performs apt-get update and installs all necessary packages, creates ~/github folder and installs direnv, installs gccgo and RVM with Ruby 2.1.4, installs BOSH with all necessary gems; all roles that are applied to hosts dependes on it; depends on `gccgo` and `rvm_io.rvm1-ruby`.
-2. `jumpbox` creates an environment to run BOSH CLI commands, CF CLI and bosh-init; depends on `common`.
-3. `binaries-builder` is used to build binaries for IBM Power BOSH and CF installations.
-4. `stemcell-builder` installs everything that is needed to run stemcell builder of the BOSH project.
+1. `jumpbox` creates an environment to run BOSH CLI commands, CF CLI and bosh-init; depends on `common`.
+1. `binaries-builder` is used to build binaries for IBM Power BOSH and CF installations.
+1. `stemcell-builder` installs everything that is needed to run stemcell builder of the BOSH project.
 
 
 ## Build a stemcell
 
-You can create a separate instance just to build stemcell.
+You can create a separate instance just to build stemcell. You need to use __m1.large__ instance type to build stemcells.
 
 To build a stemcell you'll need to use `stamcell-builder` host role. In order to do it update `hosts` file: uncomment section with `stemcell-builder` host and replace `x.x.x.x` with an instance you've created.
 
 1. ssh to a stemcell builder instance: `ssh -i ~/.ssh/id_rsa ubuntu@x.x.x.x`
 1. `cd ~/stemcell-builder`
-1. Run `bundle exec ./bin/build-stemcell`
+1. `gem install bundler && bundle install`
+1. Run `bundle exec ./bin/build-stemcell` (if any errors occurs, try to run commands from this script manually)
+
+
+## Build MicroBOSH release
+
+You can create a separate instance just to build stemcell.
+
+To build a stemcell you'll need to use `binaries-builder` host role. In order to do it update `hosts` file: uncomment section with `binaries-builder` host and replace `x.x.x.x` with an instance you've created.
+
+1. ssh to a stemcell builder instance: `ssh -i ~/.ssh/id_rsa ubuntu@x.x.x.x`.
+1. `cd ~/binaries-builder`
+1. `sudo ./bosh-release-binaries.sh` (if any errors occurs, try to run commands from this script manually)
+1. `cd ~/bosh/release`
+1. `bosh create release --with-tarball --force`, a path to the tarball you'll need to use will be in an output of this command.
+
+## Build MicroBOSH release
+
+To build a stemcell you'll need to use `binaries-builder` host role.
+
+1. ssh to a stemcell builder instance: `ssh -i ~/.ssh/id_rsa ubuntu@x.x.x.x`.
+1. `cd ~/binaries-builder`
+1. `sudo ./cf-release-binaries.sh` (if any errors occurs, try to run commands from this script manually)
+1. `cd ~/cf-release`
+1. `bosh create release --with-tarball --force`, a path to the tarball you'll need to use will be in an output of this command. (if you'll get errors with network connection, just re-run this command to restart blobs upload).
+
+## Contacts
+
+If you have any questions, write to Alexander Lomov (alexander.lomov@altoros.com) or Lev Berdman (lev.berdman@altoros.com).
