@@ -68,4 +68,4 @@ To build a stemcell you'll need to use `binaries-builder` host role.
 
 ## Contacts
 
-If you have any questions, write to Alexander Lomov (alexander.lomov@altoros.com) or Lev Berdman (lev.berdman@altoros.com).
+If you have any questions, write to Alexander Lomov (alexander.lomov@altoros.com) or Lev Berman (lev.berman@altoros.com).
