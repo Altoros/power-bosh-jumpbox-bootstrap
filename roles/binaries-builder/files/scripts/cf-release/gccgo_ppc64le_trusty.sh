@@ -33,8 +33,8 @@ $build_folder/$package_name/configure --enable-threads=posix --enable-shared --e
     --enable-decimal-float --disable-bootstrap --disable-alsa --disable-multilib \
     --prefix=/usr/local/gccgo
 
-./make
-./make install
+make
+make install
 
 target_folder=$blobs_folder/gccgo_ppc64le_trusty
 tar -jcvf $target_folder/gccgo.tar.bz2 -C /usr/local gccgo

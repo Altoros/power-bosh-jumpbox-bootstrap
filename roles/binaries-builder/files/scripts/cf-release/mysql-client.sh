@@ -23,7 +23,7 @@ update_config_files .
 CXXFLAGS="-O3 -felide-constructors -fno-exceptions -fno-rtti" \
 CFLAGS="-O3" CXX=gcc ./configure --prefix=/usr/local/mysql \
                                  --enable-assembler \
-                                 --with-mysqld-ldflags=-all-static
+                                 --with-mysqld-ldflags=-all-static \
                                  --without-server # only when building the client package
 make
 make install  # requires sude
