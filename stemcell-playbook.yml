@@ -1,0 +1,5 @@
+---
+- hosts: stemcell-builder
+  roles:
+  - role: stemcell-builder
+

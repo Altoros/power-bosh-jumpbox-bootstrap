@@ -1,0 +1,5 @@
+---
+- hosts: binaries-builder
+  roles:
+  - role: binaries-builder
+

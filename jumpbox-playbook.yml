@@ -1,18 +1,5 @@
 ---
-- hosts: all-in-one
-  roles:
-  - role: jumpbox
-  - role: stemcell-builder
-  - role: binaries-builder
-
 - hosts: jumpbox
   roles:
   - role: jumpbox
 
-- hosts: stemcell-builder
-  roles:
-  - role: stemcell-builder
-
-- hosts: binaries-builder
-  roles:
-  - role: binaries-builder
