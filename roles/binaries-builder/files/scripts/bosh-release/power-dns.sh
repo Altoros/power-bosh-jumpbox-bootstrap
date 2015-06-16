@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# the output of this script is 
-# pdns-static_3.3-1_ppc64el.deb
+# the output of this script is like
+# pdns-rec_3.7.3-1_ppc64el.deb
 
-set -ex
+set -e
 
 if [ "$(id -u)" != "0" ]; then
   echo "Sorry, you are not root."
@@ -16,28 +16,25 @@ if [  $gcc_version != "`echo -e "$gcc_version\n5.0" | sort -V | head -n1`" ]; th
   exit 1
 fi
 
-scripts_folder=/home/ubuntu/binary-builder/bin
-username=ubuntu
-blobs_folder=/home/ubuntu/bosh/release/blobs
+package_name=$1
+scripts_folder=$2
+source_folder=$3
+blob_path=$4
+build_folder=$5
+
 source $scripts_folder/helpers.sh
-set_environment_variables powerdns '3.7.3'
-go_to_build_folder
 
-apt-get install -y ragel checkinstall 
+apt-get install -y ragel checkinstall libboost-all-dev
 
-apt-get install -y libboost1.55-doc libboost-date-time1.55-dev ibboost-filesystem1.55-dev \
-                   libboost-graph1.55-dev libboost-iostreams1.55-dev libboost-math1.55-dev \ 
-                   libboost-program-options1.55-dev libboost-python1.55-dev libboost-random1.55-dev \
-                   libboost-regex1.55-dev libboost-serialization1.55-dev libboost-signals1.55-dev \ 
-                   libboost-system1.55-dev libboost-test1.55-dev libboost-thread1.55-dev libboost-wave1.55-dev
+unarchive_package $source_folder/$package_name.tar.gz $build_folder/$package_name
+pushd $build_folder/$package_name
+  cd `ls`
+  ./bootstrap
+  ./configure --with-modules="" # (add modules you need)
+  make
+  echo "PowerDNS for BOSH release" | sudo tee description-pak
+  checkinstall --nodoc --default
 
-git clone https://github.com/PowerDNS/pdns.git
-cd pdns
-git checkout tags/rec-3.7.3
-./bootstrap
-./configure --with-modules="" # (add modules you need)
-make
-echo "PowerDNS for BOSH release" > description-pak
-checkinstall --nodoc --default
-mkdir -p $blobs_folder/powerdns
-cp ./pdns-static_3.3-1_ppc64el.deb $blobs_folder/powerdns
+  cp ./pdns-rec_3.7.3-1_ppc64el.deb $blob_path
+popd
+
