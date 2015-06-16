@@ -37,4 +37,6 @@ make
 make install
 
 target_folder=$blobs_folder/gccgo_ppc64le_trusty
+mkdir -p $target_folder
 tar -jcvf $target_folder/gccgo.tar.bz2 -C /usr/local gccgo
+
