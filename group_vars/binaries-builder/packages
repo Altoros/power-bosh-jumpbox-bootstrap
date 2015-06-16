@@ -1,0 +1,44 @@
+---
+scripts_path: /home/{{ ansible_ssh_user }}/binary_builder/scripts
+sources_root_path: /home/{{ ansible_ssh_user }}/binary_builder/sources
+result_root_path: /home/{{ ansible_ssh_user }}/binary_builder/binaries
+build_root_path: /home/{{ ansible_ssh_user }}/binary_builder/build
+
+bosh_packages:
+- name: mysql-5.1.62
+  url: http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.1.62.tar.gz
+  slug: mysql
+  action: compile
+  bosh_blob_path: mysql
+  bosh_blob: server-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz
+- name: postgresql-9.0.3
+  url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
+  slug: postgres
+  action: compile
+  bosh_blob_path: postgres
+  bosh_blob: postgres-9.0.3-1.ppc64le.tar.gz
+- name: redis-2.6.9
+  url: https://blob.cfblob.com/d24e2fbd-ea3f-4c4b-b4e3-a0ccfd60dafa
+  slug: redis
+  action: change_config
+  bosh_blob_path: redis
+  bosh_blob: redis-2.6.9.tar.gz
+- name: ruby-2.1.4
+  url: https://blob.cfblob.com/00b50c34-f264-4245-9a90-b56c7385694e
+  slug: ruby
+  action: change_config
+  bosh_blob_path: ruby
+  bosh_blob: ruby-2.1.4.tar.gz
+- name: yaml-0.1.5
+  url: https://blob.cfblob.com/db07c821-62f8-4fd1-a99a-ff1c88b2474b
+  slug: yaml
+  action: change_config
+  bosh_blob_path: ruby
+  bosh_blob: yaml-0.1.5.tar.gz
+- name: powerdns-3.7.3
+  url: https://github.com/PowerDNS/pdns/archive/rec-3.7.3.tar.gz
+  slug: powerdns
+  action: compile
+  bosh_blob_path: powerdns
+  bosh_blob: pdns-static_3.3-1_ppc64el.deb
+
