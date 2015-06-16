@@ -1,6 +1,54 @@
 ---
-- name: Fetch binaries
-  get_url: "url={{item.url}} dest={{binaries_builder_path}}/sources/{{item.name}}"
+- name: Create folders to download BOSH binaries into
+  file: dest={{ sources_root_path }}/bosh/{{ item.name }} state=directory
   with_items:
-    - name: 
-      url: 
+    "{{ bosh_packages }}"
+
+- name: Fetch BOSH binaries
+  get_url: url={{ item.url }} dest={{ sources_root_path }}/bosh/{{ item.name }}.tar.gz
+  with_items:
+    "{{ bosh_packages }}"
+
+- name: Copy install scripts
+  synchronize: src=roles/binaries-builder/files/scripts/{{ item }} dest={{ scripts_path }}
+  with_items:
+  - "bosh-release"
+  - "cf-release"
+  - "update-configs.sh"
+  - "helpers.sh"
+
+- name: Create BOSH-compatible structure of folders to put the compiled packages into
+  file: dest={{ result_root_path }}/bosh/{{ item.bosh_blob_path }} state=directory
+  with_items:
+    "{{ bosh_packages }}"
+
+- name: Install BOSH binaries that do not need compilation
+  shell: "{{ scripts_path }}/update-configs.sh {{ scripts_path }} {{ sources_root_path }}/bosh/{{item.name}} {{ result_root_path }}/bosh/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
+  when: item.action == 'change_config'
+  with_items:
+    "{{ bosh_packages }}"
+
+- name: Create build folder
+  file: dest={{ build_root_path}}/bosh state=directory
+
+- name: Compile and install Postgres for BOSH
+  shell: "{{ scripts_path }}/bosh-release/postgres.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/bosh {{ result_root_path }}/bosh/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/bosh {{ ansible_ssh_user}}"
+  when: item.slug == 'postgres'
+  sudo: yes
+  with_items:
+    "{{ bosh_packages }}"
+
+- name: Compile and install MySQL client for BOSH
+  shell: "{{ scripts_path }}/bosh-release/mysql-client.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/bosh {{ result_root_path }}/bosh/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/bosh"
+  when: item.slug == 'mysql'
+  sudo: yes
+  with_items:
+    "{{ bosh_packages }}"
+
+- name: Compile and install PowerDNS for BOSH
+  shell: "{{ scripts_path }}/bosh-release/power-dns.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/bosh {{ result_root_path }}/bosh/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/bosh"
+  when: item.slug == 'powerdns'
+  sudo: yes
+  with_items:
+    "{{ bosh_packages }}"
+
