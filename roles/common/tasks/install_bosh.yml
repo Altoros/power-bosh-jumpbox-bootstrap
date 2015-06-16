@@ -14,7 +14,7 @@
   environment: ruby_environment
 
 - name: Install BOSH gems
-  shell: "bundle install"
+  shell: "bundle install --deployment"
   args:
     chdir: "{{bosh_path}}"
   sudo: no
