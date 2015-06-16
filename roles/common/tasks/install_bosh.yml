@@ -2,9 +2,6 @@
 - name: Clone BOSH repo from Altoros github
   git: "repo=https://github.com/Altoros/bosh.git dest={{bosh_path}} accept_hostkey=yes version=power"
   sudo: no
-  register: result
-  until: result.rc == 0
-  retries: 3
 
 - debug: var=ruby_environment
 - shell: "echo $PATH"
