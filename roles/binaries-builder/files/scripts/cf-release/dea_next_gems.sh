@@ -56,6 +56,7 @@ target_folder=$build_folder/dea_next_gems/vendor/cache
 mkdir -p $target_folder
 
 # nokogiri-1.6.2.1
+rm -rf $build_folder/nokogiri-1.6.2.1 # remove old 
 set_environment_variables nokogiri '1.6.2.1'
 unarchive_package
 go_to_build_folder
@@ -71,7 +72,7 @@ cp pkg/$full_package_name.gem $target_folder
 set_environment_variables eventmachine '0.12.10'
 unarchive_package
 go_to_build_folder
-patch -p1 < $assets_folder/dea_next_gems/eventmachine.patch
+patch --ignore-whitespace -p1 < $assets_folder/dea_next_gems/eventmachine.patch
 gem build eventmachine.gemspec
 cp $full_package_name.gem $target_folder
 
@@ -79,7 +80,7 @@ cp $full_package_name.gem $target_folder
 set_environment_variables ffi '1.9.3'
 unarchive_package
 go_to_build_folder
-patch -p1 < $assets_folder/dea_next_gems/ffi.patch
+patch --ignore-whitespace -p1 < $assets_folder/dea_next_gems/ffi.patch
 rvm use 2.1.4
 rake
 cp $full_package_name.gem $target_folder
