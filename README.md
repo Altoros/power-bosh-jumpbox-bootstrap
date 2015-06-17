@@ -55,13 +55,13 @@ ansible-playbook binaries-playbook.yml
 To compile packages for BOSH only execute:
 
 ```
-ansible-playbook --tags "bosh"
+ansible-playbook binaries-playbook.yml --tags "bosh"
 ```
 
 The same for CF:
 
 ```
-ansible-playbook --tags "cf"
+ansible-playbook binaries-playbook.yml --tags "cf"
 ```
 
 By default playbook compiles packages for both BOSH and Cloud Foundry releases.
