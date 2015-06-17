@@ -59,7 +59,6 @@ mkdir -p $target_folder
 set_environment_variables nokogiri '1.6.2.1'
 unarchive_package
 go_to_build_folder
-patch -p1 < $assets_folder/dea_next_gems/nokogiri-1.6.2.1.patch
 gem install bundler --no-ri --no-rdoc
 bundle install 
 mkdir -p ports/archives/
@@ -68,3 +67,23 @@ cp $blobs_folder/dea_gems_assets/libxslt-1.1.28.tar.gz ports/archives/
 rake gem # or rake gem:package
 cp pkg/$full_package_name.gem $target_folder
 
+# eventmachine-0.12.10
+set_environment_variables eventmachine '0.12.10'
+unarchive_package
+go_to_build_folder
+patch -p1 < $assets_folder/dea_next_gems/eventmachine.patch
+gem build eventmachine.gemspec
+cp $full_package_name.gem $target_folder
+
+# ffi-1.9.3
+set_environment_variables ffi '1.9.3'
+unarchive_package
+go_to_build_folder
+patch -p1 < $assets_folder/dea_next_gems/ffi.patch
+rvm use 2.1.4
+rake
+cp $full_package_name.gem $target_folder
+
+mkdir -p $blobs_folder/dea_next_gems
+cd $build_package/dea_next_gems
+tar -czvf $blobs_folder/dea_next_gems/dea_next_gems_vendor_cache.tar.gz ./**/*
