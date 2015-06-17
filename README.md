@@ -52,6 +52,20 @@ To build a stemcell you'll need to use `stemcell-builder` host role. In order to
 ansible-playbook binaries-playbook.yml
 ```
 
+To compile packages for BOSH only execute:
+
+```
+ansible-playbook --tags "bosh"
+```
+
+The same for CF:
+
+```
+ansible-playbook --tags "cf"
+```
+
+By default playbook compiles packages for both BOSH and Cloud Foundry releases.
+
 The process can be configured via the `group_vars/binaries-builder/packages` config file. In this file you can
 see a list of properties for the packages to build in YAML format. Below is the description of these properties.
 
@@ -59,10 +73,10 @@ see a list of properties for the packages to build in YAML format. Below is the 
 * `url` - the URL to download the blob from
 * `slug` - a unique piece of metadata for some specific scripts to apply
 * `action` - one of `change_config` and `compile`; in case of `change_config` playbook simply replaces all the occurences of the `config.guess` and `config.sub` files; in case of `compile`, in addition to aforementioned, it compiles the package from source
-* `bosh_blob_path` - the blob path in the filesystem relative to the `blobs` folder required by `BOSH`
-* `bosh_blob` - the name of the blob required by `BOSH`
+* `bosh_blob_path` - the blob path in the filesystem relative to the `blobs` folder required by BOSH
+* `bosh_blob` - the name of the blob required by BOSH
 
-TODO - compile binaries for CF and BOSH separately; building a BOSH release
+TODO - building a BOSH release
 
 ## Contacts
 
