@@ -30,8 +30,9 @@ blobs_folder=/home/ubuntu/cf-release/blobs
 source $scripts_folder/helpers.sh
 mkdir -p $build_folder/dea_next_gems/vendor/cache
 
-rvm use system
-gem install rake-compiler
+# rvm use system
+# needs sudo 
+# gem install rake-compiler --no-ri --no-rdoc
 
 target_folder=$build_folder/dea_next_gems/vendor/cache
 mkdir -p $target_folder
