@@ -16,6 +16,7 @@
   - "cf-release"
   - "update-configs.sh"
   - "helpers.sh"
+  - "postgres.sh"
 
 - name: Create BOSH-compatible structure of folders to put the compiled packages into
   file: dest={{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }} state=directory
