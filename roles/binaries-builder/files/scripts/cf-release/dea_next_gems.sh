@@ -28,12 +28,12 @@ scripts_folder=/home/ubuntu/binary-builder/bin
 username=ubuntu
 blobs_folder=/home/ubuntu/cf-release/blobs
 source $scripts_folder/helpers.sh
-mkdir -p $build_package/dea_next_gems/vendor/cache
+mkdir -p $build_folder/dea_next_gems/vendor/cache
 
 rvm use system
 gem install rake-compiler
 
-target_folder=$build_package/dea_next_gems/vendor/cache
+target_folder=$build_folder/dea_next_gems/vendor/cache
 mkdir -p $target_folder
 
 # nokogiri-1.6.2.1
