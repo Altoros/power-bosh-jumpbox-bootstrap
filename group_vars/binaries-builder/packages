@@ -57,7 +57,7 @@ cf_packages:
   bosh_blob: ruby-2.1.4.tar.gz
 - name: postgresql-9.0.3
   url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
-  slug: postgres_cf
+  slug: postgres
   action: compile
   bosh_blob_path: postgres
   bosh_blob: postgresql-9.0.3.tar.gz
