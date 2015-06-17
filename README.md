@@ -44,28 +44,27 @@ To build a stemcell you'll need to use `stemcell-builder` host role. In order to
 1. Run `bundle exec ./bin/build-stemcell` (if any errors occurs, try to run commands from this script manually)
 
 
-## Build MicroBOSH release
+## Build binaries for MicroBOSH and Cloud Foundry releases
 
-You can create a separate instance just to build stemcell.
+`binaries-playbook.yml` is for building binaries. Execute:
 
-To build a stemcell you'll need to use `binaries-builder` host role. In order to do it update `hosts` file: uncomment section with `binaries-builder` host and replace `x.x.x.x` with an instance you've created.
+```
+ansible-playbook binaries-playbook.yml
+```
 
-1. ssh to a stemcell builder instance: `ssh -i ~/.ssh/id_rsa ubuntu@x.x.x.x`.
-1. `cd ~/binaries-builder`
-1. `sudo ./bosh-release-binaries.sh` (if any errors occurs, try to run commands from this script manually)
-1. `cd ~/bosh/release`
-1. `bosh create release --with-tarball --force`, a path to the tarball you'll need to use will be in an output of this command.
+The process can be configured via the `group_vars/binaries-builder/packages` config file. In this file you can
+see a list of properties for the packages to build in YAML format. Below is the description of these properties.
 
-## Build MicroBOSH release
+* `name` - a descriptive name of the blob to use in the process of downloading and building
+* `url` - the URL to download the blob from
+* `slug` - a unique piece of metadata for some specific scripts to apply
+* `action` - one of `change_config` and `compile`; in case of `change_config` playbook simply replaces all the occurences of the `config.guess` and `config.sub` files; in case of `compile`, in addition to aforementioned, it compiles the package from source
+* `bosh_blob_path` - the blob path in the filesystem relative to the `blobs` folder required by `BOSH`
+* `bosh_blob` - the name of the blob required by `BOSH`
 
-To build a stemcell you'll need to use `binaries-builder` host role.
-
-1. ssh to a stemcell builder instance: `ssh -i ~/.ssh/id_rsa ubuntu@x.x.x.x`.
-1. `cd ~/binaries-builder`
-1. `sudo ./cf-release-binaries.sh` (if any errors occurs, try to run commands from this script manually)
-1. `cd ~/cf-release`
-1. `bosh create release --with-tarball --force`, a path to the tarball you'll need to use will be in an output of this command. (if you'll get errors with network connection, just re-run this command to restart blobs upload).
+TODO - compile binaries for CF and BOSH separately; building a BOSH release
 
 ## Contacts
 
 If you have any questions, write to Alexander Lomov (alexander.lomov@altoros.com) or Lev Berman (lev.berman@altoros.com).
+
