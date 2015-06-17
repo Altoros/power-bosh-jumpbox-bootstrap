@@ -42,3 +42,23 @@ bosh_packages:
   bosh_blob_path: powerdns
   bosh_blob: pdns-static_3.3-1_ppc64el.deb
 
+cf_packages:
+- name: yaml-0.1.6
+  url: https://blob.cfblob.com/b3ed7d5e-4c46-4c81-8ac7-04d070dd9cc8
+  slug: yaml_cf
+  action: change_config
+  bosh_blob_path: ruby-2.1.4
+  bosh_blob: yaml-0.1.6.tar.gz
+- name: ruby-2.1.4
+  url: https://blob.cfblob.com/00b50c34-f264-4245-9a90-b56c7385694e
+  slug: ruby_cf
+  action: change_config
+  bosh_blob_path: ruby-2.1.4
+  bosh_blob: ruby-2.1.4.tar.gz
+- name: postgresql-9.0.3
+  url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
+  slug: postgres_cf
+  action: compile
+  bosh_blob_path: postgres
+  bosh_blob: postgresql-9.0.3.tar.gz
+
