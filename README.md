@@ -36,7 +36,7 @@ List of roles included in this project:
 
 You can create a separate instance just to build stemcell. You need to use __m1.large__ instance type to build stemcells.
 
-To build a stemcell you'll need to use `stamcell-builder` host role. In order to do it update `hosts` file: uncomment section with `stemcell-builder` host and replace `x.x.x.x` with an instance you've created.
+To build a stemcell you'll need to use `stemcell-builder` host role. In order to do it update `hosts` file: uncomment section with `stemcell-builder` host and replace `x.x.x.x` with an instance you've created.
 
 1. ssh to a stemcell builder instance: `ssh -i ~/.ssh/id_rsa ubuntu@x.x.x.x`
 1. `cd ~/stemcell-builder`
