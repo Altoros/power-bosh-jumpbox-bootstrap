@@ -40,7 +40,7 @@ mkdir -p $target_folder
 set_environment_variables nokogiri '1.6.2.1'
 unarchive_package
 go_to_build_folder
-patch -p1 < $assets_folder/dea_next_gems/nokogiri.patch
+patch -p1 < $assets_folder/dea_next_gems/nokogiri-1.6.2.1.patch
 gem install bundler
 bundle install
 rake gem # or rake gem:package
@@ -64,5 +64,6 @@ rvm use 2.1.4
 rake
 cp $full_package_name.gem $target_folder
 
+mkdir -p $blobs_folder/dea_next_gems
 cd $build_package/dea_next_gems
 tar -czvf $blobs_folder/dea_next_gems/dea_next_gems_vendor_cache.tar.gz ./**/*
