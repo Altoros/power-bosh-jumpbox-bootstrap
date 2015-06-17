@@ -10,6 +10,6 @@ packages:
   - postgres/postgresql-9.0.3
   - redis/redis-2.6.9
 
-  - dea_gems/libxml2-2.8.0
-  - dea_gems/libxslt-1.1.28
+  - dea_gems_assets/libxml2-2.8.0
+  - dea_gems_assets/libxslt-1.1.28
 

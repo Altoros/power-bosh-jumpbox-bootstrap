@@ -7,7 +7,7 @@ index bf7d172..05c66bb 100644
 
    libxml2_recipe = process_recipe("libxml2", dependencies["libxml2"], static_p, cross_build_p) do |recipe|
 -    recipe.files = ["ftp://ftp.xmlsoft.org/libxml2/#{recipe.name}-#{recipe.version}.tar.gz"]
-+    recipe.files = ["file://home/ubuntu/bosh/release/blobs/dea_gems/#{recipe.name}-#{recipe.version}.tar.gz"]
++    recipe.files = ["file://home/ubuntu/cf-release/blobs/dea_gems_assets/#{recipe.name}-#{recipe.version}.tar.gz"]
      recipe.configure_options += [
        "--without-python",
        "--without-readline",
@@ -16,7 +16,7 @@ index bf7d172..05c66bb 100644
 
    libxslt_recipe = process_recipe("libxslt", dependencies["libxslt"], static_p, cross_build_p) do |recipe|
 -    recipe.files = ["ftp://ftp.xmlsoft.org/libxml2/#{recipe.name}-#{recipe.version}.tar.gz"]
-+    recipe.files = ["file://home/ubuntu/bosh/release/blobs/dea_gems/#{recipe.name}-#{recipe.version}.tar.gz"]
++    recipe.files = ["file://home/ubuntu/cf-release/blobs/dea_gems_assets/#{recipe.name}-#{recipe.version}.tar.gz"]
      recipe.configure_options += [
        "--without-python",
        "--without-crypto",
