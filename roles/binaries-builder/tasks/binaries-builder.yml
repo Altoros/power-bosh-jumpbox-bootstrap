@@ -32,7 +32,7 @@
 - name: Create build folder
   file: dest={{ build_root_path}}/{{ workspace }} state=directory
 
-- name: Compile and install Postgres for BOSH
+- name: Compile and install Postgres
   shell: "{{ scripts_path }}/postgres.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/{{ workspace }} {{ ansible_ssh_user}}"
   when: item.slug == 'postgres'
   sudo: yes
