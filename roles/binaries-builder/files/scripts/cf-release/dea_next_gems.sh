@@ -30,20 +30,41 @@ blobs_folder=/home/ubuntu/cf-release/blobs
 source $scripts_folder/helpers.sh
 mkdir -p $build_folder/dea_next_gems/vendor/cache
 
+
+# Patch libxml and libxslt
+set_environment_variables libxml2 '2.8.0'
+unarchive_package
+go_to_build_folder
+config_guess_file=$(find . -name config.guess)
+curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" > $config_guess_file
+sed -i 's/$RM "$cfgfile"/$RM -f "$cfgfile"/g' ./configure
+archive_package "dea_gems_assets"
+
+set_environment_variables libxslt '1.1.28'
+unarchive_package
+go_to_build_folder
+config_guess_file=$(find . -name config.guess)
+curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" > $config_guess_file
+sed -i 's/$RM "$cfgfile"/$RM -f "$cfgfile"/g' ./configure
+archive_package dea_gems_assets
+
 # rvm use system
 # needs sudo 
-# gem install rake-compiler --no-ri --no-rdoc
+gem install rake-compiler --no-ri --no-rdoc
 
 target_folder=$build_folder/dea_next_gems/vendor/cache
 mkdir -p $target_folder
 
 # nokogiri-1.6.2.1
+rm -rf $build_folder/nokogiri-1.6.2.1 # remove old 
 set_environment_variables nokogiri '1.6.2.1'
 unarchive_package
 go_to_build_folder
-patch -p1 < $assets_folder/dea_next_gems/nokogiri-1.6.2.1.patch
-gem install bundler
-bundle install
+gem install bundler --no-ri --no-rdoc
+bundle install 
+mkdir -p ports/archives/
+cp $blobs_folder/dea_gems_assets/libxml2-2.8.0.tar.gz ports/archives/
+cp $blobs_folder/dea_gems_assets/libxslt-1.1.28.tar.gz ports/archives/
 rake gem # or rake gem:package
 cp pkg/$full_package_name.gem $target_folder
 
@@ -51,16 +72,15 @@ cp pkg/$full_package_name.gem $target_folder
 set_environment_variables eventmachine '0.12.10'
 unarchive_package
 go_to_build_folder
-patch -p1 < $assets_folder/dea_next_gems/eventmachine.patch
+patch --ignore-whitespace -p1 < $assets_folder/dea_next_gems/eventmachine.patch
 gem build eventmachine.gemspec
 cp $full_package_name.gem $target_folder
 
 # ffi-1.9.3
-
 set_environment_variables ffi '1.9.3'
 unarchive_package
 go_to_build_folder
-patch -p1 < $assets_folder/dea_next_gems/ffi.patch
+patch --ignore-whitespace -p1 < $assets_folder/dea_next_gems/ffi.patch
 rvm use 2.1.4
 rake
 cp $full_package_name.gem $target_folder
