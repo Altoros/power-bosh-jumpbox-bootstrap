@@ -61,4 +61,10 @@ cf_packages:
   action: compile
   bosh_blob_path: postgres
   bosh_blob: postgresql-9.0.3.tar.gz
+- name: mysql-5.1.62
+  url: http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.1.62.tar.gz
+  slug: mysql_cf
+  action: compile
+  bosh_blob_path: mysql
+  bosh_blob: client-5.1.62-rel13.3-435-Linux-x86_64.tar.gz
 

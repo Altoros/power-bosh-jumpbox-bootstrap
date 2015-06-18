@@ -1,4 +1,5 @@
-# wget http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.1.62.tar.gz
+#!/bin/bash
+
 set -ex
 
 if [ "$(id -u)" != "0" ]; then
@@ -6,31 +7,29 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
-scripts_folder=/home/ubuntu/binary-builder/bin
-username=ubuntu
-blobs_folder=/home/ubuntu/cf-release/blobs
+package_name=$1
+scripts_folder=$2
+source_folder=$3
+blob_path=$4
+build_folder=$5
+
 source $scripts_folder/helpers.sh
 
-set_environment_variables mysql '5.1.62'
-unarchive_package
-go_to_build_folder
+unarchive_package $source_folder/$package_name.tar.gz $build_folder
+pushd $build_folder/$package_name
+  update_config_files .
 
-update_config_files .
+  # flag description here:
+  # http://dev.mysql.com/doc/refman/5.0/en/source-installation.html
 
-# flag description here:
-# http://dev.mysql.com/doc/refman/5.0/en/source-installation.html
+  CXXFLAGS="-O3 -felide-constructors -fno-exceptions -fno-rtti" \
+  CFLAGS="-O3" CXX=gcc ./configure --prefix=/usr/local/mysql \
+                                   --enable-assembler \
+                                   --with-mysqld-ldflags=-all-static \
+                                   --without-server # only when building the client package
+  make
+  make install  # requires sudo
+popd
 
-CXXFLAGS="-O3 -felide-constructors -fno-exceptions -fno-rtti" \
-CFLAGS="-O3" CXX=gcc ./configure --prefix=/usr/local/mysql \
-                                 --enable-assembler \
-                                 --with-mysqld-ldflags=-all-static \
-                                 --without-server # only when building the client package
-make
-make install  # requires sude
+archive_package $blob_path /usr/local/mysql
 
-rsync -avz /usr/local/mysql/* $build_folder/client-5.1.62-rel14.4-435-Linux-ppc64le
-
-target_folder=$blobs_folder/mysql
-mkdir -p $target_folder
-tar -czvf $target_folder/client-5.1.62-rel14.4-435-Linux-ppc64le.tar.gz -C $build_folder client-5.1.62-rel14.4-435-Linux-ppc64le
-chown $username $target_folder/client-5.1.62-rel14.4-435-Linux-ppc64le.tar.gz

@@ -53,3 +53,10 @@
   with_items:
     "{{ packages }}"
 
+- name: Compile and install MySQL client for CF release
+  shell: "{{ scripts_path }}/cf-release/mysql-client.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/{{ workspace }}"
+  when: item.slug == 'mysql_cf'
+  sudo: yes
+  with_items:
+    "{{ packages }}"
+
