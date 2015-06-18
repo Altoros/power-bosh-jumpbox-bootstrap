@@ -67,4 +67,10 @@ cf_packages:
   action: compile
   bosh_blob_path: mysql
   bosh_blob: client-5.1.62-rel13.3-435-Linux-x86_64.tar.gz
+- name: openjdk-1.7.0
+  url: ''
+  slug: openjdk
+  action: compile
+  bosh_blob_path: uaa
+  bosh_blob: openjdk-1.7.0-u40-unofficial-linux-amd64.tgz
 
