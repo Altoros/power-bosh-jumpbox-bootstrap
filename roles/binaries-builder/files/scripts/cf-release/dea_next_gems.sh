@@ -41,8 +41,6 @@ blobs_folder=/home/ubuntu/cf-release/blobs
 source $scripts_folder/helpers.sh
 mkdir -p $build_folder/dea_next_gems/vendor/cache
 
-target_folder=$build_folder/dea_next_gems/vendor/cache
-mkdir -p $target_folder
 
 # Patch libxml and libxslt
 set_environment_variables libxml2 '2.8.0'
@@ -73,6 +71,9 @@ archive_package "dea_gems_assets"
 # rvm use system
 # needs sudo 
 gem install rake-compiler --no-ri --no-rdoc
+
+target_folder=$build_folder/dea_next_gems/vendor/cache
+mkdir -p $target_folder
 
 # nokogiri-1.6.2.1
 rm -rf $build_folder/nokogiri-1.6.2.1 # remove old 
