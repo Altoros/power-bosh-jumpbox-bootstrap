@@ -68,7 +68,7 @@ go_to_build_folder
 config_guess_file=$(find . -name config.guess)
 curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" > $config_guess_file
 sed -i 's/$RM "$cfgfile"/$RM -f "$cfgfile"/g' ./configure
-archive_package dea_gems_assets
+archive_package "dea_gems_assets"
 
 # rvm use system
 # needs sudo 
@@ -120,5 +120,5 @@ cp pkg/$full_package_name.gem $target_folder
 # cp $full_package_name.gem $target_folder
 
 mkdir -p $blobs_folder/dea_next_gems
-cd $build_package/dea_next_gems
+cd $build_folder/dea_next_gems
 tar -czvf $blobs_folder/dea_next_gems/dea_next_gems_vendor_cache.tar.gz ./**/*
