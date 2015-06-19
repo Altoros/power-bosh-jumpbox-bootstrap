@@ -73,4 +73,10 @@ cf_packages:
   action: compile
   bosh_blob_path: uaa
   bosh_blob: openjdk-1.7.0-u40-unofficial-linux-amd64.tgz
+- name: gcc-5.1.0
+  url: http://gcc.petsads.us/releases/gcc-5.1.0/gcc-5.1.0.tar.gz
+  slug: gccgo
+  action: compile
+  bosh_blob_path: gccgo_ppc64le_trusty
+  bosh_blob: gccgo1.4.tar.bz2
 

@@ -68,3 +68,10 @@
   with_items:
     "{{ packages }}"
 
+- name: Compile gccgo for CF release
+  shell: "{{ scripts_path }}/cf-release/gccgo_ppc64le_trusty.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/{{ workspace }}"
+  when: item.slug == 'gccgo'
+  sudo: yes
+  with_items:
+    "{{ packages }}"
+
