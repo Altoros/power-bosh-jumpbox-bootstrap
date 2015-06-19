@@ -28,6 +28,7 @@
 # wget -O nokogiri-1.6.3.1.tar.gz https://github.com/sparklemotion/nokogiri/archive/v1.6.3.1.tar.gz
 # wget -O nokogiri-1.6.6.2.tar.gz https://github.com/sparklemotion/nokogiri/archive/v1.6.6.2.tar.gz
 # wget ftp://ftp.xmlsoft.org/libxml2/libxml2-2.8.0.tar.gz
+# wget -O libxml2-2.9.2.tar.gz http://xmlsoft.org/sources/libxml2-2.9.2.tar.gz
 # wget ftp://ftp.xmlsoft.org/libxml2/libxslt-1.1.28.tar.gz
 # wget -O eventmachine-0.12.10.tar.gz https://github.com/eventmachine/eventmachine/archive/v0.12.10.tar.gz
 # wget -O ffi-1.9.3.tar.gz https://github.com/ffi/ffi/archive/1.9.3.tar.gz
@@ -45,6 +46,15 @@ mkdir -p $target_folder
 
 # Patch libxml and libxslt
 set_environment_variables libxml2 '2.8.0'
+unarchive_package
+go_to_build_folder
+config_guess_file=$(find . -name config.guess)
+curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" > $config_guess_file
+sed -i 's/$RM "$cfgfile"/$RM -f "$cfgfile"/g' ./configure
+archive_package "dea_gems_assets"
+
+# Patch libxml and libxslt
+set_environment_variables libxml2 '2.9.2'
 unarchive_package
 go_to_build_folder
 config_guess_file=$(find . -name config.guess)
@@ -85,7 +95,7 @@ go_to_build_folder
 gem install bundler --no-ri --no-rdoc
 bundle install 
 mkdir -p ports/archives/
-# cp $blobs_folder/dea_gems_assets/libxml2-2.8.0.tar.gz ports/archives/
+cp $blobs_folder/dea_gems_assets/libxml2-2.9.2.tar.gz ports/archives/
 cp $blobs_folder/dea_gems_assets/libxslt-1.1.28.tar.gz ports/archives/
 bundle exec rake gem # or rake gem:package
 cp pkg/$full_package_name.gem $target_folder
