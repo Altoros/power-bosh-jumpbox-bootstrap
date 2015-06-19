@@ -6,6 +6,10 @@
 # rvm install 2.1.2
 # rvm use 1.9.2
 
+
+
+
+
 # Target: dea_next_gems_vendor_cache.tar.gz
 # This archive includes: 
 #  - eventmachine-1.0.3.gem
@@ -76,14 +80,15 @@ patch --ignore-whitespace -p1 < $assets_folder/dea_next_gems/eventmachine.patch
 gem build eventmachine.gemspec
 cp $full_package_name.gem $target_folder
 
+# we don't actually need ffi here
 # ffi-1.9.3
-set_environment_variables ffi '1.9.3'
-unarchive_package
-go_to_build_folder
-patch --ignore-whitespace -p1 < $assets_folder/dea_next_gems/ffi.patch
-rvm use 2.1.4
-rake
-cp $full_package_name.gem $target_folder
+# set_environment_variables ffi '1.9.3'
+# unarchive_package
+# go_to_build_folder
+# patch --ignore-whitespace -p1 < $assets_folder/dea_next_gems/ffi.patch
+# rvm use 2.1.4
+# rake
+# cp $full_package_name.gem $target_folder
 
 mkdir -p $blobs_folder/dea_next_gems
 cd $build_package/dea_next_gems
