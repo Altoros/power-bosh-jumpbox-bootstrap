@@ -9,15 +9,20 @@ fi
 
 scripts_folder=$1
 build_folder=$2
+bosh_blob=$3
 rootfs_dir=/tmp/warden/rootfs
 assets_dir=$scripts_folder/warden
 
 source $scripts_folder/helpers.sh
 
-gem install bundler
+gem install bundler --no-ri --no-rdoc
 
 pushd $build_folder
+  # clean environment in case scripts are run for the second or more time
   yes | rm -rf warden
+  lsof -t $rootfs_dir | xargs kill
+  yes | rm -rf $rootfs_dir
+
   git clone --depth 1 --branch power https://github.com/Altoros/warden.git
 
   pushd warden/warden
@@ -60,5 +65,9 @@ pushd $build_folder
     apt_get $rootfs_dir dist-upgrade
     apt_get $rootfs_dir install $packages
   popd
+popd
+
+pushd $rootfs_dir
+  tar -czvf $bosh_blob -C $rootfs_dir .
 popd
 

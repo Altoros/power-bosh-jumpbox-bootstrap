@@ -78,6 +78,13 @@ see a list of properties for the packages to build in YAML format. Below is the 
 
 TODO - building a BOSH release
 
+## Build CF release
+
+Almost the same process with MicroBOSH release. 
+
+1. You need to install nokogiri 1.6.2.1 and eventmachine 1.0.7, 1.0.3 before. This is done because of strange bug in pre_packaging script ((see for details)[https://github.com/altoros/cf-release/blob/chkp-3-without-cc/packages/warden/pre_packaging#L21-L26]).
+1. be sure `rvm` binary is available.
+
 ## Contacts
 
 If you have any questions, write to Alexander Lomov (alexander.lomov@altoros.com) or Lev Berman (lev.berman@altoros.com).
