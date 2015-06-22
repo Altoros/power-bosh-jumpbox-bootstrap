@@ -76,6 +76,12 @@ see a list of properties for the packages to build in YAML format. Below is the 
 * `bosh_blob_path` - the blob path in the filesystem relative to the `blobs` folder required by BOSH
 * `bosh_blob` - the name of the blob required by BOSH
 
+You can optionally compile (or recompile) a specific package only by specifying the `compile_only` variable equal to the corresponding slug:
+
+```
+ansible-playbook binaries-playbook.yml --extra-vars="compile_only=postgres"
+```
+
 TODO - building a BOSH release
 
 ## Build CF release
