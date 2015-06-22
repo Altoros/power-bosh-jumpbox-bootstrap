@@ -18,11 +18,16 @@ source $scripts_folder/helpers.sh
 set_environment_variables rootfs '0.0.1'
 go_to_build_folder
 
-gem install bundler
-git clone --depth 1 --branch power https://github.com/Altoros/warden.git
-chmod +x $assets_folder/warden/*.sh
-cp -r $assets_folder/warden/assets $build_folder/warden/warden
-cp $assets_folder/warden/*.sh $build_folder/warden/warden
+gem install bundler --no-ri --no-rdoc
+git clone --depth 1 --branch power https://github.com/Altoros/warden.git warden
+cd warden/warden
+bundle install
+cp -rvH $assets_folder/warden/assets .
+cp $assets_folder/warden/*.sh .
+chmod +x *.sh
 
-cd $build_folder/warden/warden
+# prepare if you run this script several times 
+lsof -t /tmp/warden/rootfs | kill
+rm -rf /tmp/warden/rootfs
+
 ./build.sh
