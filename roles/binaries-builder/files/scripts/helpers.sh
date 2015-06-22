@@ -1,6 +1,6 @@
 export source_folder=/home/ubuntu/binary-builder/src
 export build_folder=/home/ubuntu/binary-builder/build
-export blobs_folder=$blobs_folder:-/home/ubuntu/blobs
+export blobs_folder=${blobs_folder:-/home/ubuntu/blobs}
 export assets_folder=/home/ubuntu/binary-builder/assets
 
 function set_environment_variables {
@@ -11,7 +11,7 @@ function set_environment_variables {
 }
 
 function unarchive_package {
-  tar -xzvf $source_folder/$full_package_name.tar.gz -C $build_folder
+  tar -xzf $source_folder/$full_package_name.tar.gz -C $build_folder
 }
 
 function go_to_build_folder {
@@ -19,10 +19,10 @@ function go_to_build_folder {
 }
 
 function archive_package {
-  local $scope=$1
+  local scope=$1
   export target_folder=$blobs_folder/$scope
   mkdir -p $target_folder  
-  tar -xzvf $source_folder/$full_package_name.tar.gz -C $build_folder
+  tar -czf $target_folder/$full_package_name.tar.gz -C $build_folder $full_package_name
 }
 
 function update_config_files {
