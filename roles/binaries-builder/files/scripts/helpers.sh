@@ -15,6 +15,9 @@ function unarchive_package {
 }
 
 function go_to_build_folder {
+  if [ ! -f $build_folder/$full_package_name ]; then
+    mkdir -p $build_folder/$full_package_name
+  fi
   cd $build_folder/$full_package_name
 }
 
