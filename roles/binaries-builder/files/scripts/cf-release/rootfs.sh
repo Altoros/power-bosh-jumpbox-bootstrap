@@ -20,8 +20,12 @@ gem install bundler --no-ri --no-rdoc
 pushd $build_folder
   # clean environment in case scripts are run for the second or more time
   yes | rm -rf warden
-  lsof -t $rootfs_dir | xargs kill
-  yes | rm -rf $rootfs_dir
+  if [ -d $rootfs_dir ]
+  then
+    lsof -t $rootfs_dir | xargs kill
+    sleep 2 # FIXME
+    yes | rm -rf $rootfs_dir
+  fi
 
   git clone --depth 1 --branch power https://github.com/Altoros/warden.git
 
