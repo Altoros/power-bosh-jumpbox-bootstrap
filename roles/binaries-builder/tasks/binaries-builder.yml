@@ -77,7 +77,7 @@
     "{{ packages }}"
 
 - name: Compile rootfs for CF release
-  shell: "{{ scripts_path }}/cf-release/rootfs.sh {{ scripts_path }} {{ build_root_path }}/{{ workspace }}"
+  shell: "{{ scripts_path }}/cf-release/rootfs.sh {{ scripts_path }} {{ build_root_path }}/{{ workspace }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   when: item.slug == 'rootfs'
   sudo: yes
   with_items:
