@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # 1. in a ppc64le machine git clone https://github.com/cloudfoundry/warden.git
 # 2. Put two scripts (build.sh and helpers.sh) in warden/warden and execute
 
