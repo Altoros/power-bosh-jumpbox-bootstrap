@@ -66,6 +66,13 @@ To build a stemcell you'll need to use `binaries-builder` host role.
 1. `cd ~/cf-release`
 1. `bosh create release --with-tarball --force`, a path to the tarball you'll need to use will be in an output of this command. (if you'll get errors with network connection, just re-run this command to restart blobs upload).
 
+## Build CF release
+
+Almost the same process with MicroBOSH release. 
+
+1. You need to install nokogiri 1.6.2.1 and eventmachine 1.0.7, 1.0.3 before. This is done because of strange bug in pre_packaging script ((see for details)[https://github.com/altoros/cf-release/blob/chkp-3-without-cc/packages/warden/pre_packaging#L21-L26]).
+1. be sure `rvm` binary is available.
+
 ## Contacts
 
 If you have any questions, write to Alexander Lomov (alexander.lomov@altoros.com) or Lev Berman (lev.berman@altoros.com).
