@@ -76,3 +76,10 @@
   with_items:
     "{{ packages }}"
 
+- name: Compile rootfs for CF release
+  shell: "{{ scripts_path }}/cf-release/rootfs.sh {{ scripts_path }} {{ build_root_path }}/{{ workspace }}"
+  when: item.slug == 'rootfs'
+  sudo: yes
+  with_items:
+    "{{ packages }}"
+

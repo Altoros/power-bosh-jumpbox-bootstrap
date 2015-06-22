@@ -79,4 +79,10 @@ cf_packages:
   action: compile
   bosh_blob_path: gccgo_ppc64le_trusty
   bosh_blob: gccgo1.4.tar.bz2
+- name: rootfs
+  url: ''
+  slug: rootfs
+  action: compile
+  bosh_blob_path: rootfs
+  bosh_blob: rootfsppc64.tgz
 

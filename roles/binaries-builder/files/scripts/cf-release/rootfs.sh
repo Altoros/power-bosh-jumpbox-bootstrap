@@ -1,5 +1,4 @@
-# 1. in a ppc64le machine git clone https://github.com/cloudfoundry/warden.git
-# 2. Put two scripts (build.sh and helpers.sh) in warden/warden and execute
+#!/bin/bash
 
 set -ex
 
@@ -8,19 +7,58 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
-scripts_folder=/home/ubuntu/binary-builder/bin
-username=ubuntu
-blobs_folder=/home/ubuntu/cf-release/blobs
+scripts_folder=$1
+build_folder=$2
+rootfs_dir=/tmp/warden/rootfs
+assets_dir=$scripts_folder/warden
+
 source $scripts_folder/helpers.sh
 
-set_environment_variables rootfs '0.0.1'
-go_to_build_folder
-
 gem install bundler
-git clone --depth 1 --branch power https://github.com/Altoros/warden.git
-chmod +x $assets_folder/warden/*.sh
-cp -r $assets_folder/warden/assets $build_folder/warden/warden
-cp $assets_folder/warden/*.sh $build_folder/warden/warden
 
-cd $build_folder/warden/warden
-./build.sh
+pushd $build_folder
+  yes | rm -rf warden
+  git clone --depth 1 --branch power https://github.com/Altoros/warden.git
+
+  pushd warden/warden
+    # setup warden's default rootfs
+    (
+      bundle install && bundle exec rake setup[config/linux.yml]
+    )
+
+    # source /etc/lsb-release if present
+    if [ -f $rootfs_dir/etc/lsb-release ]
+    then
+      source $rootfs_dir/etc/lsb-release
+    fi
+
+    # disable interactive dpkg
+    debconf="debconf debconf/frontend select noninteractive"
+    run_in_chroot $rootfs_dir "echo ${debconf} | debconf-set-selections"
+
+    # networking
+    cp $assets_dir/etc/hosts $rootfs_dir/etc/hosts
+
+    # timezone
+    cp $assets_dir/etc/timezone $rootfs_dir/etc/timezone
+    run_in_chroot $rootfs_dir "dpkg-reconfigure -fnoninteractive -pcritical tzdata"
+
+    # locale
+    cp $assets_dir/etc/default/locale $rootfs_dir/etc/default/locale
+    run_in_chroot $rootfs_dir "
+      locale-gen en_US.UTF-8
+      dpkg-reconfigure -fnoninteractive -pcritical libc6
+      dpkg-reconfigure -fnoninteractive -pcritical locales
+    "
+
+    # firstboot script
+    cp $assets_dir/etc/rc.local $rootfs_dir/etc/rc.local
+    cp $assets_dir/root/firstboot.sh $rootfs_dir/root/firstboot.sh
+    chmod 0755 $rootfs_dir/root/firstboot.sh
+
+    apt_get $rootfs_dir install upstart
+    apt_get $rootfs_dir dist-upgrade
+    apt_get $rootfs_dir install $packages
+  popd
+popd
+
