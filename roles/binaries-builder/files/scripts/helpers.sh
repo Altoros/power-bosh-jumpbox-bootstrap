@@ -62,8 +62,10 @@ EOS
 }
 
 function apt_get {
-  run_in_chroot $1 "apt-get update"
-  run_in_chroot $1 "apt-get -f -y --force-yes --no-install-recommends $*"
-  run_in_chroot $1 "apt-get clean"
+  local rootfs_dir=$1
+  shift
+  run_in_chroot $rootfs_dir "apt-get update"
+  run_in_chroot $rootfs_dir "apt-get -f -y --force-yes --no-install-recommends $@"
+  run_in_chroot $rootfs_dir "apt-get clean"
 }
  
