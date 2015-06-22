@@ -31,3 +31,7 @@ lsof -t /tmp/warden/rootfs | kill
 rm -rf /tmp/warden/rootfs
 
 ./build.sh
+
+target_folder=$blobs_folder/rootfs
+cd /tmp/warden/rootfs
+tar -czvf $target_folder/rootfsppc64.tgz -C /tmp/warden/rootfs .

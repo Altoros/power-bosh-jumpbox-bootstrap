@@ -40,4 +40,4 @@ make install  # requires sudo
 rsync -avz /usr/local/pgsql/* $build_folder/postgres-9.0.3-1.ppc64le
 
 target_folder=$blobs_folder/postgres
-tar -cvfz $target_folder/postgres-9.0.3-1.ppc64le.tar.gz -C $build_folder postgres-9.0.3-1.ppc64le
+tar -czvf $target_folder/postgres-9.0.3-1.ppc64le.tar.gz -C $build_folder postgres-9.0.3-1.ppc64le
