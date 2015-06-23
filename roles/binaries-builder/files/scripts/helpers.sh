@@ -6,7 +6,9 @@ function unarchive_package {
 }
 
 function archive_package {
-  tar -cvzf $1 $2
+  pushd $2
+    tar -cvzf $1 *
+  popd
 }
 
 function update_config_files {
