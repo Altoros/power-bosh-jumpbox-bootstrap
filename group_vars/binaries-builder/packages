@@ -85,4 +85,10 @@ cf_packages:
   action: compile
   bosh_blob_path: rootfs
   bosh_blob: rootfsppc64.tgz
+- name: dea_next_gems
+  url: ''
+  slug: dea_next
+  action: compile
+  bosh_blob_path: dea_next_gems
+  bosh_blob: dea_next_gems_vendor_cache.tar.gz
 

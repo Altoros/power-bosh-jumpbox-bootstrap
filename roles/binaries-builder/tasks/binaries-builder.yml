@@ -83,3 +83,10 @@
   with_items:
     "{{ packages }}"
 
+- name: Compile dea_next gems for CF release
+  shell: "{{ scripts_path }}/cf-release/dea_next_gems.sh {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ build_root_path }}/{{ workspace }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
+  when: item.slug == 'dea_next' and (not compile_only or compile_only == item.slug)
+  sudo: yes
+  with_items:
+    "{{ packages }}"
+
