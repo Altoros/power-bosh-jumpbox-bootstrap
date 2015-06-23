@@ -70,7 +70,7 @@ The process can be configured via the `group_vars/binaries-builder/packages` con
 see a list of properties for the packages to build in YAML format. Below is the description of these properties.
 
 * `name` - a descriptive name of the blob to use in the process of downloading and building
-* `url` - the URL to download the blob from
+* `url` - the URL to download the blob from; has to be '' if a package is not downloaded by plain HTTP (git, APT, etc)
 * `slug` - a unique piece of metadata for some specific scripts to apply
 * `action` - one of `change_config` and `compile`; in case of `change_config` playbook simply replaces all the occurences of the `config.guess` and `config.sub` files; in case of `compile`, in addition to aforementioned, it compiles the package from source
 * `bosh_blob_path` - the blob path in the filesystem relative to the `blobs` folder required by BOSH
