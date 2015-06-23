@@ -82,14 +82,9 @@ You can optionally compile (or recompile) a specific package only by specifying 
 ansible-playbook binaries-playbook.yml --extra-vars="compile_only=postgres"
 ```
 
-TODO - building a BOSH release
+Some extra notes about building packages for CF:
 
-## Build CF release
-
-Almost the same process with MicroBOSH release. 
-
-1. You need to install nokogiri 1.6.2.1 and eventmachine 1.0.7, 1.0.3 before. This is done because of strange bug in pre_packaging script ((see for details)[https://github.com/altoros/cf-release/blob/chkp-3-without-cc/packages/warden/pre_packaging#L21-L26]).
-1. be sure `rvm` binary is available.
+1. You need to install nokogiri 1.6.2.1 and eventmachine 1.0.7, 1.0.3 before. This is done because of strange bug in pre_packaging script ((see for details)[https://github.com/altoros/cf-release/blob/chkp-3-without-cc/packages/warden/pre_packaging#L21-L26]). (TBD - playbook should do it for you)
 
 ## Contacts
 
