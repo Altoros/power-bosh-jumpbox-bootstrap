@@ -30,7 +30,7 @@ pushd $build_folder/$package_name
 popd
 
 # ?: why do we need it
-mkdir -p /usr/local/pgsql/datavcap
+rm -rf /usr/local/pgsql/datavcap && mkdir -p /usr/local/pgsql/datavcap
 chown -R $user /usr/local/pgsql/datavcap
 sudo -u $user /usr/local/pgsql/bin/initdb -D /usr/local/pgsql/datavcap
 
