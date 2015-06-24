@@ -16,7 +16,7 @@ pushd $build_folder
   tar -xzf $source_folder/$package.tar.gz
   pushd $package
     update_config_files .
-    tar -cvzf $bosh_blob -C $build_folder/$package .
   popd
+  tar -cvzf $bosh_blob -C $build_folder $package
 popd
 
