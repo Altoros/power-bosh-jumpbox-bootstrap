@@ -11,5 +11,7 @@ bosh_blob=$1
 
 apt-get install -y openjdk-7-jre openjdk-7-jdk
 
-tar -czvf $bosh_blob /usr/lib/jvm/java-7-openjdk-ppc64el
+pushd /usr/lib/jvm/java-7-openjdk-ppc64el
+  tar -czvf $bosh_blob .
+popd
 
