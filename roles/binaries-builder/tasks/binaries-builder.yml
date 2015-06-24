@@ -26,7 +26,7 @@
     "{{ packages }}"
 
 - name: Install binaries that do not need compilation
-  shell: "{{ scripts_path }}/update-configs.sh {{ scripts_path }} {{ sources_root_path }}/{{ workspace }}/{{item.name}} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
+  shell: "{{ scripts_path }}/update-configs.sh {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ item.name }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   when: item.action == 'change_config'
   with_items:
     "{{ packages }}"
