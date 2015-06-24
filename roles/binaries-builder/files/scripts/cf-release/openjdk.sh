@@ -16,6 +16,6 @@ mkdir -p $target_folder
 
 apt-get install -y openjdk-7-jre openjdk-7-jdk
 
-cd /usr/lib/jvm
-target_folder=$blobs_folder/java
-tar -czvf $target_folder/java-7-openjdk-ppc64el.tgz java-7-openjdk-ppc64el
+cd /usr/lib/jvm/java-7-openjdk-ppc64el
+target_folder=$blobs_folder/uaa
+tar -czvf $target_folder/java-7-openjdk-ppc64el.tgz .
