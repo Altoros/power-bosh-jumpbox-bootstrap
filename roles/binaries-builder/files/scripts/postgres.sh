@@ -13,9 +13,10 @@ fi
 package_name=$1
 scripts_folder=$2
 source_folder=$3
-blob_path=$4
-build_folder=$5
-user=$6
+blob_name=$4
+blob_path=$5
+build_folder=$6
+user=$7
 
 source $scripts_folder/helpers.sh
 
@@ -43,5 +44,7 @@ sudo -u $user /usr/local/pgsql/bin/initdb -D /usr/local/pgsql/datavcap
 
 chmod -R +r /usr/local/pgsql/datavcap
 
-archive_package $blob_path /usr/local/pgsql
+pushd /usr/local/pgsql
+  tar -czvf $blob_path -C /usr/local/pgsql .
+popd
 
