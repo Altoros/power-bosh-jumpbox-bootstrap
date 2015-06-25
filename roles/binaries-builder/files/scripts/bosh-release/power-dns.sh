@@ -30,7 +30,7 @@ unarchive_package $source_folder/$package_name.tar.gz $build_folder/$package_nam
 pushd $build_folder/$package_name
   cd `ls`
   ./bootstrap
-  ./configure --with-modules="" # (add modules you need)
+  ./configure --enable-static-binaries --with-modules="" # (add modules you need)
   make
   echo "PowerDNS for BOSH release" | sudo tee description-pak
   checkinstall --nodoc --default
