@@ -12,8 +12,9 @@ fi
 package_name=$1
 scripts_folder=$2
 source_folder=$3
-blob_path=$4
-build_folder=$5
+blob_name=$4
+blob_path=$5
+build_folder=$6
 
 source $scripts_folder/helpers.sh
 
@@ -32,5 +33,5 @@ pushd $build_folder/$package_name
   make install  # requires sude
 popd
 
-archive_package $blob_path /usr/local/mysql  # $build_folder/$package_name
+archive_package $blob_name $blob_path /usr/local/mysql  # $build_folder/$package_name
 

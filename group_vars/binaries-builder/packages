@@ -11,42 +11,49 @@ bosh_packages:
   action: compile
   bosh_blob_path: mysql
   bosh_blob: server-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz
+  bosh_blob_name: server-5.1.62-rel13.3-435-Linux-ppc64le
 - name: postgresql-9.0.3
   url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
   slug: postgres
   action: compile
   bosh_blob_path: postgres
   bosh_blob: postgres-9.0.3-1.ppc64le.tar.gz
+  bosh_blob_name: postgres-9.0.3-1.ppc64le
 - name: postgresql-9.0.3-for-libpq
   url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
   slug: postgres_for_libpq
   action: change_config
   bosh_blob_path: postgres
   bosh_blob: postgresql-9.0.3.tar.gz
+  bosh_blob_name: postgresql-9.0.3
 - name: redis-2.6.9
   url: https://blob.cfblob.com/d24e2fbd-ea3f-4c4b-b4e3-a0ccfd60dafa
   slug: redis
   action: change_config
   bosh_blob_path: redis
   bosh_blob: redis-2.6.9.tar.gz
+  bosh_blob_name: redis-2.6.9
 - name: ruby-2.1.4
   url: https://blob.cfblob.com/00b50c34-f264-4245-9a90-b56c7385694e
   slug: ruby
   action: change_config
   bosh_blob_path: ruby
   bosh_blob: ruby-2.1.4.tar.gz
+  bosh_blob_name: ruby-2.1.4
 - name: yaml-0.1.5
   url: https://blob.cfblob.com/db07c821-62f8-4fd1-a99a-ff1c88b2474b
   slug: yaml
   action: change_config
   bosh_blob_path: ruby
   bosh_blob: yaml-0.1.5.tar.gz
+  bosh_blob_name: yaml-0.1.5
 - name: powerdns-3.7.3
   url: https://github.com/PowerDNS/pdns/archive/rec-3.7.3.tar.gz
   slug: powerdns
   action: compile
   bosh_blob_path: powerdns
   bosh_blob: pdns-static_3.3-1_ppc64el.deb
+  bosh_blob_name: pdns-static_3.3-1_ppc64el
 
 cf_packages:
 - name: yaml-0.1.6
@@ -55,46 +62,54 @@ cf_packages:
   action: change_config
   bosh_blob_path: ruby-2.1.4
   bosh_blob: yaml-0.1.6.tar.gz
+  bosh_blob_name: yaml-0.1.6
 - name: ruby-2.1.4
   url: https://blob.cfblob.com/00b50c34-f264-4245-9a90-b56c7385694e
   slug: ruby_cf
   action: change_config
   bosh_blob_path: ruby-2.1.4
   bosh_blob: ruby-2.1.4.tar.gz
+  bosh_blob_name: ruby-2.1.4
 - name: postgresql-9.0.3
   url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
   slug: postgres
   action: compile
   bosh_blob_path: postgres
   bosh_blob: postgresql-9.0.3.tar.gz
+  bosh_blob_name: postgresql-9.0.3
 - name: mysql-5.1.62
   url: http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.1.62.tar.gz
   slug: mysql_cf
   action: compile
   bosh_blob_path: mysql
   bosh_blob: client-5.1.62-rel13.3-435-Linux-x86_64.tar.gz
+  bosh_blob_name: client-5.1.62-rel13.3-435-Linux-x86_64
 - name: openjdk-1.7.0
   url: ''
   slug: openjdk
   action: compile
   bosh_blob_path: uaa
   bosh_blob: openjdk-1.7.0-u40-unofficial-linux-amd64.tgz
+  bosh_blob_name: openjdk-1.7.0-u40-unofficial-linux-amd64
 - name: gcc-5.1.0
   url: http://gcc.petsads.us/releases/gcc-5.1.0/gcc-5.1.0.tar.gz
   slug: gccgo
   action: compile
   bosh_blob_path: gccgo_ppc64le_trusty
   bosh_blob: gccgo1.4.tar.bz2
+  bosh_blob_name: gccgo1.4
 - name: rootfs
   url: ''
   slug: rootfs
   action: compile
   bosh_blob_path: rootfs
   bosh_blob: rootfsppc64.tgz
+  bosh_blob_name: rootfsppc64
 - name: dea_next_gems
   url: ''
   slug: dea_next
   action: compile
   bosh_blob_path: dea_next_gems
   bosh_blob: dea_next_gems_vendor_cache.tar.gz
+  bosh_blob_name: dea_next_gems_vendor_cache
 

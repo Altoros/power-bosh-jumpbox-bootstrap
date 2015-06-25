@@ -7,23 +7,21 @@ function unarchive_package {
 
 function archive_package {
   # Archives the contents of the given folder into specified path.
-  # The contents are first put into the root folder whose name is taken from the specified path.
-  # The arhive must end in .tar.gz.
+  # The contents are first put into the root folder whose name is passed as an argument.
   #
   # Example:
-  #   archive_package /my/bosh/blobs/postgres/postgres-9.0.3.tar.gz /usr/local/pgsql
+  #   archive_package postgres-9.0.3 /my/bosh/blobs/postgres/postgres-9.0.3.tar.gz /usr/local/pgsql
   # This will put the contents of pgsql folder into the folder called postrgres-9.0.3 and archive it
   # into /my/bosh/blobs/postgres/postgres-9.0.3.tar.gz.
-  path=(${1//\// })
-  package_name_tar_gz=${path[${#path[@]}-1]}
-  package_name=${package_name_tar_gz::-7}
+  package_name=$1
+  package_path=$2
 
   archive_folder=/tmp/$package_name
   rm -rf $archive_folder && mkdir -p $archive_folder
 
-  rsync -avz $2/* $archive_folder
+  rsync -avz $3/* $archive_folder
   pushd /tmp
-    tar -cvzf $1 -C /tmp $package_name
+    tar -cvzf $package_path -C /tmp $package_name
   popd
 }
 
