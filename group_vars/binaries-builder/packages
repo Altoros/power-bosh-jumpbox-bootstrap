@@ -17,6 +17,12 @@ bosh_packages:
   action: compile
   bosh_blob_path: postgres
   bosh_blob: postgres-9.0.3-1.ppc64le.tar.gz
+- name: postgresql-9.0.3-for-libpq
+  url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
+  slug: postgres_for_libpq
+  action: change_config
+  bosh_blob_path: postgres
+  bosh_blob: postgresql-9.0.3.tar.gz
 - name: redis-2.6.9
   url: https://blob.cfblob.com/d24e2fbd-ea3f-4c4b-b4e3-a0ccfd60dafa
   slug: redis
