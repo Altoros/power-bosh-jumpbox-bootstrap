@@ -31,7 +31,7 @@ pushd $build_folder/$package_name
   cd `ls`
   export PATH=$PWD:$PATH
   ./bootstrap
-  ./configure --enable-static-binaries --with-modules="" # (add modules you need)
+  ./configure LIBS=-L/usr/local/pgsql/lib CPPFLAGS=-I/usr/local/pgsql/include --enable-static-binaries --with-modules="gpgsql" # (add modules you need)
   make
   echo "PowerDNS for BOSH release" | sudo tee description-pak
   checkinstall --nodoc --default
