@@ -29,6 +29,7 @@ apt-get install -y ragel checkinstall libboost-all-dev
 unarchive_package $source_folder/$package_name.tar.gz $build_folder/$package_name
 pushd $build_folder/$package_name
   cd `ls`
+  export PATH=$PWD:$PATH
   ./bootstrap
   ./configure --enable-static-binaries --with-modules="" # (add modules you need)
   make
