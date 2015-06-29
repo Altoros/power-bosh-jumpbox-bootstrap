@@ -28,9 +28,9 @@ CFLAGS="-O3" CXX=gcc ./configure --prefix=/usr/local/mysql \
 make
 make install  # requires sude
 
-rsync -avz /usr/local/mysql/* $build_folder/client-5.1.62-rel14.4-435-Linux-ppc64le
+rsync -avz /usr/local/mysql/* $build_folder/client-5.1.62-rel13.3-435-Linux-ppc64le
 
 target_folder=$blobs_folder/mysql
 mkdir -p $target_folder
-tar -czvf $target_folder/client-5.1.62-rel14.4-435-Linux-ppc64le.tar.gz -C $build_folder client-5.1.62-rel14.4-435-Linux-ppc64le
-chown $username $target_folder/client-5.1.62-rel14.4-435-Linux-ppc64le.tar.gz
+tar -czvf $target_folder/client-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz -C $build_folder client-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz
+chown $username $target_folder/client-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz
