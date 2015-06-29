@@ -2,21 +2,17 @@
 
 The recommended ansible version is 1.9.1 (install from [PyPI](https://pypi.python.org/pypi/ansible/1.9.1)). The earlier versions may come with [this bug](https://github.com/rvm/rvm1-ansible/issues/44).
 
-Mac OS:
-`brew install ansible`
+## Setup VMs
 
-Ubuntu:
-`apt-get install ansible`
-
-## Create a jumpbox VM
-
-_Name_: set a VM name, for example "jumpbox"
-_Image_: select Ubuntu 14.04 image
-_Networks_: Add two networks: private, for example with 192.168.1.0/24 CIDR and 192.168.1.2 jumpbox IP and a public network with a floating IP address
+Playbooks are intended to be run on virtual machines powering Ubuntu 14.04 with ppc64el arch.
+We recommend using a separate VM as a jumpbox and 2 separate VMs for bulding stemcell and binaries.
 
 ## Provision jumpbox VM
 
+From your local host:
+
 1. Run `ansible-galaxy install rvm_io.rvm1-ruby`
+1. Clone the [repo](https://github.com/Altoros/power-bosh-jumpbox-bootstrap.git) and enter its root
 1. Run `cp hosts.example hosts`
 1. Open `hosts` file and change x.x.x.x to an jumpbox's public IP
 1. Run `ansible-playbook jumpbox-playbook.yml` to provision a VM
@@ -26,16 +22,17 @@ _Networks_: Add two networks: private, for example with 192.168.1.0/24 CIDR and 
 List of roles included in this project:
 
 1. `gccgo` is used to install gccgo (version 5.1 by default), at this moment works only for power 8.
-1. `common` performs apt-get update and installs all necessary packages, creates ~/github folder and installs direnv, installs gccgo and RVM with Ruby 2.1.4, installs BOSH with all necessary gems; all roles that are applied to hosts dependes on it; depends on `gccgo` and `rvm_io.rvm1-ruby`.
-1. `jumpbox` creates an environment to run BOSH CLI commands, CF CLI and bosh-init; depends on `common`.
+1. `common` performs apt-get update and installs all necessary packages, creates ~/github folder and installs direnv, installs RVM with Ruby 2.1.4, installs BOSH with all necessary gems; all roles that are applied to hosts depend on it; depends on `gccgo` and `rvm_io.rvm1-ruby`.
+1. `jumpbox` creates an environment to run other playbooks, BOSH CLI commands, CF CLI commands and bosh-init; depends on `common`.
 1. `binaries-builder` is used to build binaries for IBM Power BOSH and CF installations.
 1. `stemcell-builder` installs everything that is needed to run stemcell builder of the BOSH project.
 
 
 ## Build a stemcell
 
-You can create a separate instance just to build stemcell. You need to use __m1.large__ instance type to build stemcells.
+You should create a separate VM to build a stemcell. VM capacity should fit the OpenStack __m1.large__ [flavor](http://docs.openstack.org/openstack-ops/content/flavors.html).
 
+# TODO - how to build it using playbook?
 To build a stemcell you'll need to use `stemcell-builder` host role. In order to do it update `hosts` file: uncomment section with `stemcell-builder` host and replace `x.x.x.x` with an instance you've created.
 
 1. ssh to a stemcell builder instance: `ssh -i ~/.ssh/id_rsa ubuntu@x.x.x.x`
@@ -47,45 +44,54 @@ Notice: At this moment I use power-2915 branch to build stemcell 2915 for power 
 
 ## Build binaries for MicroBOSH and Cloud Foundry releases
 
-`binaries-playbook.yml` is for building binaries. Execute:
+`binaries-playbook.yml` is used for building binaries. To build all the binaries for both BOSH and CF execute:
 
 ```
 ansible-playbook binaries-playbook.yml
 ```
 
-To compile packages for BOSH only execute:
+You can only make binaries for BOSH:
 
 ```
 ansible-playbook binaries-playbook.yml --tags "bosh"
 ```
 
-The same for CF:
+Or for CF:
 
 ```
 ansible-playbook binaries-playbook.yml --tags "cf"
 ```
 
-By default playbook compiles packages for both BOSH and Cloud Foundry releases.
+The binaries and the directory structure can be configured via the `group_vars/binaries-builder/packages` config file. The file is in YAML format and contains the following properties
 
-The process can be configured via the `group_vars/binaries-builder/packages` config file. In this file you can
-see a list of properties for the packages to build in YAML format. Below is the description of these properties.
+* `scripts_path` - the folder playbook copies its compilation scripts into.
+* `source_root_path` - the folder to download the original binaries into.
+* `result_root_path` - the folder with the results of binary building organized in the same way binaries are organized in the `blobs` folder of the corresponging BOSH release folder.
+* `build_root_path` - the folder to build the packages in.
 
-* `name` - a descriptive name of the blob to use in the process of downloading and building
-* `url` - the URL to download the blob from; has to be '' if a package is not downloaded by plain HTTP (git, APT, etc)
-* `slug` - a unique piece of metadata for some specific scripts to apply
-* `action` - one of `change_config` and `compile`; in case of `change_config` playbook simply replaces all the occurences of the `config.guess` and `config.sub` files; in case of `compile`, in addition to aforementioned, it compiles the package from source
-* `bosh_blob_path` - the blob path in the filesystem relative to the `blobs` folder required by BOSH
-* `bosh_blob` - the name of the blob required by BOSH
+In each of these folders playbook creates `bosh` and `cf` folders to organize the namespaces for BOSH and CF binaries.
 
-You can optionally compile (or recompile) a specific package only by specifying the `compile_only` variable equal to the corresponding slug:
+Packages to build for BOSH and CF are described in `bosh_packages` and `cf_packages` lists correspondingly. Each entry in the list describes an individual binary and consists of the following properties:
+
+* `name` - a descriptive name of the blob to use in the process of downloading and building; since it is used to name some intermediate folders it has to be unique.
+* `url` - the URL to download the blob from; has to be '' if a package is not downloaded by plain HTTP (eg git, APT, etc).
+* `slug` - a unique piece of metadata for some specific scripts to apply.
+* `action` - one of `change_config` and `compile`; in case of `change_config` playbook simply replaces all the occurences of the `config.guess` and `config.sub` files; in case of `compile`, in addition to aforementioned, it compiles the package from source.
+* `bosh_blob_path` - the blob path in the filesystem relative to the `blobs` folder required by BOSH.
+* `bosh_blob` - the name of the blob required by BOSH including the filetype extension.
+* `bosh_blob_name` - the name of the blob required by BOSH without the filetype extension.
+
+`bosh_blob` and `bosh_blob_name` are both here for 2 reasons:
+1. BOSH may require the archive to contain a folder with the same name and we do not want to parse it from the archive name.
+2. BOSH may require different file type extensions depending on the package.
+
+You can optionally compile a specific package only by specifying the `compile_only` variable equal to the corresponding slug:
 
 ```
 ansible-playbook binaries-playbook.yml --extra-vars="compile_only=postgres"
 ```
 
-Some extra notes about building packages for CF:
-
-1. You need to install nokogiri 1.6.2.1 and eventmachine 1.0.7, 1.0.3 before. This is done because of strange bug in pre_packaging script ((see for details)[https://github.com/altoros/cf-release/blob/chkp-3-without-cc/packages/warden/pre_packaging#L21-L26]). (TBD - playbook should do it for you)
+Note that PowerDNS depends on PostgreSQL so don't build it before you build PostgreSQL.
 
 ## Contacts
 
