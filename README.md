@@ -90,6 +90,8 @@ You can optionally compile a specific package only by specifying the `compile_on
 ansible-playbook binaries-playbook.yml --extra-vars="compile_only=postgres"
 ```
 
+Note that PowerDNS depends on PostgreSQL so don't build it before you build PostgreSQL.
+
 ## Contacts
 
 If you have any questions, write to Alexander Lomov (alexander.lomov@altoros.com) or Lev Berman (lev.berman@altoros.com).
