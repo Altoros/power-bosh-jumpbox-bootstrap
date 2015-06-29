@@ -43,6 +43,7 @@ To build a stemcell you'll need to use `stamcell-builder` host role. In order to
 1. `gem install bundler && bundle install`
 1. Run `bundle exec ./bin/build-stemcell` (if any errors occurs, try to run commands from this script manually)
 
+Notice: At this moment I use power-2915 branch to build stemcell 2915 for power arch. You can find this branch [here](https://github.com/Altoros/bosh/tree/power-2915). This branch doesn't add micro bosh release to the stemcell. It is not needed, since we use `bosh-init` tool for MicroBOSH deployment.
 
 ## Build MicroBOSH release
 
