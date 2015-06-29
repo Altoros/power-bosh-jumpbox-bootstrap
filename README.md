@@ -32,15 +32,14 @@ List of roles included in this project:
 
 You should create a separate VM to build a stemcell. VM capacity should fit the OpenStack __m1.large__ [flavor](http://docs.openstack.org/openstack-ops/content/flavors.html).
 
-# TODO - how to build it using playbook?
-To build a stemcell you'll need to use `stemcell-builder` host role. In order to do it update `hosts` file: uncomment section with `stemcell-builder` host and replace `x.x.x.x` with an instance you've created.
+The playbook for building stemcells is the work in progress so far. In order to build a stemcell make the following steps:
 
 1. ssh to a stemcell builder instance: `ssh -i ~/.ssh/id_rsa ubuntu@x.x.x.x`
 1. `cd ~/stemcell-builder`
 1. `gem install bundler && bundle install`
 1. Run `bundle exec ./bin/build-stemcell` (if any errors occurs, try to run commands from this script manually)
 
-Notice: At this moment I use power-2915 branch to build stemcell 2915 for power arch. You can find this branch [here](https://github.com/Altoros/bosh/tree/power-2915). This branch doesn't add micro bosh release to the stemcell. It is not needed, since we use `bosh-init` tool for MicroBOSH deployment.
+Notice: At this moment we use the [power-2915 branch](https://github.com/Altoros/bosh/tree/power-2915) of BOSH. This branch doesn't add an extra MicroBOSH release to the stemcell, which is not needed at all, since we use `bosh-init` tool for MicroBOSH deployment.
 
 ## Build binaries for MicroBOSH and Cloud Foundry releases
 
