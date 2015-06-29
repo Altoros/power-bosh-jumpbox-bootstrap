@@ -11,7 +11,7 @@ We recommend using a separate VM as a jumpbox and 2 separate VMs for bulding ste
 
 From your local host:
 
-1. Run `ansible-galaxy install rvm_io.rvm1-ruby`
+1. Run `sudo ansible-galaxy install rvm_io.rvm1-ruby`
 1. Clone the [repo](https://github.com/Altoros/power-bosh-jumpbox-bootstrap.git) and enter its root
 1. Run `cp hosts.example hosts`
 1. Open `hosts` file and change x.x.x.x to an jumpbox's public IP
