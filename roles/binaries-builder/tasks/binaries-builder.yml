@@ -90,3 +90,9 @@
   with_items:
     "{{ packages }}"
 
+- name: Compile nfs server for CF release
+  shell: "{{ scripts_path }}/cf-release/nfs-kernel-server.sh {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
+  when: item.slug == 'nfs' and (not compile_only or compile_only == item.slug)
+  sudo: yes
+  with_items:
+    "{{ packages }}"

@@ -112,4 +112,10 @@ cf_packages:
   bosh_blob_path: dea_next_gems
   bosh_blob: dea_next_gems_vendor_cache.tar.gz
   bosh_blob_name: dea_next_gems_vendor_cache
-
+- name: debian_nfs_server
+  url: ''
+  slug: nfs
+  action: compile
+  bosh_blob_path: debian_nfs_server
+  bosh_blob: nfs-kernel-server_1%3a1.2.8-6ubuntu1.1_ppc64el.deb
+  bosh_blob_name: nfs-kernel-server_1%3a1.2.8-6ubuntu1.1_ppc64el
