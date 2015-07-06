@@ -28,6 +28,10 @@ pushd $build_folder/$package_name
   make
   rm -rf  /usr/local/pgsql/datavcap
   make install  # requires sudo
+  pushd contrib
+    gmake
+    gmake install
+  popd
 popd
 
 # ?: why do we need it
