@@ -96,3 +96,6 @@ Note that PowerDNS depends on PostgreSQL so don't build it before you build Post
 
 If you have any questions, write to Alexander Lomov (alexander.lomov@altoros.com) or Lev Berman (lev.berman@altoros.com).
 
+## TODO
+
+1. put in an order arguments of binaries builder script.
