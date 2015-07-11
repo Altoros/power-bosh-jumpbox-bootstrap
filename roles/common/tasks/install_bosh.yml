@@ -2,11 +2,12 @@
 - name: Clone BOSH repo from Altoros github
   git: "repo=https://github.com/Altoros/bosh.git dest={{bosh_path}} accept_hostkey=yes version=power"
   sudo: no
-
-- debug: var=ruby_environment
-- shell: "echo $PATH"
-  environment: ruby_environment
   register: result
+  until: not result|failed
+  retries: 5
+  # environment:
+  #   GIT_CURL_VERBOSE: 1
+
 - debug: var=result
 
 - name: Prepare Bundler

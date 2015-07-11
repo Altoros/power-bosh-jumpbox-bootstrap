@@ -1,6 +1,8 @@
 ## Install [Ansible](http://www.ansible.com/)
 
-The recommended ansible version is 1.9.1 (install from [PyPI](https://pypi.python.org/pypi/ansible/1.9.1)). The earlier versions may come with [this bug](https://github.com/rvm/rvm1-ansible/issues/44).
+The recommended ansible version is 1.9.2 (install from [PyPI](https://pypi.python.org/pypi/ansible/1.9.2)). The earlier versions may come with [this bug](https://github.com/rvm/rvm1-ansible/issues/44).
+
+You can also use `brew` tool to install latest version on your Mac OS. Simply run `brew install ansible`.
 
 ## Setup VMs
 
@@ -99,3 +101,4 @@ If you have any questions, write to Alexander Lomov (alexander.lomov@altoros.com
 ## TODO
 
 1. put in an order arguments of binaries builder script.
+1. move shared contrib extentions to postgresql folder https://github.com/cloudfoundry/cf-release/blob/v207/jobs/postgres/templates/postgres_ctl.erb#L109

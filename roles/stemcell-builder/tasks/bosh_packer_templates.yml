@@ -1,10 +1,26 @@
 ---
-- name: Clone bosh-packer-templates project
-  git: "repo=https://github.com/Altoros/bosh-packer-templates.git dest={{bosh_packer_path}} accept_hostkey=yes version=power"
-  sudo: no
-  ignore_errors: True # this task can fail because the repo is changed in the fallowing step
 
-# TODO: - name: Checkout bosh-packer-templates project
+- name: Check if bosh-packer-templates project exists
+  stat: "path={{bosh_packer_path}}"
+  register: bosh_packer_path_exists
+
+- name: Clone bosh-packer-templates project
+  git: "repo=https://github.com/Altoros/bosh-packer-templates.git"
+  args:
+    dest: "{{bosh_packer_path}}"
+    accept_hostkey: yes
+    version: power
+  sudo: no
+  register: result
+  until: not result|failed
+  retries: 5
+  when: bosh_packer_path_exists.stat.exists == false
+
+- name: Clone bosh-packer-templates project
+  shell: "git reset HEAD --hard"
+  args:
+    chdir: "{{bosh_packer_path}}"
+  when: bosh_packer_path_exists.stat.exists
 
 - name: Make BOSH packer scripts executable
   file: "dest={{bosh_packer_path}}/bosh-stemcell/scripts/{{item}} mode=a+x"

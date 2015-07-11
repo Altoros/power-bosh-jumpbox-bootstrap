@@ -32,6 +32,13 @@ pushd $build_folder/$package_name
     gmake
     gmake install
   popd
+
+  # because of this line:
+  # https://github.com/Altoros/cf-release/blob/power-207/jobs/postgres/templates/postgres_ctl.erb#L116
+  pushd /usr/local/pgsql/shared
+    mkdir postgresql
+    mv contrib postgresql
+  popd
 popd
 
 # ?: why do we need it

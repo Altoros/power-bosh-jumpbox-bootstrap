@@ -46,6 +46,9 @@
     chdir: "{{go_path}}/src/github.com/cloudfoundry/cli/"
     creates: "{{go_path}}/src/github.com/cloudfoundry/cli/out/cf"
   environment: go_environment
+  register: result
+  until: not result|failed
+  retries: 5
 
 - name: Add bosh-init path to $PATH
   sudo: yes
@@ -54,6 +57,9 @@
     mode: 755
     dest: /usr/local/bin/cli
     state: link
+  register: result
+  until: not result|failed
+  retries: 5
 
 - name: Install Spiff
   shell: "go get github.com/cloudfoundry-incubator/spiff"

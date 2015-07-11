@@ -19,6 +19,9 @@
     dest: "{{stemcell_builder_path}}/bosh"
     version: stemcell-builder-without-microbosh
     accept_hostkey: yes
+  register: result
+  until: not result|failed
+  retries: 5
 
 - name: Install BOSH gems
   shell: "bundle install"

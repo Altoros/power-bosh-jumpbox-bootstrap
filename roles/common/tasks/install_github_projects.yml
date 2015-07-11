@@ -4,7 +4,10 @@
 
 - name: Clone direnv
   git: "repo=https://github.com/zimbatm/direnv dest={{github_path}}/direnv accept_hostkey=yes"
-  sudo: no  
+  sudo: no
+  register: result
+  until: not result|failed
+  retries: 10
 
 - name: Build direnv
   shell: "go build -o direnv chdir={{github_path}}/direnv creates={{github_path}}/direnv/direnv"
@@ -19,3 +22,4 @@
   sudo: yes
 
 - shell: echo 'eval "$(direnv hook bash)"' >> /home/{{ansible_ssh_user}}/.bashrc
+  sudo: no
