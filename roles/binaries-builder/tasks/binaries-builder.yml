@@ -5,34 +5,23 @@
     "{{ packages }}"
 
 - name: Fetch binaries
-  get_url: url={{ item.url }} dest={{ sources_root_path }}/{{ workspace }}/{{ item.name }}.tar.gz
+  get_url: "url={{ item.url }} dest={{ sources_root_path }}/{{ workspace }}/{{ item.name }}.tar.gz"
   when: item.url
   with_items:
     "{{ packages }}"
 
-# - name: Create folder
-#   file: "path={{ scripts_path }} state=directory mode=0755"
-
 - name: "Copy install scripts"
-  copy: "src=roles/binaries-builder/files/scripts/{{ item }}"
+  copy: "src=roles/binaries-builder/files/scripts"
   args:
-    dest: "{{ scripts_path }}/{{ item }}"
-    mode: "0755"
+    dest: "{{ binary_builder_path }}"
     force: no
-  with_items:
-  - "bosh-release"
-  - "cf-release"
-  - "update-configs.sh"
-  - "helpers.sh"
-  - "postgres.sh"
-  - "warden"
   register: result
   until: not result|failed
   retries: 5
   sudo: no
 
 - name: Ensure files are 0755
-  command: "find {{ scripts_path }} -name *.sh -exec chmod 0755 {}"
+  command: "find {{ scripts_path }} -name *.sh -exec chmod 0755 {} \\;"
   sudo: yes
 
 - name: "Create BOSH-compatible structure of folders to put the compiled packages into"
@@ -49,65 +38,110 @@
 - name: "Create build folder"
   file: dest={{ build_root_path}}/{{ workspace }} state=directory
 
-- name: Compile and install Postgres
-  shell: "{{ scripts_path }}/postgres.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ item.bosh_blob_name }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/{{ workspace }} {{ ansible_ssh_user}}"
+- name: "Compile and install Postgres for {{ workspace }} release"
+  shell: "{{ scripts_path }}/postgres.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ item.bosh_blob_name }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/{{ workspace }} {{ ansible_ssh_user }}"
   when: item.slug == 'postgres' and (not compile_only or compile_only == item.slug)
   sudo: yes
+  args:
+    creates: "{{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   with_items:
     "{{ packages }}"
+  register: result
+  until: not result|failed
+  retries: 5
 
-- name: Compile and install MySQL client for BOSH
+- name: "Compile and install MySQL client for {{ workspace }} release"
   shell: "{{ scripts_path }}/bosh-release/mysql-client.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ item.bosh_blob_name }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/{{ workspace }}"
   when: item.slug == 'mysql' and (not compile_only or compile_only == item.slug)
   sudo: yes
+  args:
+    creates: "{{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"  
   with_items:
     "{{ packages }}"
+  register: result
+  until: not result|failed
+  retries: 5
 
-- name: Compile and install PowerDNS for BOSH
+- name: "Compile and install PowerDNS for {{ workspace }} release"
   shell: "{{ scripts_path }}/bosh-release/power-dns.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/{{ workspace }}"
   when: item.slug == 'powerdns' and (not compile_only or compile_only == item.slug)
   sudo: yes
+  args:
+    creates: "{{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   with_items:
     "{{ packages }}"
+  register: result
+  until: not result|failed
+  retries: 5
 
-- name: Compile and install MySQL client for CF release
+- name: "Compile and install MySQL client for {{ workspace }} release"
   shell: "{{ scripts_path }}/cf-release/mysql-client.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ item.bosh_blob_name }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/{{ workspace }}"
   when: item.slug == 'mysql_cf' and (not compile_only or compile_only == item.slug)
   sudo: yes
+  args:
+    creates: "{{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   with_items:
     "{{ packages }}"
+  register: result
+  until: not result|failed
+  retries: 5
 
-- name: Compile OpenJDK for CF release
+- name: "Compile OpenJDK for {{ workspace }} release"
   shell: "{{ scripts_path }}/cf-release/openjdk.sh {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   when: item.slug == 'openjdk' and (not compile_only or compile_only == item.slug)
   sudo: yes
+  args:
+    creates: "{{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   with_items:
     "{{ packages }}"
+  register: result
+  until: not result|failed
+  retries: 5
 
-- name: Compile gccgo for CF release
+- name: "Compile gccgo for {{ workspace }} release"
   shell: "{{ scripts_path }}/cf-release/gccgo_ppc64le_trusty.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/{{ workspace }}"
   when: item.slug == 'gccgo' and (not compile_only or compile_only == item.slug)
   sudo: yes
+  args:
+    creates: "{{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   with_items:
     "{{ packages }}"
+  register: result
+  until: not result|failed
+  retries: 5
 
-- name: Compile rootfs for CF release
+- name: "Compile rootfs for {{ workspace }} release"
   shell: "{{ scripts_path }}/cf-release/rootfs.sh {{ scripts_path }} {{ build_root_path }}/{{ workspace }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   when: item.slug == 'rootfs' and (not compile_only or compile_only == item.slug)
   sudo: yes
+  args:
+    creates: "{{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   with_items:
     "{{ packages }}"
+  register: result
+  until: not result|failed
+  retries: 5
 
-- name: Compile dea_next gems for CF release
+- name: "Compile dea_next gems for {{ workspace }} release"
   shell: "{{ scripts_path }}/cf-release/dea_next_gems.sh {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ build_root_path }}/{{ workspace }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   when: item.slug == 'dea_next' and (not compile_only or compile_only == item.slug)
   sudo: yes
+  args:
+    creates: "{{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   with_items:
     "{{ packages }}"
+  register: result
+  until: not result|failed
+  retries: 5
 
-- name: Compile nfs server for CF release
+- name: "Compile nfs server for {{ workspace }} release"
   shell: "{{ scripts_path }}/cf-release/nfs-kernel-server.sh {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   when: item.slug == 'nfs' and (not compile_only or compile_only == item.slug)
   sudo: yes
+  args:
+    creates: "{{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   with_items:
     "{{ packages }}"
+  register: result
+  until: not result|failed
+  retries: 5

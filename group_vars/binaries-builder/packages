@@ -1,8 +1,9 @@
 ---
-scripts_path: /home/{{ ansible_ssh_user }}/binary_builder/scripts
-sources_root_path: /home/{{ ansible_ssh_user }}/binary_builder/sources
-result_root_path: /home/{{ ansible_ssh_user }}/binary_builder/binaries
-build_root_path: /home/{{ ansible_ssh_user }}/binary_builder/build
+binary_builder_path: "/home/{{ ansible_ssh_user }}/binary_builder"
+scripts_path: "{{ binary_builder_path }}/scripts"
+sources_root_path: "{{ binary_builder_path }}/sources"
+result_root_path: "{{ binary_builder_path }}/binaries"
+build_root_path: "{{ binary_builder_path }}/build"
 
 bosh_packages:
 - name: mysql-5.1.62

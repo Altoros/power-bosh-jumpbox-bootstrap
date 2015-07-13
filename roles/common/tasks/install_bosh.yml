@@ -1,14 +1,12 @@
 ---
 - name: Clone BOSH repo from Altoros github
-  git: "repo=https://github.com/Altoros/bosh.git dest={{bosh_path}} accept_hostkey=yes version=power"
+  git: "repo=https://github.com/Altoros/bosh.git dest={{ bosh_path }} accept_hostkey=yes version=power-2915"
   sudo: no
   register: result
   until: not result|failed
   retries: 5
-  # environment:
-  #   GIT_CURL_VERBOSE: 1
-
-- debug: var=result
+  environment:
+    GIT_CURL_VERBOSE: 1
 
 - name: Prepare Bundler
   shell: "bundle config build.nokogiri '--use-system-libraries'"
@@ -17,6 +15,6 @@
 - name: Install BOSH gems
   shell: "bundle install --deployment"
   args:
-    chdir: "{{bosh_path}}"
+    chdir: "{{ bosh_path }}"
   sudo: no
   environment: ruby_environment

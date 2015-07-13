@@ -19,6 +19,8 @@ build_folder=$6
 user=$7
 
 source $scripts_folder/helpers.sh
+rm -f /usr/bin/gmake
+ln -s /usr/bin/make /usr/bin/gmake
 
 unarchive_package $source_folder/$package_name.tar.gz $build_folder
 pushd $build_folder/$package_name
@@ -35,9 +37,9 @@ pushd $build_folder/$package_name
 
   # because of this line:
   # https://github.com/Altoros/cf-release/blob/power-207/jobs/postgres/templates/postgres_ctl.erb#L116
-  pushd /usr/local/pgsql/shared
-    mkdir postgresql
-    mv contrib postgresql
+  pushd /usr/local/pgsql/share
+    mkdir -p postgresql
+    cp -R contrib postgresql
   popd
 popd
 
