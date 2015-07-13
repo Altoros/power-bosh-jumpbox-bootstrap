@@ -18,6 +18,7 @@
   args:
     dest: "{{ scripts_path }}/{{ item }}"
     mode: "0755"
+    force: no
   with_items:
   - "bosh-release"
   - "cf-release"
@@ -28,6 +29,11 @@
   register: result
   until: not result|failed
   retries: 5
+  sudo: no
+
+- name: Ensure files are 0755
+  command: "find {{ scripts_path }} -name *.sh -exec chmod 0755 {}"
+  sudo: yes
 
 - name: "Create BOSH-compatible structure of folders to put the compiled packages into"
   file: dest={{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }} state=directory
