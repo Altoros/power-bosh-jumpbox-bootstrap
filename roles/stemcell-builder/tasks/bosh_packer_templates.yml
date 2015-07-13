@@ -1,5 +1,4 @@
 ---
-
 - name: Check if bosh-packer-templates project exists
   stat: "path={{bosh_packer_path}}"
   register: bosh_packer_path_exists

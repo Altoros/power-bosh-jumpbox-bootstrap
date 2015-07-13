@@ -17,7 +17,7 @@
   sudo: no
   args:
     dest: "{{stemcell_builder_path}}/bosh"
-    version: stemcell-builder-without-microbosh
+    version: power-2915
     accept_hostkey: yes
   register: result
   until: not result|failed
@@ -29,8 +29,6 @@
     chdir: "{{stemcell_builder_path}}/bosh"
   sudo: no
   environment: ruby_environment
-
-# - name: Download base os image for stemcell builder
-#   get_url: "url=https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-ppc64el.tar.gz"
-#   args: 
-#     dest: "{{stemcell_builder_path}}/base-os-image-trusty-ppc64el.tar.gz"
+  register: result
+  until: not result|failed
+  retries: 5
