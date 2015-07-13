@@ -19,8 +19,8 @@ fi
 package_name=$1
 scripts_folder=$2
 source_folder=$3
-blob_path=$4
-build_folder=$5
+blob_path=$6
+build_folder=$4
 
 source $scripts_folder/helpers.sh
 

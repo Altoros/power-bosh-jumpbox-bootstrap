@@ -15,10 +15,10 @@
 
 set -ex
 
-scripts_folder=$1
-source_folder=$2
-build_folder=$3
-bosh_blob=$4
+scripts_folder=$2
+source_folder=$3
+build_folder=$4
+bosh_blob=$6
 
 source $scripts_folder/helpers.sh
 # rvm use system

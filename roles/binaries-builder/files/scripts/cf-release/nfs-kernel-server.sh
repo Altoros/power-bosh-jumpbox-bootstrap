@@ -2,7 +2,7 @@
 
 set -ex
 
-bosh_blob=$1
+bosh_blob=$6
 
 if [ "$(id -u)" != "0" ]; then
   echo "Sorry, you are not root."

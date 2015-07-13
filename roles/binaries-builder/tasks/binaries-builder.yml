@@ -49,65 +49,10 @@
 - name: "Create build folder"
   file: dest={{ build_root_path}}/{{ workspace }} state=directory
 
-- name: Compile and install Postgres
-  shell: "{{ scripts_path }}/postgres.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ item.bosh_blob_name }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/{{ workspace }} {{ ansible_ssh_user}}"
-  when: item.slug == 'postgres' and (not compile_only or compile_only == item.slug)
+- name: "Compile packages"
+  shell: "{{ scripts_path }}/{{ item.script }} {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ build_root_path }}/{{ workspace }} {{ item.bosh_blob_name }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ ansible_ssh_user}}"
+  when: item.action == 'compile' and (not compile_only or compile_only == item.slug)
   sudo: yes
   with_items:
     "{{ packages }}"
 
-- name: Compile and install MySQL client for BOSH
-  shell: "{{ scripts_path }}/bosh-release/mysql-client.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ item.bosh_blob_name }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/{{ workspace }}"
-  when: item.slug == 'mysql' and (not compile_only or compile_only == item.slug)
-  sudo: yes
-  with_items:
-    "{{ packages }}"
-
-- name: Compile and install PowerDNS for BOSH
-  shell: "{{ scripts_path }}/bosh-release/power-dns.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/{{ workspace }}"
-  when: item.slug == 'powerdns' and (not compile_only or compile_only == item.slug)
-  sudo: yes
-  with_items:
-    "{{ packages }}"
-
-- name: Compile and install MySQL client for CF release
-  shell: "{{ scripts_path }}/cf-release/mysql-client.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ item.bosh_blob_name }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/{{ workspace }}"
-  when: item.slug == 'mysql_cf' and (not compile_only or compile_only == item.slug)
-  sudo: yes
-  with_items:
-    "{{ packages }}"
-
-- name: Compile OpenJDK for CF release
-  shell: "{{ scripts_path }}/cf-release/openjdk.sh {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
-  when: item.slug == 'openjdk' and (not compile_only or compile_only == item.slug)
-  sudo: yes
-  with_items:
-    "{{ packages }}"
-
-- name: Compile gccgo for CF release
-  shell: "{{ scripts_path }}/cf-release/gccgo_ppc64le_trusty.sh {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ build_root_path }}/{{ workspace }}"
-  when: item.slug == 'gccgo' and (not compile_only or compile_only == item.slug)
-  sudo: yes
-  with_items:
-    "{{ packages }}"
-
-- name: Compile rootfs for CF release
-  shell: "{{ scripts_path }}/cf-release/rootfs.sh {{ scripts_path }} {{ build_root_path }}/{{ workspace }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
-  when: item.slug == 'rootfs' and (not compile_only or compile_only == item.slug)
-  sudo: yes
-  with_items:
-    "{{ packages }}"
-
-- name: Compile dea_next gems for CF release
-  shell: "{{ scripts_path }}/cf-release/dea_next_gems.sh {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ build_root_path }}/{{ workspace }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
-  when: item.slug == 'dea_next' and (not compile_only or compile_only == item.slug)
-  sudo: yes
-  with_items:
-    "{{ packages }}"
-
-- name: Compile nfs server for CF release
-  shell: "{{ scripts_path }}/cf-release/nfs-kernel-server.sh {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
-  when: item.slug == 'nfs' and (not compile_only or compile_only == item.slug)
-  sudo: yes
-  with_items:
-    "{{ packages }}"

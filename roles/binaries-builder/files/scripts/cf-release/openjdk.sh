@@ -7,7 +7,7 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
-bosh_blob=$1
+bosh_blob=$6
 
 apt-get install -y openjdk-7-jre openjdk-7-jdk
 

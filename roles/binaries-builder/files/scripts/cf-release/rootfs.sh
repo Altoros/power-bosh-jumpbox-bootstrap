@@ -7,9 +7,9 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
-scripts_folder=$1
-build_folder=$2
-bosh_blob=$3
+scripts_folder=$2
+build_folder=$4
+bosh_blob=$6
 rootfs_dir=/tmp/warden/rootfs
 assets_dir=$scripts_folder/warden
 
