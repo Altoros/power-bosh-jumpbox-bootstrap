@@ -7,13 +7,18 @@
 - name: "Fetch {{ workspace }} binaries"
   get_url: "url={{ item.url }} dest={{ sources_root_path }}/{{ workspace }}/{{ item.name }}.tar.gz"
   when: item.url
+  sudo: no
   with_items:
     "{{ packages }}"
+  register: result
+  until: not result|failed
+  retries: 5
 
 - name: "Copy install scripts"
   copy: "src=roles/binaries-builder/files/scripts"
   args:
     dest: "{{ binary_builder_path }}"
+    force: yes
   register: result
   until: not result|failed
   retries: 5
@@ -25,14 +30,22 @@
 
 - name: "Create BOSH-compatible structure of folders to put the compiled {{ workspace }} packages into"
   file: dest={{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }} state=directory
+  sudo: no
   with_items:
     "{{ packages }}"
+  register: result
+  until: not result|failed
+  retries: 5
 
 - name: "Install {{ workspace }} binaries that do not need compilation"
   shell: "{{ scripts_path }}/update-configs.sh {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ item.bosh_blob_name }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   when: item.action == 'change_config'
+  sudo: no
   with_items:
     "{{ packages }}"
+  register: result
+  until: not result|failed
+  retries: 5
 
 - name: "Create build folder for {{ workspace }}"
   file: dest={{ build_root_path}}/{{ workspace }} state=directory

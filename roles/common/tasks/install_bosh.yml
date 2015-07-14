@@ -1,10 +1,16 @@
 ---
+
+- name: "Check if {{ bosh_path }} exists"
+  stat: "path={{ bosh_path }}"
+  register: bosh_folder
+
 - name: Clone BOSH repo from Altoros github
   git: "repo=https://github.com/Altoros/bosh.git dest={{ bosh_path }} accept_hostkey=yes version=power-2915"
   sudo: no
   register: result
   until: not result|failed
   retries: 5
+  when: bosh_folder.stat.isdir is defined and not bosh_folder.stat.exists
   environment:
     GIT_CURL_VERBOSE: 1
 
