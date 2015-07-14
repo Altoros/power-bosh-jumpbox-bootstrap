@@ -76,8 +76,9 @@ Packages to build for BOSH and CF are described in `bosh_packages` and `cf_packa
 
 * `name` - a descriptive name of the blob to use in the process of downloading and building; since it is used to name some intermediate folders it has to be unique.
 * `url` - the URL to download the blob from; has to be '' if a package is not downloaded by plain HTTP (eg git, APT, etc).
-* `slug` - a unique piece of metadata for some specific scripts to apply.
+* `slug` - a short identifier to use with the `--compile-only` option.
 * `action` - one of `change_config` and `compile`; in case of `change_config` playbook simply replaces all the occurences of the `config.guess` and `config.sub` files; in case of `compile`, in addition to aforementioned, it compiles the package from source.
+* `script` - a path (relative to the `scripts_path` folder) to a bash script used to compile the package.
 * `bosh_blob_path` - the blob path in the filesystem relative to the `blobs` folder required by BOSH.
 * `bosh_blob` - the name of the blob required by BOSH including the filetype extension.
 * `bosh_blob_name` - the name of the blob required by BOSH without the filetype extension.
