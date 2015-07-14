@@ -1,17 +1,26 @@
 #!/bin/bash
 
-cd /home/ubuntu/stemcell-builder/bosh
+set -ex
 
-gem install bundler
-bundle install
+if [ "$(id -u)" != "0" ]; then
+  echo "Sorry, you are not root."
+  exit 1
+fi
 
-export base_os_image_path="/home/ubuntu/stemcell-builder/base-os-image-trusty-ppc64el.tar.gz"
-export STEMCELL_BUILD_NUMBER=2905
+pushd /home/ubuntu/stemcell-builder/bosh
 
-bundle exec rake stemcell:build_os_image[ubuntu,trusty,$base_os_image_path]
+  gem install bundler --no-ri --no-rdoc
+  bundle install
+  
+  export base_os_image_path="/home/ubuntu/stemcell-builder/base-os-image-trusty-ppc64el.tar.gz"
+  export STEMCELL_BUILD_NUMBER=2915
+  
+  bundle exec rake stemcell:build_os_image[ubuntu,trusty,$base_os_image_path]
+  
+  chown -R ubuntu $base_os_image_path
+  
+  bundle exec rake stemcell:build_with_local_os_image[openstack,kvm,ubuntu,trusty,go,$base_os_image_path]
+  
+  cp bosh-stemcell*.tgz /home/ubuntu/stemcell-builder
 
-chown -R ubuntu $base_os_image_path
-
-bundle exec rake stemcell:build_with_local_os_image[openstack,kvm,ubuntu,trusty,go,$base_os_image_path]
-
-cp bosh-stemcell*.tgz /home/ubuntu/stemcell-builder
+popd

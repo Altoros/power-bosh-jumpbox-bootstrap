@@ -11,13 +11,14 @@
 - name: Put Gemfile to the directory
   copy: "src=Gemfile dest={{stemcell_builder_path}}/Gemfile"
 
-
+# git clone --recursive --branch power-2915 https://github.com/Altoros/bosh.git
 - name: Clone BOSH repo from Altoros github for stemcell builder
   git: "repo=https://github.com/Altoros/bosh.git"
   sudo: no
   args:
     dest: "{{stemcell_builder_path}}/bosh"
     version: power-2915
+    recursive: yes
     accept_hostkey: yes
   register: result
   until: not result|failed

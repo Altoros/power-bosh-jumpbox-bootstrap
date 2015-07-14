@@ -13,13 +13,24 @@
   shell: "go build -o direnv chdir={{github_path}}/direnv creates={{github_path}}/direnv/direnv"
   sudo: no
   environment: go_environment
+  register: result
+  until: not result|failed
+  retries: 5
 
 - name: Copy direnv binary to /usr/local/bin
   shell: "cp {{github_path}}/direnv/direnv /usr/local/bin/direnv creates=/usr/local/bin/direnv"
   sudo: yes
+  register: result
+  until: not result|failed
+  retries: 5
 
-- file: path=/usr/local/bin/direnv mode=755
+- name: Make direnv file executable
+  file: path=/usr/local/bin/direnv mode=755
   sudo: yes
+  register: result
+  until: not result|failed
+  retries: 5
 
-- shell: echo 'eval "$(direnv hook bash)"' >> /home/{{ansible_ssh_user}}/.bashrc
+- name: Add direnv load to .bashrc
+  shell: echo 'eval "$(direnv hook bash)"' >> /home/{{ansible_ssh_user}}/.bashrc
   sudo: no

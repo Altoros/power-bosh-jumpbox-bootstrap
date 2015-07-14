@@ -22,7 +22,10 @@ pushd $build_folder
   yes | rm -rf warden
   if [ -d $rootfs_dir ]
   then
-    lsof -t $rootfs_dir | xargs kill
+    rootfs_dir_pids=`lsof -t $rootfs_dir`
+    if [ -n "$rootfs_dir_pids" ]; then
+      lsof -t $rootfs_dir | xargs kill
+    fi
     sleep 2 # FIXME
     yes | rm -rf $rootfs_dir
   fi
