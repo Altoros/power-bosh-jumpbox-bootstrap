@@ -47,5 +47,5 @@
     "{{ packages }}"
   register: result
   until: not result|failed
-  retries: 5
+  retries: 2
 
