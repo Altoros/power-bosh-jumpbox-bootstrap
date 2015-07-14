@@ -1,10 +1,10 @@
 ---
-- name: Create folders to download binaries into
+- name: "Create {{ workspace }} folders to download binaries into"
   file: dest={{ sources_root_path }}/{{ workspace }}/{{ item.name }} state=directory
   with_items:
     "{{ packages }}"
 
-- name: Fetch binaries
+- name: "Fetch {{ workspace }} binaries"
   get_url: "url={{ item.url }} dest={{ sources_root_path }}/{{ workspace }}/{{ item.name }}.tar.gz"
   when: item.url
   with_items:
@@ -19,25 +19,25 @@
   retries: 5
   sudo: no
 
-- name: Ensure files are 0755
+- name: "Ensure files are 0755"
   command: "find {{ scripts_path }} -name *.sh -exec chmod 0755 {} \\;"
   sudo: yes
 
-- name: "Create BOSH-compatible structure of folders to put the compiled packages into"
+- name: "Create BOSH-compatible structure of folders to put the compiled {{ workspace }} packages into"
   file: dest={{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }} state=directory
   with_items:
     "{{ packages }}"
 
-- name: "Install binaries that do not need compilation"
+- name: "Install {{ workspace }} binaries that do not need compilation"
   shell: "{{ scripts_path }}/update-configs.sh {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ item.bosh_blob_name }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   when: item.action == 'change_config'
   with_items:
     "{{ packages }}"
 
-- name: "Create build folder"
+- name: "Create build folder for {{ workspace }}"
   file: dest={{ build_root_path}}/{{ workspace }} state=directory
 
-- name: "Compile packages"
+- name: "Compile packages for {{ workspace }}"
   shell: "{{ scripts_path }}/{{ item.script }} {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ build_root_path }}/{{ workspace }} {{ item.bosh_blob_name }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ ansible_ssh_user }}"
   when: item.action == 'compile' and (not compile_only or compile_only == item.slug)
   sudo: yes
