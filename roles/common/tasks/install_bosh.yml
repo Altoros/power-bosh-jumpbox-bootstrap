@@ -1,6 +1,6 @@
 ---
 - name: Clone BOSH repo from Altoros github
-  git: "repo=https://github.com/Altoros/bosh.git dest={{ bosh_path }} accept_hostkey=yes version=power-2915"
+  git: "repo=https://github.com/Altoros/bosh.git dest={{ bosh_path }} accept_hostkey=yes recursive=no version=power-2915"
   sudo: no
   register: result
   until: not result|failed
