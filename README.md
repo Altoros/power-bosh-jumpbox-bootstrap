@@ -1,3 +1,15 @@
+## Short instructions
+
+If you don't want to go through all README file, you can use following steps to create all necessary assets for deploying BOSH and CF to OpenStack on Power architecture:
+
+1. Create "injector" VM with __m1.small__ flavor and Ubuntu 14.04 LE as operating system. And make it possible to SSH to the VM. This VM will be used to run Ansible playbooks that create jumpbox, stemcell and binary builders. This is needed to minimize impact of network problems on the deployment process.
+1. Create "jumpbox" VM with __m1.xlarge__ flavor (the size is important here) and Ubuntu 14.04 LE operating system. 
+1. Make it possible to establish SSH connection from "injector" to "jumpbox".
+1. Enter "injector" VM by SSH and run [this script](https://gist.github.com/allomov/46b5b936a3ffce152933#file-bootstrap-jumpbox-sh) to bootstrap "jumpbox" and create all necessary assets. After that you can use "jumpbox" to deploy MicroBOSH and CF.
+1. Enter "jumpbox" VM by SSH.
+1. Build all necessary assets: stemcell, opetstack cpi and BOSH release. You can use [this script](https://gist.github.com/allomov/46b5b936a3ffce152933#file-deploy-microbosh-sh) as an example of how to do it.
+1. Clone [workspace project](https://github.com/Altoros/ibm-power-bosh-workspace) and follow instructions in its README.
+
 ## Install [Ansible](http://www.ansible.com/)
 
 The recommended ansible version is 1.9.2 (install from [PyPI](https://pypi.python.org/pypi/ansible/1.9.2)). The earlier versions may come with [this bug](https://github.com/rvm/rvm1-ansible/issues/44).
@@ -39,7 +51,7 @@ The playbook for building stemcells is the work in progress so far. In order to 
 1. ssh to a stemcell builder instance: `ssh -i ~/.ssh/id_rsa ubuntu@x.x.x.x`
 1. `cd ~/stemcell-builder`
 1. `gem install bundler && bundle install`
-1. Run `bundle exec ./bin/build-stemcell` (if any errors occurs, try to run commands from this script manually)
+1. Run `/home/ubuntu/stemcell-builder/bin/build-stemcell` (if any errors occurs, try to run commands from this script manually).
 
 Notice: At this moment we use the [power-2915 branch](https://github.com/Altoros/bosh/tree/power-2915) of BOSH. This branch doesn't add an extra MicroBOSH release to the stemcell, which is not needed at all, since we use `bosh-init` tool for MicroBOSH deployment.
 

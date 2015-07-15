@@ -1,10 +1,4 @@
 ---
-- name: "packages"
-  debug: "msg={{packages}}"
-
-- name: "sources_root_path"
-  debug: "msg={{sources_root_path}}"
-
 - name: "Create {{ workspace }} folders to download binaries into"
   file: "dest={{ sources_root_path }}/{{ workspace }}/{{ item.name }}"
   args: 
