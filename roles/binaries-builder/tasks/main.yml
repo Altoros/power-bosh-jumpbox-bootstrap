@@ -1,5 +1,4 @@
 ---
-
 - include: binaries-builder.yml packages=bosh_packages workspace=bosh
   tags:
   - bosh

@@ -1,6 +1,12 @@
 ---
+- name: "packages"
+  debug: "msg={{packages}}"
+
+- name: "sources_root_path"
+  debug: "msg={{sources_root_path}}"
+
 - name: "Create {{ workspace }} folders to download binaries into"
-  file: dest={{ sources_root_path }}/{{ workspace }}/{{ item.name }}
+  file: "dest={{ sources_root_path }}/{{ workspace }}/{{ item.name }}"
   args: 
     state: directory
   sudo: no
@@ -35,7 +41,7 @@
   sudo: yes
 
 - name: "Create BOSH-compatible structure of folders to put the compiled {{ workspace }} packages into"
-  file: dest={{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }} state=directory
+  file: "dest={{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }} state=directory"
   sudo: no
   with_items:
     "{{ packages }}"
@@ -54,7 +60,7 @@
   retries: 5
 
 - name: "Create build folder for {{ workspace }}"
-  file: dest={{ build_root_path}}/{{ workspace }} state=directory
+  file: "dest={{ build_root_path}}/{{ workspace }} state=directory"
 
 - name: "Compile packages for {{ workspace }}"
   shell: "{{ scripts_path }}/{{ item.script }} {{ item.name }} {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ build_root_path }}/{{ workspace }} {{ item.bosh_blob_name }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }} {{ ansible_ssh_user }}"
@@ -66,5 +72,5 @@
     "{{ packages }}"
   register: result
   until: not result|failed
-  retries: 2
+  retries: 3
 
