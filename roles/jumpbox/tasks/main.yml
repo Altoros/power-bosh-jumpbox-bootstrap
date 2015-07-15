@@ -33,8 +33,11 @@
 
 - name: Get cloudfoundry CLI
   shell: "go get -d github.com/cloudfoundry/cli"
-  args: {creates: "{{go_path}}/src/github.com/cloudfoundry/cli/"}
+  args: {creates: "{{go_path}}/src/github.com/cloudfoundry/cli"}
   environment: go_environment
+  register: result
+  until: not result|failed
+  retries: 5
 
 - name: "Revert CF CLI (freeze the version to v6.11.2)"
   shell: "git checkout tags/v6.11.2"
@@ -50,12 +53,12 @@
   until: not result|failed
   retries: 5
 
-- name: Add bosh-init path to $PATH
+- name: Add CF CLI binary to $PATH
   sudo: yes
-  file: "src={{go_path}}/src/github.com/cloudfoundry/cli/out/cli"
+  file: "src={{go_path}}/src/github.com/cloudfoundry/cli/out/cf"
   args:
-    mode: 755
-    dest: /usr/local/bin/cli
+    mode: "0755"
+    dest: /usr/local/bin/cf
     state: link
   register: result
   until: not result|failed
@@ -67,4 +70,7 @@
   environment: go_environment
   args:
     creates: "{{go_path}}/src/github.com/cloudfoundry-incubator/spiff"
+  register: result
+  until: not result|failed
+  retries: 5
 

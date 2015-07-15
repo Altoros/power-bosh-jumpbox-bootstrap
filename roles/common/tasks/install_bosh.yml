@@ -10,7 +10,7 @@
   register: result
   until: not result|failed
   retries: 5
-  when: bosh_folder.stat.isdir is defined and not bosh_folder.stat.exists
+  when: not bosh_folder.stat.exists
   environment:
     GIT_CURL_VERBOSE: 1
 
