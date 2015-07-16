@@ -7,6 +7,21 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
+stemcell_dir=/mnt/stemcell
+
+if [ -d $stemcell_dir ]; then
+  echo "Cleaning environment from the last stemcell build."
+  stemcell_chroot_dir=$stemcell_dir/null/null/ubuntu/work/work/chroot
+  stemcell_chroot_dir_pids=`lsof -t $stemcell_chroot_dir`
+  if [ -n "$stemcell_chroot_dir_pids" ]; then
+    lsof -t $stemcell_chroot_dir | xargs kill
+  fi
+  sleep 2 # FIXME
+  yes | rm -rf $stemcell_dir
+  echo "Done."
+fi
+
+
 pushd /home/ubuntu/stemcell-builder/bosh
 
   gem install bundler --no-ri --no-rdoc
