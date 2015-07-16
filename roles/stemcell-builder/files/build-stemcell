@@ -8,7 +8,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 stemcell_dir=/mnt/stemcell
-
+echo $stemcell_dir
 if [ -d $stemcell_dir ]; then
   echo "Cleaning environment from the last stemcell build."
   stemcell_chroot_dir=$stemcell_dir/null/null/ubuntu/work/work/chroot
@@ -36,6 +36,6 @@ pushd /home/ubuntu/stemcell-builder/bosh
   
   bundle exec rake stemcell:build_with_local_os_image[openstack,kvm,ubuntu,trusty,go,$base_os_image_path]
   
-  cp bosh-stemcell*.tgz /home/ubuntu/stemcell-builder
+  cp /mnt/stemcells/openstack/kvm/ubuntu/work/work/bosh-stemcell*.tgz /home/ubuntu/stemcell-builder
 
 popd

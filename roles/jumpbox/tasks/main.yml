@@ -12,8 +12,8 @@
   args: {creates: "{{go_path}}/src/github.com/cloudfoundry/bosh-init/"}
   environment: go_environment
 
-- name: "Revert bosh-init (freeze the version to v0.0.43)"
-  shell: "git checkout tags/v0.0.43"
+- name: "Revert bosh-init (freeze the version to v0.0.70)"
+  shell: "git checkout tags/v0.0.70"
   args: {chdir: "{{go_path}}/src/github.com/cloudfoundry/bosh-init/"}
 
 - name: Build bosh-init
@@ -65,7 +65,7 @@
   retries: 5
 
 - name: Install Spiff
-  shell: "go get github.com/cloudfoundry-incubator/spiff"
+  shell: "go get -d github.com/cloudfoundry-incubator/spiff"
   sudo: no
   environment: go_environment
   args:
@@ -74,3 +74,21 @@
   until: not result|failed
   retries: 5
 
+- name: Build Spiff
+  shell: "./scripts/build"
+  sudo: no
+  environment: go_environment
+  args:
+    chdir: "{{go_path}}/src/github.com/cloudfoundry-incubator/spiff"
+
+- name: Move Spiff binary to $PATH
+  shell: "./scripts/build"
+  sudo: yes
+  file: "{{go_path}}/src/github.com/cloudfoundry-incubator/spiff/spiff"
+  args:
+    mode: "0755"
+    dest: /usr/local/bin/spiff
+    state: link
+  register: result
+  until: not result|failed
+  retries: 5

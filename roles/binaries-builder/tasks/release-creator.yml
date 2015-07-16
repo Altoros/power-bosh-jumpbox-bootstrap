@@ -1,0 +1,12 @@
+---
+- name: "Copy release to workspace"
+  file: "dest={{ sources_root_path }}/{{ workspace }}/{{ item.name }}"
+  args: 
+    state: directory
+  sudo: no
+  with_items:
+    "{{ packages }}"
+  register: result
+  until: not result|failed
+  retries: 5
+
