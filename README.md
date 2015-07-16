@@ -2,7 +2,7 @@
 
 If you don't want to go through all README file, you can use following steps to create all necessary assets for deploying BOSH and CF to OpenStack on Power architecture:
 
-1. Create "injector" VM with __m1.small__ flavor and Ubuntu 14.04 LE as operating system. And make it possible to SSH to the VM. This VM will be used to run Ansible playbooks that create jumpbox, stemcell and binary builders. This is needed to minimize impact of network problems on the deployment process.
+1. Create "injector" VM with __m1.small__ flavor and Ubuntu 14.04 LE as operating system. And make it possible to SSH to the VM. In case you use password authentication for SSH or sudo user, you will need to uncomment `ask_pass` or `ask_sudo_pass` options in `ansible.cfg` file. This VM will be used to run Ansible playbooks that create jumpbox, stemcell and binary builders. This is needed to minimize impact of network problems on the deployment process.
 1. Create "jumpbox" VM with __m1.xlarge__ flavor (the size is important here) and Ubuntu 14.04 LE operating system. 
 1. Make it possible to establish SSH connection from "injector" to "jumpbox".
 1. Enter "injector" VM by SSH and run [this script](https://gist.github.com/allomov/46b5b936a3ffce152933#file-bootstrap-jumpbox-sh) to bootstrap "jumpbox" and create all necessary assets. After that you can use "jumpbox" to deploy MicroBOSH and CF.
@@ -18,8 +18,9 @@ You can also use `brew` tool to install latest version on your Mac OS. Simply ru
 
 ## Setup VMs
 
-Playbooks are intended to be run on virtual machines powering Ubuntu 14.04 with ppc64el arch.
-We recommend using a separate VM as a jumpbox and 2 separate VMs for bulding stemcell and binaries.
+Playbooks are intended to be run on virtual machines powering Ubuntu 14.04 with ppc64el arch, this VMs should have python 2.5+ to be installed.
+
+We recommend using a separate VM as a jumpbox and 2 separate VMs for bulding stemcell and binaries, still you can build everything you need on a single VM using `all-in-one`.
 
 ## Provision jumpbox VM
 
