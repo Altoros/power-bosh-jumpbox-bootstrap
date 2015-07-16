@@ -82,7 +82,6 @@
     chdir: "{{go_path}}/src/github.com/cloudfoundry-incubator/spiff"
 
 - name: Move Spiff binary to $PATH
-  shell: "./scripts/build"
   sudo: yes
   file: "{{go_path}}/src/github.com/cloudfoundry-incubator/spiff/spiff"
   args:
