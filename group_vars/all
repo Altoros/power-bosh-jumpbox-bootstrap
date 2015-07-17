@@ -104,8 +104,8 @@ cf_packages:
   action: compile
   script: cf-release/gccgo_ppc64le_trusty.sh
   bosh_blob_path: gccgo_ppc64le_trusty
-  bosh_blob: gccgo1.4.tar.bz2
-  bosh_blob_name: gccgo1.4
+  bosh_blob: gccgo.tar.bz2
+  bosh_blob_name: gccgo
 - name: rootfs
   url: ''
   slug: rootfs
