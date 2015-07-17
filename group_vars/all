@@ -82,6 +82,14 @@ cf_packages:
   bosh_blob_path: postgres
   bosh_blob: postgresql-9.0.3.tar.gz
   bosh_blob_name: postgresql-9.0.3
+- name: postgresql-9.0.3
+  url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
+  slug: postgres
+  action: compile
+  script: postgres.sh
+  bosh_blob_path: postgres
+  bosh_blob: postgres-9.0.3-1.ppc64le.tar.gz
+  bosh_blob_name: postgres-9.0.3-1.ppc64le
 - name: mysql-5.1.62
   url: http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.1.62.tar.gz
   slug: mysql_cf
