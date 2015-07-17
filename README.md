@@ -8,6 +8,7 @@ If you don't want to go through all README file, you can use following steps to 
 1. Enter "injector" VM by SSH and run [this script](https://gist.github.com/allomov/46b5b936a3ffce152933#file-bootstrap-jumpbox-sh) to bootstrap "jumpbox" and create all necessary assets. After that you can use "jumpbox" to deploy MicroBOSH and CF.
 1. Enter "jumpbox" VM by SSH.
 1. Build all necessary assets: stemcell, opetstack cpi and BOSH release. You can use [this script](https://gist.github.com/allomov/46b5b936a3ffce152933#file-deploy-microbosh-sh) as an example of how to do it.
+1. After you deployed MicroBOSH, you'll need to find out what's MicroBOSH in private network, then SSH to the MicroBOSH instance and replace MicroBOSH floating IP to its IP in a private network in a following file `/var/vcap/jobs/cpi/config/cpi.yml`. This made to allow compilation VMs to communicate with BOSH director in MicroBOSH instance. 
 1. Clone [workspace project](https://github.com/Altoros/ibm-power-bosh-workspace) and follow instructions in its README.
 
 ## Install [Ansible](http://www.ansible.com/)
