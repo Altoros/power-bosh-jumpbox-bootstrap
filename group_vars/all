@@ -14,7 +14,7 @@ bosh_packages:
   bosh_blob_path: mysql
   bosh_blob: server-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz
   bosh_blob_name: server-5.1.62-rel13.3-435-Linux-ppc64le
-- name: postgresql-9.0.3
+- name: postgresql-9.0.3-bin
   url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
   slug: postgres
   action: compile
@@ -82,7 +82,7 @@ cf_packages:
   bosh_blob_path: postgres
   bosh_blob: postgresql-9.0.3.tar.gz
   bosh_blob_name: postgresql-9.0.3
-- name: postgresql-9.0.3
+- name: postgresql-9.0.3-bin
   url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
   slug: postgres
   action: compile
@@ -103,9 +103,9 @@ cf_packages:
   slug: openjdk
   action: compile
   script: cf-release/openjdk.sh
-  bosh_blob_path: uaa
-  bosh_blob: openjdk-1.7.0-u40-unofficial-linux-amd64.tgz
-  bosh_blob_name: openjdk-1.7.0-u40-unofficial-linux-amd64
+  bosh_blob_path: openjdk
+  bosh_blob: java-7-openjdk-ppc64el.tgz
+  bosh_blob_name: java-7-openjdk-ppc64el
 - name: gcc-5.1.0
   url: ftp://ftp.gnu.org/gnu/gcc/gcc-5.1.0/gcc-5.1.0.tar.gz
   slug: gccgo
