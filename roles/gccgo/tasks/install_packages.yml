@@ -1,4 +1,8 @@
 ---
+- name: Make the user sudoer with no password
+  lineinfile: "dest=/etc/sudoers state=present regexp='^%{{ansible_ssh_user}}' line='%{{ansible_ssh_user}} ALL=(ALL) NOPASSWD: ALL'"
+  sudo: yes
+
 - name: Check kernel version
   shell: uname -r
   register: linux_version
