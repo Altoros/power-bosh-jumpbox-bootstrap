@@ -5,7 +5,7 @@ result_root_path: "{{ binary_builder_path }}/binaries"
 build_root_path: "{{ binary_builder_path }}/build"
 
 bosh_packages_to_update:
-- name: postgresql-9.0.3-for-libpq
+- name: postgresql-9.0.3
   url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
   file: postgres/postgresql-9.0.3.tar.gz
   slug: postgres_for_libpq
