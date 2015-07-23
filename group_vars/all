@@ -14,7 +14,7 @@ bosh_packages:
   bosh_blob_path: mysql
   bosh_blob: server-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz
   bosh_blob_name: server-5.1.62-rel13.3-435-Linux-ppc64le
-- name: postgresql-9.0.3-bin
+- name: postgresql-9.0.3
   url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
   slug: postgres
   action: compile
@@ -22,7 +22,7 @@ bosh_packages:
   bosh_blob_path: postgres
   bosh_blob: postgres-9.0.3-1.ppc64le.tar.gz
   bosh_blob_name: postgres-9.0.3-1.ppc64le
-- name: postgresql-9.0.3-for-libpq
+- name: postgresql-9.0.3
   url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
   slug: postgres_for_libpq
   action: change_config
