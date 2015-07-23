@@ -83,7 +83,7 @@
 
 - name: Move Spiff binary to $PATH
   sudo: yes
-  file: "{{go_path}}/src/github.com/cloudfoundry-incubator/spiff/spiff"
+  file: "src={{go_path}}/src/github.com/cloudfoundry-incubator/spiff/spiff"
   args:
     mode: "0755"
     dest: /usr/local/bin/spiff
