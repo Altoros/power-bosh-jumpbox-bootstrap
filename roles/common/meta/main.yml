@@ -1,7 +1,7 @@
 ---
 dependencies:
   - role: gccgo
-    tags: golang
+    tags: ["golang", "gccgo"]
   - role: rvm_io.rvm1-ruby
     tags: ruby
     rvm1_install_flags: '--auto-dotfiles --user-install'
