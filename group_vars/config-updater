@@ -13,14 +13,6 @@ bosh_packages_to_update:
   bosh_blob_path: postgres
   bosh_blob_name: postgresql-9.0.3
   bosh_blob: postgresql-9.0.3.tar.gz
-# - name: redis-3.0.2
-#   url: https://blob.cfblob.com/033ba3ad-dea6-4a18-910f-e7d0f244d8ef
-#   sha: a38755fe9a669896f7c5d8cd3ebbf76d59712002
-#   slug: redis
-#   action: change_config
-#   bosh_blob_path: redis
-#   bosh_blob: redis-3.0.2.tar.gz
-#   bosh_blob_name: redis-3.0.2
 - name: ruby-2.1.4
   url: https://blob.cfblob.com/00b50c34-f264-4245-9a90-b56c7385694e
   sha: 29e9cfdd9e989b7621d7696ef3f970262a08dbc3
@@ -37,6 +29,7 @@ bosh_packages_to_update:
   bosh_blob_path: ruby
   bosh_blob_name: yaml-0.1.5
   bosh_blob: yaml-0.1.5.tar.gz
+
 
 # cf_packages_to_update:
 # - name: yaml-0.1.6
