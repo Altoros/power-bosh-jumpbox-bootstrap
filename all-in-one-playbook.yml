@@ -3,5 +3,6 @@
   roles:
   - role: jumpbox
   - role: stemcell-builder
-  - role: binaries-builder
+  - { role: binaries-builder, packages: bosh_packages, workspace: bosh}
+  - { role: binaries-builder, packages: cf_packages, workspace: cf}
 

@@ -1,9 +1,2 @@
 ---
-- include: binaries-builder.yml packages=bosh_packages workspace=bosh
-  tags:
-  - bosh
-
-- include: binaries-builder.yml packages=cf_packages workspace=cf
-  tags:
-  - cf
-
+- include: binaries-builder.yml

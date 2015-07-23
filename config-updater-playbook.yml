@@ -1,0 +1,5 @@
+---
+- hosts: config-updater
+  roles:
+  - { role: binaries-builder, packages: bosh_packages_to_update, workspace: bosh}
+  - { role: binaries-builder, packages: cf_packages_to_update, workspace: cf}
