@@ -47,7 +47,7 @@
 
 - name: "Install {{ workspace }} binaries that do not need compilation"
   shell: "{{ scripts_path }}/update-configs.sh {{ scripts_path }} {{ sources_root_path }}/{{ workspace }} {{ item.bosh_blob_name }} {{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
-  when: item.action == 'change_config' || item.action == 'update_config'
+  when: (item.action == 'change_config' or item.action == 'update_config')
   sudo: no
   with_items:
     "{{ packages }}"
