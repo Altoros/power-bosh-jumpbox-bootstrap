@@ -7,52 +7,56 @@ build_root_path: "{{ binary_builder_path }}/build"
 bosh_packages_to_update:
 - name: postgresql-9.0.3-for-libpq
   url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
+  file: postgres/postgresql-9.0.3.tar.gz
   slug: postgres_for_libpq
-  action: change_config
+  action: update_config
   bosh_blob_path: postgres
-  bosh_blob: postgresql-9.0.3.tar.gz
   bosh_blob_name: postgresql-9.0.3
-- name: redis-2.6.9
-  url: https://blob.cfblob.com/d24e2fbd-ea3f-4c4b-b4e3-a0ccfd60dafa
-  slug: redis
-  action: change_config
-  bosh_blob_path: redis
-  bosh_blob: redis-2.6.9.tar.gz
-  bosh_blob_name: redis-2.6.9
+  bosh_blob: postgresql-9.0.3.tar.gz
+# - name: redis-3.0.2
+#   url: https://blob.cfblob.com/033ba3ad-dea6-4a18-910f-e7d0f244d8ef
+#   sha: a38755fe9a669896f7c5d8cd3ebbf76d59712002
+#   slug: redis
+#   action: change_config
+#   bosh_blob_path: redis
+#   bosh_blob: redis-3.0.2.tar.gz
+#   bosh_blob_name: redis-3.0.2
 - name: ruby-2.1.4
   url: https://blob.cfblob.com/00b50c34-f264-4245-9a90-b56c7385694e
+  sha: 29e9cfdd9e989b7621d7696ef3f970262a08dbc3
   slug: ruby
-  action: change_config
+  action: update_config
   bosh_blob_path: ruby
-  bosh_blob: ruby-2.1.4.tar.gz
   bosh_blob_name: ruby-2.1.4
+  bosh_blob: ruby-2.1.4.tar.gz
 - name: yaml-0.1.5
   url: https://blob.cfblob.com/db07c821-62f8-4fd1-a99a-ff1c88b2474b
+  sha: 8b78cb9f759c7d80db8a7328c0ebecfe34fde737
   slug: yaml
-  action: change_config
+  action: update_config
   bosh_blob_path: ruby
-  bosh_blob: yaml-0.1.5.tar.gz
   bosh_blob_name: yaml-0.1.5
+  bosh_blob: yaml-0.1.5.tar.gz
 
-cf_packages_to_update:
-- name: yaml-0.1.6
-  url: https://blob.cfblob.com/b3ed7d5e-4c46-4c81-8ac7-04d070dd9cc8
-  slug: yaml_cf
-  action: change_config
-  bosh_blob_path: ruby-2.1.4
-  bosh_blob: yaml-0.1.6.tar.gz
-  bosh_blob_name: yaml-0.1.6
-- name: ruby-2.1.4
-  url: https://blob.cfblob.com/00b50c34-f264-4245-9a90-b56c7385694e
-  slug: ruby_cf
-  action: change_config
-  bosh_blob_path: ruby-2.1.4
-  bosh_blob: ruby-2.1.4.tar.gz
-  bosh_blob_name: ruby-2.1.4
-- name: postgresql-9.0.3
-  url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
-  slug: postgres
-  action: change_config
-  bosh_blob_path: postgres
-  bosh_blob: postgresql-9.0.3.tar.gz
-  bosh_blob_name: postgresql-9.0.3
+# cf_packages_to_update:
+# - name: yaml-0.1.6
+#   url: https://blob.cfblob.com/b3ed7d5e-4c46-4c81-8ac7-04d070dd9cc8
+#   slug: yaml_cf
+#   action: change_config
+#   bosh_blob_path: ruby-2.1.4
+#   bosh_blob: yaml-0.1.6.tar.gz
+#   bosh_blob_name: yaml-0.1.6
+# - name: ruby-2.1.4
+#   url: https://blob.cfblob.com/00b50c34-f264-4245-9a90-b56c7385694e
+#   slug: ruby_cf
+#   action: change_config
+#   bosh_blob_path: ruby-2.1.4
+#   bosh_blob: ruby-2.1.4.tar.gz
+#   bosh_blob_name: ruby-2.1.4
+# - name: postgresql-9.0.3
+#   url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
+#   slug: postgres
+#   action: change_config
+#   bosh_blob_path: postgres
+#   bosh_blob: postgresql-9.0.3.tar.gz
+#   bosh_blob_name: postgresql-9.0.3
