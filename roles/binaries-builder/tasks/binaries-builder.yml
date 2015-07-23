@@ -67,7 +67,6 @@
     creates: "{{ result_root_path }}/{{ workspace }}/{{ item.bosh_blob_path }}/{{ item.bosh_blob }}"
   with_items:
     "{{ packages }}"
-  register: result
-  until: not result|failed
-  retries: 3
+  ignore_errors: yes # because of this https://github.com/ansible/ansible/issues/10920
+                     # will need to wait ansible 2.0
 
