@@ -81,7 +81,7 @@ cf_packages:
   bosh_blob_path: postgres
   bosh_blob: postgresql-9.0.3.tar.gz
   bosh_blob_name: postgresql-9.0.3
-- name: postgresql-9.0.3-bin
+- name: postgresql-9.0.3
   url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
   slug: postgres
   action: compile
