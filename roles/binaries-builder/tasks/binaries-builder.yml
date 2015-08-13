@@ -2,7 +2,7 @@
 
 - name: "Create {{ workspace }} folders to download binaries into"
   file: "dest={{ sources_root_path }}/{{ workspace }}/{{ item.name }}"
-  args: 
+  args:
     state: directory
   sudo: no
   with_items:

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# /home/ubuntu/binary_builder/scripts/cf-release/rootfs.sh rootfs /home/ubuntu/binary_builder/scripts/ /home/ubuntu/binary_builder/sources /home/ubuntu/binary_builder/binaries /home/ubuntu/binary_builder/binaries/cf rootfsppc64 /home/ubuntu/binary_builder/binaries/cf/rootfs/rootfsppc64.tgz
+
 set -ex
 
 if [ "$(id -u)" != "0" ]; then
@@ -16,6 +18,50 @@ assets_dir=$scripts_folder/warden
 source $scripts_folder/helpers.sh
 
 gem install bundler --no-ri --no-rdoc
+
+packages="
+  bind9-host
+  bison
+  build-essential
+  curl
+  dnsutils
+  flex
+  gdb
+  git
+#  imagemagick
+  iputils-arping
+  libaio1
+  libbz2-dev
+  libcap2-bin
+  libcurl3
+  libcurl3-dev
+#  libmagick9-dev
+  libmysqlclient-dev
+  libncurses5-dev
+  libpq-dev
+  libreadline6-dev
+  libsqlite-dev
+  libsqlite3-dev
+  libssl-dev
+  libxml2
+  libxml2-dev
+  libxslt1-dev
+  libxslt1.1
+  libyaml-dev
+  lsof
+  openssh-server
+  psmisc
+  quota
+  rsync
+  strace
+  sysstat
+  tcpdump
+  traceroute
+  unzip
+  wget
+  zip
+  libv8-dev
+"
 
 pushd $build_folder
   # clean environment in case scripts are run for the second or more time
