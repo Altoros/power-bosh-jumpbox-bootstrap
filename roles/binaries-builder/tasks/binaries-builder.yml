@@ -21,6 +21,17 @@
   until: not result|failed
   retries: 5
 
+- name: "Fetch {{ workspace }} binaries with s3cli"
+  shell: "s3cli -c {{github_path}}/s3cli/s3.json get {{item.object}} {{ sources_root_path }}/{{ workspace }}/{{ item.name }}.tar.gz"
+  when: item.object
+  sudo: no
+  with_items:
+    "{{ packages }}"
+  register: result
+  environment: '{{go_environment}}'
+  until: not result|failed
+  retries: 5
+
 - name: "Copy install scripts"
   copy: "src=roles/binaries-builder/files/scripts"
   args:

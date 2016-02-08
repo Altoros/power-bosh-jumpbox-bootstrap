@@ -8,6 +8,7 @@ build_root_path: "{{ binary_builder_path }}/build"
 bosh_packages:
 - name: mysql-5.1.62
   url: http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.1.62.tar.gz
+  object: ''
   slug: mysql
   action: compile
   script: bosh-release/mysql-client.sh
@@ -15,7 +16,8 @@ bosh_packages:
   bosh_blob: server-5.1.62-rel13.3-435-Linux-ppc64le.tar.gz
   bosh_blob_name: server-5.1.62-rel13.3-435-Linux-ppc64le
 - name: postgresql-9.0.3
-  url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
+  url: ''
+  object: rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
   slug: postgres
   action: compile
   script: postgres.sh
@@ -23,28 +25,32 @@ bosh_packages:
   bosh_blob: postgres-9.0.3-1.ppc64le.tar.gz
   bosh_blob_name: postgres-9.0.3-1.ppc64le
 - name: postgresql-9.0.3
-  url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
+  url: '' 
+  object: rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
   slug: postgres_for_libpq
   action: change_config
   bosh_blob_path: postgres
   bosh_blob: postgresql-9.0.3.tar.gz
   bosh_blob_name: postgresql-9.0.3
 - name: redis-2.6.9
-  url: https://blob.cfblob.com/d24e2fbd-ea3f-4c4b-b4e3-a0ccfd60dafa
+  url: ''
+  object: d24e2fbd-ea3f-4c4b-b4e3-a0ccfd60dafa
   slug: redis
   action: change_config
   bosh_blob_path: redis
   bosh_blob: redis-2.6.9.tar.gz
   bosh_blob_name: redis-2.6.9
 - name: ruby-2.1.4
-  url: https://blob.cfblob.com/00b50c34-f264-4245-9a90-b56c7385694e
+  url: ''
+  object: 00b50c34-f264-4245-9a90-b56c7385694e
   slug: ruby
   action: change_config
   bosh_blob_path: ruby
   bosh_blob: ruby-2.1.4.tar.gz
   bosh_blob_name: ruby-2.1.4
 - name: yaml-0.1.5
-  url: https://blob.cfblob.com/db07c821-62f8-4fd1-a99a-ff1c88b2474b
+  url: ''
+  object: db07c821-62f8-4fd1-a99a-ff1c88b2474b
   slug: yaml
   action: change_config
   bosh_blob_path: ruby
@@ -53,6 +59,7 @@ bosh_packages:
 - name: powerdns-3.7.3
   url: https://github.com/PowerDNS/pdns/archive/rec-3.7.3.tar.gz
   slug: powerdns
+  object: ''
   action: compile
   script: bosh-release/power-dns.sh
   bosh_blob_path: powerdns
@@ -61,28 +68,32 @@ bosh_packages:
 
 cf_packages:
 - name: yaml-0.1.6
-  url: https://blob.cfblob.com/b3ed7d5e-4c46-4c81-8ac7-04d070dd9cc8
+  url: ''
+  object: b3ed7d5e-4c46-4c81-8ac7-04d070dd9cc8
   slug: yaml_cf
   action: change_config
   bosh_blob_path: ruby-2.1.4
   bosh_blob: yaml-0.1.6.tar.gz
   bosh_blob_name: yaml-0.1.6
 - name: ruby-2.1.4
-  url: https://blob.cfblob.com/00b50c34-f264-4245-9a90-b56c7385694e
+  url: ''
+  object: 00b50c34-f264-4245-9a90-b56c7385694e
   slug: ruby_cf
   action: change_config
   bosh_blob_path: ruby-2.1.4
   bosh_blob: ruby-2.1.4.tar.gz
   bosh_blob_name: ruby-2.1.4
 - name: postgresql-9.0.3
-  url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
+  url: ''
+  object: rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
   slug: postgres
   action: change_config
   bosh_blob_path: postgres
   bosh_blob: postgresql-9.0.3.tar.gz
   bosh_blob_name: postgresql-9.0.3
 - name: postgresql-9.0.3
-  url: https://blob.cfblob.com/rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
+  url: ''
+  object: rest/objects/4e4e78bca61e121004e4e7d51d950e04fbd4f2ca2d89
   slug: postgres
   action: compile
   script: postgres.sh
@@ -91,6 +102,7 @@ cf_packages:
   bosh_blob_name: postgres-9.0.3-1.ppc64le
 - name: mysql-5.1.62
   url: http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.1.62.tar.gz
+  object: ''
   slug: mysql_cf
   action: compile
   script: cf-release/mysql-client.sh
@@ -99,6 +111,7 @@ cf_packages:
   bosh_blob_name: client-5.1.62-rel13.3-435-Linux-ppc64le
 - name: openjdk-1.7.0
   url: ''
+  object: ''
   slug: openjdk
   action: compile
   script: cf-release/openjdk.sh
@@ -107,6 +120,7 @@ cf_packages:
   bosh_blob_name: java-7-openjdk-ppc64el
 - name: gcc-5.1.0
   url: ftp://ftp.gnu.org/gnu/gcc/gcc-5.1.0/gcc-5.1.0.tar.gz
+  object: ''
   slug: gccgo
   action: compile
   script: cf-release/gccgo_ppc64le_trusty.sh
@@ -115,6 +129,7 @@ cf_packages:
   bosh_blob_name: gccgo
 - name: rootfs
   url: ''
+  object: ''
   slug: rootfs
   action: compile
   script: cf-release/rootfs.sh
@@ -123,6 +138,7 @@ cf_packages:
   bosh_blob_name: rootfsppc64
 - name: dea_next_gems
   url: ''
+  object: ''
   slug: dea_next
   action: compile
   script: cf-release/dea_next_gems.sh
@@ -131,6 +147,7 @@ cf_packages:
   bosh_blob_name: dea_next_gems_vendor_cache
 - name: debian_nfs_server
   url: ''
+  object: ''
   slug: nfs
   action: compile
   script: cf-release/nfs-kernel-server.sh
