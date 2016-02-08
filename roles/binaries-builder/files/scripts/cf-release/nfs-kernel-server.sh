@@ -9,6 +9,6 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
-apt-get -y -d install nfs-kernel-server=1:1.2.8-6ubuntu1.1 
+apt-get -y -d install nfs-kernel-server=1:1.2.8-6ubuntu1.2
 
-cp /var/cache/apt/archives/nfs-kernel-server_1%3a1.2.8-6ubuntu1.1_ppc64el.deb $bosh_blob
+cp /var/cache/apt/archives/nfs-kernel-server_1%3a1.2.8-6ubuntu1.2_ppc64el.deb $bosh_blob

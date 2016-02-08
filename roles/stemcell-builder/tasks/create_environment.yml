@@ -12,6 +12,10 @@
   copy: "src=Gemfile dest={{stemcell_builder_path}}/Gemfile"
 
 # git clone --recursive --branch power-2915 https://github.com/Altoros/bosh.git
+- name: "Check if {{stemcell_builder_path}}/bosh exists"
+  stat: "path={{stemcell_builder_path}}/bosh"
+  register: bosh_stemcell_folder
+
 - name: Clone BOSH repo from Altoros github for stemcell builder
   git: "repo=https://github.com/Altoros/bosh.git"
   sudo: no
@@ -21,6 +25,7 @@
     recursive: yes
     accept_hostkey: yes
   register: result
+  when: bosh_stemcell_folder.stat.exists == False
   until: not result|failed
   retries: 5
 

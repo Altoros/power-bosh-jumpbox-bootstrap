@@ -31,6 +31,42 @@
   until: not result|failed
   retries: 5
 
+- name: Clone s3cli
+  git: "repo=https://github.com/pivotal-golang/s3cli.git dest={{github_path}}/s3cli accept_hostkey=yes"
+  sudo: no
+  register: result
+  until: not result|failed
+  retries: 10
+
+- name: Build s3cli
+  shell: "GOPATH=GOPATH:{{github_path}}/s3cli;go build -o s3cli s3cli/s3cli chdir={{github_path}}/s3cli creates={{github_path}}/s3cli/s3cli"
+  sudo: no
+  environment: '{{go_environment}}'
+  register: result
+  until: not result|failed
+  retries: 5
+
+- name: Copy s3cli binary to /usr/local/bin
+  shell: "cp {{github_path}}/s3cli/s3cli /usr/local/bin/s3cli creates=/usr/local/bin/s3cli"
+  sudo: yes
+  register: result
+  until: not result|failed
+  retries: 5
+
+- name: Make s3cli file executable
+  file: path=/usr/local/bin/s3cli mode=755
+  sudo: yes
+  register: result
+  until: not result|failed
+  retries: 5
+
+- name: Create s3cli config file
+  shell: "echo '{\"bucket_name\":\"blob.cfblob.com\"}' > {{github_path}}/s3cli/s3.json"
+  sudo: no
+  register: result
+  until: not result|failed
+  retries: 5
+
 - name: Add direnv load to .bashrc
   shell: echo 'eval "$(direnv hook bash)"' >> /home/{{ansible_ssh_user}}/.bashrc
   sudo: no
